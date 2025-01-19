@@ -2,17 +2,17 @@
 'use client'
 
 import { Canvas, FabricImage, PencilBrush } from 'fabric'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-const drawingModes = ['brush', 'polygon'] as const
+const modes = ['brush', 'polygon'] as const
 
-type DrawingModes = (typeof drawingModes)[number]
+type DrawingModes = (typeof modes)[number]
 
 export default function Home() {
   const canvasRef = useRef<Canvas>(null)
   const [currentFile, setCurrentFile] = useState<File | null>(null)
-  const [drawingMode, setDrawingMode] = useState<DrawingModes | null>(null)
+  const [currentMode, setCurrentMode] = useState<DrawingModes | null>(null)
   const handleFileChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.item(0)
@@ -49,24 +49,26 @@ export default function Home() {
       canvas.dispose()
     }
   }, [])
-
-  useEffect(() => {
-    const canvas = canvasRef.current
-
-    if (canvas != null) {
-      canvas.isDrawingMode = !!drawingMode
-
-      if (drawingMode === 'brush') {
-        canvas.freeDrawingBrush = new PencilBrush(canvas)
-        canvas.freeDrawingBrush.color = 'rgba(255,0,0,0.5)'
-        canvas.freeDrawingBrush.width = 10
-      }
-    }
-  }, [drawingMode, canvasRef])
-
   const handleBrush = useCallback(
     (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-      setDrawingMode(event.currentTarget.name as DrawingModes)
+      const mode = event.currentTarget.name as DrawingModes
+
+      setCurrentMode((prevMode) => {
+        const canvas = canvasRef.current
+        const newMode = prevMode === mode ? null : mode
+
+        if (canvas != null) {
+          canvas.isDrawingMode = !!newMode
+
+          if (newMode === 'brush') {
+            canvas.freeDrawingBrush = new PencilBrush(canvas)
+            canvas.freeDrawingBrush.color = 'rgba(255,0,0,0.5)'
+            canvas.freeDrawingBrush.width = 20
+          }
+        }
+
+        return newMode
+      })
     },
     [],
   )
@@ -100,7 +102,7 @@ export default function Home() {
       </div>
       <div className="h-16">
         <div className="space-x-4">
-          {drawingModes.map((mode) => (
+          {modes.map((mode) => (
             <button
               type="button"
               className="disabled:text-white/60"
@@ -108,7 +110,7 @@ export default function Home() {
               name={mode}
               onClick={handleBrush}
               disabled={
-                !canvasRef.current || (!!drawingMode && drawingMode !== mode)
+                !currentFile || (!!currentMode && currentMode !== mode)
               }>
               {mode}
             </button>
