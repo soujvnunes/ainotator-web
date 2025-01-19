@@ -1,12 +1,27 @@
-import { Inter } from 'next/font/google'
+import { Outfit } from 'next/font/google'
 import '@/ui/tailwind.css'
+import type { Metadata, Viewport } from 'next'
+import SplashScreen from '@/containers/SplashScreen'
 
-const inter = Inter({ subsets: ['latin'] })
+const outfit = Outfit({
+  subsets: ['latin'],
+  variable: '--font-outfit-sans',
+})
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'AINotator',
+
   description:
     'Interactive AI-Powered Annotation for Precise Data Segmentation',
+  appleWebApp: {
+    capable: true,
+    title: 'AINotator',
+    statusBarStyle: 'black-translucent',
+  },
+}
+
+export const viewport: Viewport = {
+  themeColor: '#000000',
 }
 
 export default function RootLayout({
@@ -15,8 +30,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html
+      lang="en"
+      className={`${outfit.variable} h-full`}>
+      <body className="h-full text-white bg-black">{children}</body>
+      <SplashScreen />
     </html>
   )
 }
