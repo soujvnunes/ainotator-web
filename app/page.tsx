@@ -1,19 +1,40 @@
 // TODO: remove directive after component client ui
 'use client'
 
-import { Canvas } from 'fabric'
-import NextImage from 'next/image'
-import { useEffect, useId, useRef, useState } from 'react'
+import { Canvas, FabricImage } from 'fabric'
+import { useCallback, useEffect, useId, useRef } from 'react'
 
 export default function Home() {
   const canvasRef = useRef<Canvas>(null)
-  const [imageSrc, setImageSrc] = useState('')
   const canvasId = useId()
+  const handleFileChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.item(0)
+      const canvas = canvasRef.current
+      const reader = new FileReader()
+
+      if (file == null) return
+
+      reader.onload = async (event) => {
+        const result = event.target?.result
+
+        if (typeof result === 'string' && canvas != null) {
+          const image = await FabricImage.fromURL(result)
+
+          image.scaleToWidth(window.innerWidth)
+          canvas.backgroundImage = image
+          canvas.renderAll()
+        }
+      }
+      reader.readAsDataURL(file)
+    },
+    [],
+  )
 
   useEffect(() => {
     const canvas = new Canvas(canvasId, {
       width: window.innerWidth,
-      // 64 refers to toolbar's height
+      // TODO: get 64 (refers to toolbar's height) dynamically
       height: window.innerHeight - 64,
     })
 
@@ -22,39 +43,12 @@ export default function Home() {
 
   return (
     <main>
-      {imageSrc}
-      <canvas
-        className="w-full h-full bg-neutral-900"
-        id={canvasId}
-      />
+      <canvas id={canvasId} />
       <input
         type="file"
         accept="image/*"
-        onChange={(event) => {
-          const file = event.target.files?.item(0)
-
-          if (file) {
-            const reader = new FileReader()
-
-            reader.readAsDataURL(file)
-            reader.onload = () => {
-              if (typeof reader.result === 'string') {
-                setImageSrc(reader.result)
-              }
-            }
-          }
-        }}
+        onChange={handleFileChange}
       />
-      {!!imageSrc && (
-        <div className="relative h-24">
-          <NextImage
-            fill
-            className="object-cover"
-            alt="Preview"
-            src={imageSrc}
-          />
-        </div>
-      )}
     </main>
   )
 }
