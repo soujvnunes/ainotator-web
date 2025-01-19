@@ -1,13 +1,13 @@
 // TODO: remove directive after component client ui
 'use client'
 
+import useCanvasDimensions from '@/hooks/useCanvasDimensions'
 import { Canvas, FabricImage } from 'fabric'
 import { useCallback, useId, useRef, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-const TOOLBAR_Y = 64
-
 export default function Home() {
+  const canvasDimensions = useCanvasDimensions({ offset: { height: 64 } })
   const canvasRef = useRef<Canvas>(null)
   const canvasId = useId()
   const [currentFile, setCurrentFile] = useState<File | null>(null)
@@ -36,11 +36,7 @@ export default function Home() {
     [],
   )
   const handleCanvas = useCallback((node: HTMLCanvasElement) => {
-    const canvas = new Canvas(node.id, {
-      width: window.innerWidth,
-      // TODO: get 64 (refers to toolbar's height) dynamically
-      height: window.innerHeight - TOOLBAR_Y,
-    })
+    const canvas = new Canvas(node.id, canvasDimensions.value)
 
     canvasRef.current = canvas
 
@@ -51,7 +47,9 @@ export default function Home() {
 
   return (
     <main>
-      <div className="relative bg-neutral-900">
+      <div
+        className="relative bg-neutral-900"
+        style={{ height: canvasDimensions.value.height }}>
         <label
           className={twMerge(
             'absolute flex w-full h-full',
@@ -72,7 +70,7 @@ export default function Home() {
           ref={handleCanvas}
         />
       </div>
-      <div style={{ height: TOOLBAR_Y }}>tools</div>
+      <div style={{ height: canvasDimensions.offset?.height }}>tools</div>
     </main>
   )
 }
