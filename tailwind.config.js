@@ -1,6 +1,16 @@
+import defaultTheme from 'tailwindcss/defaultTheme'
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./app/**/*.{ts,tsx,mdx}', './ui/**/*.{ts,tsx,mdx}'],
-  theme: {},
+  theme: {
+    fontFamily: {
+      sans: [
+        'var(--font-outfit-sans)',
+        '-apple-system-font',
+        ...defaultTheme.fontFamily.sans,
+      ],
+    },
+  },
   plugins: [],
 }
