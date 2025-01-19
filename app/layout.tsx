@@ -7,10 +7,8 @@ const outfit = Outfit({
   subsets: ['latin'],
   variable: '--font-outfit-sans',
 })
-
 export const metadata: Metadata = {
   title: 'AINotator',
-
   description:
     'Interactive AI-Powered Annotation for Precise Data Segmentation',
   appleWebApp: {
@@ -19,16 +17,11 @@ export const metadata: Metadata = {
     statusBarStyle: 'black-translucent',
   },
 }
-
 export const viewport: Viewport = {
   themeColor: '#000000',
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
     <html
       lang="en"
