@@ -1,7 +1,8 @@
 // TODO: remove directive after component client ui
 'use client'
 
-import buildAnnotation from '@/helpers/buildAnnotation'
+import getDatasetAnnotation from '@/helpers/getDatasetAnnotation'
+import getDatasetImage from '@/helpers/getDatasetImage'
 import { Canvas, FabricImage, PencilBrush } from 'fabric'
 import { useCallback, useRef, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -29,6 +30,18 @@ export default function Home() {
         if (typeof result !== 'string' || canvas == null) return
 
         const image = await FabricImage.fromURL(result)
+        // TODO: send to dataset provider
+        const datasetImage = getDatasetImage({
+          name: file.name,
+          lastModified: file.lastModified,
+          height: image.height,
+          width: image.width,
+          id: {
+            image: file.lastModified,
+            license: 0,
+          },
+        })
+
         const ratio = {
           x: canvas.width / image.width,
           y: canvas.height / image.height,
@@ -57,7 +70,8 @@ export default function Home() {
     })
 
     function handleMouseUp() {
-      const annotation = buildAnnotation(canvas, {
+      // TODO: send to dataset provider
+      const datasetAnnotation = getDatasetAnnotation(canvas, {
         isCrowded: false,
         id: {
           image: 0, // TODO: dynamically when image is setted
@@ -65,8 +79,6 @@ export default function Home() {
           annotation: 0, // TODO: dynamically when mouse's up
         },
       })
-
-      console.log({ annotation })
     }
 
     canvas.on({
