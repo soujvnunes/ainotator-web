@@ -1,8 +1,8 @@
 // TODO: remove directive after component client ui
 'use client'
 
+import buildAnnotation from '@/helpers/buildAnnotation'
 import { Canvas, FabricImage, PencilBrush } from 'fabric'
-import type { Path, TPointerEvent, TPointerEventInfo } from 'fabric'
 import { useCallback, useRef, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 
@@ -57,25 +57,16 @@ export default function Home() {
     })
 
     function handleMouseUp() {
-      const objects = canvas.getObjects()
-      const brush = objects.find((object): object is Path =>
-        object.isType('path'),
-      )
+      const annotation = buildAnnotation(canvas, {
+        isCrowded: false,
+        id: {
+          image: 0, // TODO: dynamically when image is setted
+          category: 0, // TODO: dynamically when class is setted
+          annotation: 0, // TODO: dynamically when mouse's up
+        },
+      })
 
-      if (brush) {
-        const { width, height } = brush.getBoundingRect()
-        const annotation = {
-          segmentation: brush.path.map(([cmd, ...points]) => points),
-          area: width * height,
-          iscrowd: 0,
-          image_id: 0, // TODO: dynamically when class is setted
-          bbox: [brush.left, brush.top, width, height],
-          category_id: 0, // TODO: dynamically when class is setted
-          id: 0,
-        }
-
-        console.log('up', { annotation })
-      }
+      console.log({ annotation })
     }
 
     canvas.on({
