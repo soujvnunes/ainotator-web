@@ -1,14 +1,14 @@
 import { Canvas } from 'fabric'
 import type { Path } from 'fabric'
 
-interface AnnotationOptions {
+interface DatasetAnnotationOptions {
   isCrowded?: boolean
   id: Record<'category' | 'image' | 'annotation', number>
 }
 
-export default function buildAnnotation(
+export default function getDatasetAnnotation(
   canvas: Canvas,
-  options: AnnotationOptions,
+  options: DatasetAnnotationOptions,
 ) {
   const objects = canvas.getObjects()
   const brush = objects.find((object): object is Path => object.isType('path'))
