@@ -2,6 +2,7 @@
 'use client'
 
 import { Canvas, FabricImage, PencilBrush } from 'fabric'
+import type { Path, TPointerEvent, TPointerEventInfo } from 'fabric'
 import { useCallback, useRef, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 
@@ -12,18 +13,18 @@ type DrawingModes = (typeof modes)[number]
 export default function Home() {
   const canvasRef = useRef<Canvas>(null)
   const imageRef = useRef<FabricImage>(null)
-  const [currentFile, setCurrentFile] = useState<File | null>(null)
+  const [currentImage, setCurrentImage] = useState<File | null>(null)
   const [currentMode, setCurrentMode] = useState<DrawingModes | null>(null)
   const handleFileChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.item(0)
-      const canvas = canvasRef.current
       const reader = new FileReader()
 
       if (file == null) return
 
       reader.onload = async (event) => {
         const result = event.target?.result
+        const canvas = canvasRef.current
 
         if (typeof result !== 'string' || canvas == null) return
 
@@ -36,13 +37,15 @@ export default function Home() {
         if (ratio.x > ratio.y) image.scaleToWidth(canvas.width)
         else image.scaleToHeight(canvas.height)
 
+        image.selectable = false
+        image.hasControls = false
         canvas.add(image)
         canvas.renderAll()
 
         imageRef.current = image
       }
       reader.readAsDataURL(file)
-      setCurrentFile(file)
+      setCurrentImage(file)
     },
     [],
   )
@@ -52,10 +55,40 @@ export default function Home() {
       // TODO: move 64 (toolbar's height) to the design system
       height: window.innerHeight - 64,
     })
+
+    function handleMouseUp() {
+      const objects = canvas.getObjects()
+      const brush = objects.find((object): object is Path =>
+        object.isType('path'),
+      )
+
+      if (brush) {
+        const { width, height } = brush.getBoundingRect()
+        const annotation = {
+          segmentation: brush.path.map(([cmd, ...points]) => points),
+          area: width * height,
+          iscrowd: 0,
+          image_id: 0, // TODO: dynamically when class is setted
+          bbox: [brush.left, brush.top, width, height],
+          category_id: 0, // TODO: dynamically when class is setted
+          id: 0,
+        }
+
+        console.log('up', { annotation })
+      }
+    }
+
+    canvas.on({
+      'mouse:up': handleMouseUp,
+    })
+
     canvasRef.current = canvas
 
     return () => {
       canvas.dispose()
+      canvas.off({
+        'mouse:up': handleMouseUp,
+      })
     }
   }, [])
   const handleBrush = useCallback(
@@ -87,20 +120,20 @@ export default function Home() {
       <div
         className={twMerge(
           'relative bg-neutral-900 transition-[background-color] h-[calc(100vh-64px)]',
-          !currentFile && 'hover:bg-neutral-900/60',
+          !currentImage && 'hover:bg-neutral-900/60',
         )}>
         <label
           className={twMerge(
             'absolute flex w-full h-full cursor-pointer',
-            !currentFile && 'z-10',
-            !!currentFile && 'opacity-0',
+            !currentImage && 'z-10',
+            !!currentImage && 'opacity-0',
           )}>
           <span className="m-auto">Add a file</span>
           <input
             type="file"
             accept="image/*"
             className="sr-only"
-            disabled={!!currentFile}
+            disabled={!!currentImage}
             onChange={handleFileChange}
           />
         </label>
@@ -119,7 +152,7 @@ export default function Home() {
               name={mode}
               onClick={handleBrush}
               disabled={
-                !currentFile || (!!currentMode && currentMode !== mode)
+                !currentImage || (!!currentMode && currentMode !== mode)
               }>
               {mode}
             </button>
