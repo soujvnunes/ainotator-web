@@ -11,6 +11,7 @@ type DrawingModes = (typeof modes)[number]
 
 export default function Home() {
   const canvasRef = useRef<Canvas>(null)
+  const imageRef = useRef<FabricImage>(null)
   const [currentFile, setCurrentFile] = useState<File | null>(null)
   const [currentMode, setCurrentMode] = useState<DrawingModes | null>(null)
   const handleFileChange = useCallback(
@@ -24,13 +25,21 @@ export default function Home() {
       reader.onload = async (event) => {
         const result = event.target?.result
 
-        if (typeof result === 'string' && canvas != null) {
-          const image = await FabricImage.fromURL(result)
+        if (typeof result !== 'string' || canvas == null) return
 
-          image.scaleToWidth(window.innerWidth)
-          canvas.backgroundImage = image
-          canvas.renderAll()
+        const image = await FabricImage.fromURL(result)
+        const ratio = {
+          x: canvas.width / image.width,
+          y: canvas.height / image.height,
         }
+
+        if (ratio.x > ratio.y) image.scaleToWidth(canvas.width)
+        else image.scaleToHeight(canvas.height)
+
+        canvas.add(image)
+        canvas.renderAll()
+
+        imageRef.current = image
       }
       reader.readAsDataURL(file)
       setCurrentFile(file)
@@ -100,7 +109,7 @@ export default function Home() {
           ref={handleCanvas}
         />
       </div>
-      <div className="h-16">
+      <div className="flex items-center h-16 px-4">
         <div className="space-x-4">
           {modes.map((mode) => (
             <button
