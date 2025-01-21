@@ -1,60 +1,26 @@
+import type {
+  Dataset,
+  DatasetAnnotation,
+  DatasetCategory,
+  DatasetImage,
+  DatasetInfo,
+  DatasetLicense,
+} from '@/actions/validateDataset'
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
-interface DatasetInfo {
-  description: string
-  url: string
-  version: string
-  year: string
-  contributor: string
-  date_created: string
-}
-
-interface DatasetLicense {
-  id: number
-  url: string
-  name: string
-}
-
-interface DatasetImage {
-  license: number
-  file_name: string
-  height: number
-  width: number
-  date_captured: string
-  coco_url: string
-  flickr_url: string
-  id: number
-}
-
-interface DatasetAnnotation {
-  segmentation: number[][]
-  area: number
-  iscrowd: number
-  image_id: number
-  bbox: number[]
-  category_id: number
-  id: number
-}
-
-interface DatasetState {
-  info: DatasetInfo
-  licenses: DatasetLicense[]
-  images: DatasetImage[]
-  annotations: DatasetAnnotation[]
-}
-
-const initialState: DatasetState = {
+const initialState: Dataset = {
   info: {
     description: '',
     url: '',
     version: '',
-    year: '',
+    year: 0,
     contributor: '',
     date_created: '',
   },
   licenses: [],
   images: [],
   annotations: [],
+  categories: [],
 }
 
 export default createSlice({
@@ -76,6 +42,10 @@ export default createSlice({
     addAnnotation: (state, action: PayloadAction<DatasetAnnotation>) => ({
       ...state,
       annotations: [...state.annotations, action.payload],
+    }),
+    addCategory: (state, action: PayloadAction<DatasetCategory>) => ({
+      ...state,
+      categories: [...state.categories, action.payload],
     }),
   },
 })
