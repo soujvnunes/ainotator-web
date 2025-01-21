@@ -7,11 +7,11 @@ import type { TPointerEvent, TPointerEventInfo } from 'fabric'
 import { useCallback } from 'react'
 import AnnotatorCanvasUploader from './AnnotatorCanvasUploader'
 import { twMerge } from 'tailwind-merge'
-import { useAnnotator } from '@/providers/AnnotatorProvider'
+import { useAnnotatorState } from '@/providers/AnnotatorProvider'
 
 export default function AnnotatorCanvas() {
-  const annotator = useAnnotatorRefs()
-  const file = useAnnotator((state) => state.file)
+  const annotatorRefs = useAnnotatorRefs()
+  const file = useAnnotatorState((state) => state.annotator.file)
   const handleCanvas = useCallback((node: HTMLCanvasElement) => {
     const canvas = new Canvas(node.id, {
       width: window.innerWidth,
@@ -34,7 +34,7 @@ export default function AnnotatorCanvas() {
     }
     function handleMouseMove(event: TPointerEventInfo<TPointerEvent>) {
       const viewportPoint = canvas.getViewportPoint(event.e)
-      const image = annotator.image.current
+      const image = annotatorRefs.image.current
 
       if (image == null) return
 
@@ -52,7 +52,7 @@ export default function AnnotatorCanvas() {
       'mouse:move': handleMouseMove,
     })
 
-    annotator.canvas.current = canvas
+    annotatorRefs.canvas.current = canvas
 
     return () => {
       canvas.dispose()
