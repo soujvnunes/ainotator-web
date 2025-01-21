@@ -1,7 +1,7 @@
 import { Outfit } from 'next/font/google'
 import '@/ui/tailwind.css'
 import type { Metadata, Viewport } from 'next'
-import SplashScreen from '@/containers/SplashScreen'
+import Script from 'next/script'
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -27,7 +27,13 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
       lang="en"
       className={`${outfit.variable} h-full`}>
       <body className="h-full text-white bg-black">{children}</body>
-      <SplashScreen />
+      <Script
+        id="splash-screen"
+        src="https://unpkg.com/ios-pwa-splash@1.0.0/cdn.min.js"
+        dangerouslySetInnerHTML={{
+          __html: `(function(){if(typeof window.iosPWASplash === 'function'){window.iosPWASplash('/apple-icon.png','#000000');}})();`,
+        }}
+      />
     </html>
   )
 }
