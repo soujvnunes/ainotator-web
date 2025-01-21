@@ -28,7 +28,6 @@ export default function AnnotatorCanvasUploader() {
         if (typeof result !== 'string' || canvas == null) return
 
         const image = await FabricImage.fromURL(result)
-        // TODO: send to dataset provider
         const datasetImage = getDatasetImage({
           name: file.name,
           lastModified: file.lastModified,
@@ -39,7 +38,6 @@ export default function AnnotatorCanvasUploader() {
             license: 0,
           },
         })
-
         const ratio = {
           x: canvas.width / image.width,
           y: canvas.height / image.height,
@@ -55,6 +53,7 @@ export default function AnnotatorCanvasUploader() {
 
         annotatorRefs.image.current = image
         dispatch.setFile(true)
+        dispatch.addImage(datasetImage)
       }
       reader.readAsDataURL(file)
     },
