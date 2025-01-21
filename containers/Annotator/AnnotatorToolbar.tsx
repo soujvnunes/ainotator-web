@@ -5,18 +5,18 @@ import { PencilBrush } from 'fabric'
 import { useCallback, useState } from 'react'
 import annotatorToolbarModes, { type Modes } from './annotatorToolbarModes'
 import Link from 'next/link'
-import { useAnnotator } from '@/providers/AnnotatorProvider'
+import { useAnnotatorState } from '@/providers/AnnotatorProvider'
 
 export default function AnnotatorToolbar() {
-  const annotator = useAnnotatorRefs()
-  const file = useAnnotator((state) => state.file)
+  const annotatorRefs = useAnnotatorRefs()
+  const file = useAnnotatorState((state) => state.annotator.file)
   const [mode, setMode] = useState<Modes>(null)
   const handleBrush = useCallback(
     (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       const mode = event.currentTarget.name as Modes
 
       setMode((prevMode) => {
-        const canvas = annotator.canvas.current
+        const canvas = annotatorRefs.canvas.current
         const newMode = prevMode === mode ? null : mode
 
         if (canvas != null) {
