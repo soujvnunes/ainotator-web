@@ -7,11 +7,15 @@ import type { TPointerEvent, TPointerEventInfo } from 'fabric'
 import { useCallback } from 'react'
 import AnnotatorCanvasUploader from './AnnotatorCanvasUploader'
 import { twMerge } from 'tailwind-merge'
-import { useAnnotatorState } from '@/providers/AnnotatorProvider'
+import {
+  useAnnotatorDispatch,
+  useAnnotatorState,
+} from '@/providers/AnnotatorProvider'
 
 export default function AnnotatorCanvas() {
   const annotatorRefs = useAnnotatorRefs()
   const file = useAnnotatorState((state) => state.annotator.file)
+  const dispatch = useAnnotatorDispatch()
   const handleCanvas = useCallback((node: HTMLCanvasElement) => {
     const canvas = new Canvas(node.id, {
       width: window.innerWidth,
@@ -20,7 +24,6 @@ export default function AnnotatorCanvas() {
     })
 
     function handleMouseUp() {
-      // TODO: send to dataset provider
       const datasetAnnotation = getDatasetAnnotation(canvas, {
         isCrowded: false,
         id: {
@@ -30,7 +33,7 @@ export default function AnnotatorCanvas() {
         },
       })
 
-      console.log({ datasetAnnotation })
+      if (datasetAnnotation) dispatch.addAnnotation(datasetAnnotation)
     }
     function handleMouseMove(event: TPointerEventInfo<TPointerEvent>) {
       const viewportPoint = canvas.getViewportPoint(event.e)
