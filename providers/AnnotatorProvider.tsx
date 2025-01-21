@@ -1,35 +1,37 @@
 'use client'
 
-import annotator, {
-  type AnnotatorStore,
-  createAnnotatorStore,
-} from '@/stores/annotator'
-import { createContext, useContext, useRef } from 'react'
-import { useStore } from 'zustand'
+import {
+  makeStore,
+  type AppDispatch,
+  type AppStore,
+  type RootState,
+} from '@/stores'
+import annotator from '@/stores/annotator'
+import dataset from '@/stores/dataset'
+import { bindActionCreators } from '@reduxjs/toolkit'
+import { useRef } from 'react'
+import { Provider } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
-type AnnotatorAPI = ReturnType<typeof createAnnotatorStore>
+export const useAnnotatorState = useSelector.withTypes<RootState>()
 
-const AnnotatorContext = createContext<AnnotatorAPI | undefined>(undefined)
+export function useAnnotatorDispatch() {
+  const dispatch = useDispatch<AppDispatch>()
 
-export default function AnnotatorProvider(props: React.PropsWithChildren) {
-  const store = useRef<AnnotatorAPI>(null)
-
-  if (!store.current) {
-    store.current = createAnnotatorStore(annotator())
-  }
-
-  return (
-    <AnnotatorContext
-      value={store.current}
-      {...props}
-    />
+  return bindActionCreators(
+    { ...annotator.actions, ...dataset.actions },
+    dispatch,
   )
 }
 
-export function useAnnotator<T>(selector: (store: AnnotatorStore) => T): T {
-  const annotator = useContext(AnnotatorContext)
+export default function AnnotatorProvider({
+  children,
+}: React.PropsWithChildren) {
+  const storeRef = useRef<AppStore | null>(null)
 
-  if (!annotator) throw new Error('Use annotator hook within AnnotatorProvider')
+  if (!storeRef.current) {
+    storeRef.current = makeStore()
+  }
 
-  return useStore(annotator, selector)
+  return <Provider store={storeRef.current}>{children}</Provider>
 }
