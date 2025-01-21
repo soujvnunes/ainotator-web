@@ -41,13 +41,16 @@ export default function AnnotatorCanvas() {
 
       if (image == null) return
 
-      // TODO: move image around using the offset size
-      console.log(
+      /* TODO: move image around using the offset size
+
+ console.log(
         'move',
         viewportPoint,
         image.width - canvas.width,
         viewportPoint.x - image.width / 2,
       )
+        
+      */
     }
 
     canvas.on({
