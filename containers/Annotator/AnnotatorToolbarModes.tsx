@@ -2,54 +2,66 @@
 
 import { useAnnotatorRefs } from '@/providers/AnnotatorRefsProvider'
 import { PencilBrush } from 'fabric'
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import {
   useAnnotatorDispatch,
   useAnnotatorState,
 } from '@/providers/AnnotatorProvider'
+import { AnnotatorStateAction, Category } from '@/stores/annotator'
+import getDatasetAnnotation from '@/helpers/getDatasetAnnotation'
 
 const annotatorToolbarModes = ['brush', 'polygon'] as const
 
-export type Modes = (typeof annotatorToolbarModes)[number] | null
-
 export default function AnnotatorToolbarModes() {
   const annotatorRefs = useAnnotatorRefs()
-  const isAnnotating = useAnnotatorState(
-    (state) => state.annotator.isAnnotating,
-  )
+  // TODO: use state.annotator.currentCategory != null as it'll be the same thing
+  const action = useAnnotatorState((state) => state.annotator.action)
   const dispatch = useAnnotatorDispatch()
-  const [mode, setMode] = useState<Modes>(null)
-  const handleBrush = useCallback(
+  const handleMode = useCallback(
     (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-      const mode = event.currentTarget.name as Modes
+      const canvas = annotatorRefs.canvas.current
+      const mode = event.currentTarget.name as Category
+      const newAction = (
+        action.name === 'annotating' && action.category === mode
+          ? { name: 'editting' }
+          : { name: 'annotating', category: mode }
+      ) as AnnotatorStateAction
 
-      setMode((prevMode) => {
-        const canvas = annotatorRefs.canvas.current
-        const newMode = prevMode === mode ? null : mode
-
-        if (canvas != null) {
-          canvas.isDrawingMode = !!newMode
-
-          if (newMode === 'brush') {
-            canvas.freeDrawingBrush = new PencilBrush(canvas)
-            canvas.freeDrawingBrush.color = 'rgba(255,0,0,0.5)'
-            canvas.freeDrawingBrush.width = 20
-
-            dispatch.dataset.addCategory({
-              // TODO: dynamically when click on class
-              id: 0,
-              // TODO: dynamically when click on class
-              name: 'cat',
-              // TODO: dynamically when click on class
-              supercategory: 'animal',
-            })
-          }
-        }
-
-        return newMode
+      dispatch.annotator.setAction(newAction)
+      // TODO: dynamically when click on class
+      dispatch.dataset.addCategory({
+        id: 0,
+        name: 'cat',
+        supercategory: 'animal',
       })
+
+      if (!canvas) return
+
+      if (newAction.name !== 'annotating') {
+        const datasetAnnotation = getDatasetAnnotation(canvas, {
+          isCrowded: false,
+          id: {
+            image: 0, // TODO: dynamically when image is set
+            category: 0, // TODO: dynamically when class is set
+            annotation: 0, // TODO: dynamically when mouse is up
+          },
+        })
+
+        if (datasetAnnotation) dispatch.dataset.addAnnotation(datasetAnnotation)
+
+        canvas.isDrawingMode = false
+      } else {
+        if (newAction.category === 'brush') {
+          canvas.isDrawingMode = true
+          canvas.freeDrawingBrush = new PencilBrush(canvas)
+          canvas.freeDrawingBrush.color = 'rgba(255,0,0,0.5)'
+          canvas.freeDrawingBrush.width = 20
+        } else if (newAction.category === 'polygon') {
+          // TODO: polygon
+        }
+      }
     },
-    [],
+    [annotatorRefs, action],
   )
 
   return (
@@ -61,8 +73,12 @@ export default function AnnotatorToolbarModes() {
           className="disabled:text-white/60"
           key={annotatorToolbarMode}
           name={annotatorToolbarMode}
-          onClick={handleBrush}
-          disabled={!isAnnotating || (!!mode && mode !== annotatorToolbarMode)}>
+          onClick={handleMode}
+          disabled={
+            action.name === 'waiting' ||
+            (action.name === 'annotating' &&
+              action.category !== annotatorToolbarMode)
+          }>
           {annotatorToolbarMode}
         </button>
       ))}
