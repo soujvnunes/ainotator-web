@@ -3,6 +3,7 @@
 import validateDataset, {
   type ValidateDataset,
 } from '@/actions/validateDataset'
+import isValidationSuccessful from '@/helpers/isValidationSuccessful'
 import {
   useAnnotatorDispatch,
   useAnnotatorState,
@@ -14,93 +15,146 @@ import {
   Input,
   Label,
   Legend,
+  Tab,
+  TabGroup,
+  TabList,
+  TabPanel,
+  TabPanels,
 } from '@headlessui/react'
-import Link from 'next/link'
+import { CheckIcon } from '@heroicons/react/24/solid'
 import { useCallback, useState, useTransition } from 'react'
+import { twMerge } from 'tailwind-merge'
+import { fieldsInitialState, tabs } from './annotatorToolbarExportFormTabs'
 
 export default function AnnotatorToolbarExportForm() {
   const dispatch = useAnnotatorDispatch()
   const [isPending, startTransition] = useTransition()
   const images = useAnnotatorState((state) => state.dataset.images)
-  const dataset = useAnnotatorState((state) => state.dataset)
-  // TODO: on first validation, add/validate info and then generate link
+  const categories = useAnnotatorState((state) => state.dataset.categories)
+  const annotations = useAnnotatorState((state) => state.dataset.annotations)
+  const [tabId, setTabId] = useState(0)
   const [validation, setValidation] = useState<ValidateDataset | null>(null)
-  const [license, setLicense] = useState({ url: '', name: '' })
+  // TODO: add the possibility of filling this with previous info and licenses from state.annotator.
+  const [fields, setFields] = useState(fieldsInitialState)
   const handleChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      setLicense((prevState) => ({
+      const currentTab = !tabId ? 'license' : 'info'
+
+      setFields((prevState) => ({
         ...prevState,
-        [event.target.name]: event.target.value,
+        [currentTab]: {
+          ...prevState[currentTab],
+          [event.target.name]: event.target.value,
+        },
       }))
     },
-    [],
+    [tabId],
   )
   const handleValidate = useCallback(
     async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       event.preventDefault()
 
-      const newLicense = { ...license, id: images[0].id }
+      const newLicense = { ...fields.license, id: images[0].id }
+      const newInfo = fields.info
 
       startTransition(async () => {
-        const validation = await validateDataset({
-          ...dataset,
+        const newDataset = {
+          images,
+          categories,
+          annotations,
           licenses: [newLicense],
-        })
+          info: newInfo,
+        }
+        const validation = await validateDataset(newDataset)
+
         await new Promise((resolve) => setTimeout(resolve, 3000))
 
         startTransition(() => {
           setValidation(validation)
 
-          if (validation.message === 'Success') dispatch.addLicense(newLicense)
+          if (!isValidationSuccessful(validation)) return
+
+          // TODO: get the file by a route probably
+          const blob = new Blob([JSON.stringify(newDataset, null, 2)], {
+            type: 'application/json',
+          })
+          const url = URL.createObjectURL(blob)
+          const link = document.createElement('a')
+          link.href = url
+          link.download = `${images[0].file_name}_${fields.info.date_created}_annotations.json`
+          link.click()
+          URL.revokeObjectURL(url)
+          dispatch.annotator.addLicense(newLicense)
+          dispatch.annotator.setInfo(newInfo)
         })
       })
     },
-    [images, dispatch],
+    [images, dispatch, categories, annotations],
   )
 
   return (
     <form>
       <Fieldset disabled={isPending}>
-        <Legend className="px-4 mb-4 text-white/60">
-          Fill in the following license information to validate the dataset
-          before exporting it.
+        <Legend className="px-4 pb-4 bg-neutral-800 text-white/60">
+          Fill in the license and information dataset details to validate it
+          before exporting.
         </Legend>
-        <Field className="mb-4">
-          <Label className="px-4 text-sm font-medium cursor-pointer">URL</Label>
-          <Input
-            type="text"
-            name="url"
-            placeholder="http://creativecommons.org/licenses/by-nc-sa/2.0/"
-            className="mt-2 block w-full border-none bg-white/5 h-10 px-4 text-sm  focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
-            onChange={handleChange}
-          />
-        </Field>
-        <Field>
-          <Label className="px-4 text-sm font-medium cursor-pointer">
-            Name
-          </Label>
-          <Input
-            type="text"
-            name="name"
-            placeholder="Attribution-NonCommercial-ShareAlike License"
-            className="mt-2 block w-full border-none bg-white/5 h-10 px-4 text-sm  focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
-            onChange={handleChange}
-          />
-        </Field>
+        <TabGroup
+          selectedIndex={tabId}
+          onChange={setTabId}>
+          <TabList className="flex bg-neutral-800">
+            {tabs.map((tab) => (
+              <Tab
+                key={tab.name}
+                className="inline-flex items-center  justify-center w-full px-4 text-xs uppercase font-semibold tracking-wider h-10	 text-white  data-[hover]:bg-white/5 border-b-2 border-b-transparent hover:border-gray-50 hover:data-[selected]:border-gray-50 data-[selected]:border-gray-50/20 ">
+                {tab.name}
+              </Tab>
+            ))}
+          </TabList>
+          <TabPanels>
+            {tabs.map((tab) => (
+              <TabPanel key={tab.name}>
+                {tab.fields.map((field) => (
+                  <Field
+                    className="mt-4"
+                    key={field.name}>
+                    <Label className="px-4 text-sm font-medium cursor-pointer">
+                      {field.label}
+                    </Label>
+                    <Input
+                      type="text"
+                      name={field.name}
+                      placeholder={field.placeholder}
+                      className="mt-2 block w-full border-x-none border-t-none border-b-transparent border-b-2 bg-white/5 h-10 px-4 text-sm  focus:outline-none data-[focus]:border-b-2  data-[focus]:border-gray-50/20"
+                      onChange={handleChange}
+                    />
+                  </Field>
+                ))}
+              </TabPanel>
+            ))}
+          </TabPanels>
+        </TabGroup>
         <div className="flex items-center">
           <Button
             type="submit"
-            className="inline-flex items-center data-[disabled]:text-white/40 data-[disabled]:cursor-not-allowed justify-center w-full px-4 text-xs uppercase font-semibold tracking-wider h-10	 text-white  data-[hover]:bg-white/5 "
             onClick={handleValidate}
-            disabled={Object.values(license).some((value) => !value)}>
-            Valid{isPending ? 'ating...' : 'ate'}
+            className={twMerge(
+              'inline-flex items-center data-[disabled]:text-white/40 data-[disabled]:cursor-not-allowed justify-center w-full px-4 text-xs uppercase font-semibold tracking-wider h-10	 text-white  data-[hover]:bg-white/5 ',
+              isValidationSuccessful(validation) &&
+                'text-green-400 pointer-events-none',
+            )}
+            disabled={Object.values(
+              Object.assign({}, ...Object.values(fields)),
+            ).some((value) => !value)}>
+            {isValidationSuccessful(validation) ? (
+              <>
+                <CheckIcon className="mr-2 size-6" />
+                Valid
+              </>
+            ) : (
+              `Valid${isPending ? 'ating...' : 'ate'}`
+            )}
           </Button>
-          <Link
-            className="inline-flex data-[disabled]:text-white/40 data-[disabled]:bg-white/5 data-[disabled]:cursor-not-allowed items-center justify-center w-full px-4 text-xs uppercase font-semibold tracking-wider h-10	   data-[hover]:bg-white/5 "
-            href=""
-            data-disabled>
-            Export
-          </Link>
         </div>
       </Fieldset>
     </form>
