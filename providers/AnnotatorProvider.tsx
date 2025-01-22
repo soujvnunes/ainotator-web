@@ -18,10 +18,10 @@ export const useAnnotatorState = useSelector.withTypes<RootState>()
 export function useAnnotatorDispatch() {
   const dispatch = useDispatch<AppDispatch>()
 
-  return bindActionCreators(
-    { ...annotator.actions, ...dataset.actions },
-    dispatch,
-  )
+  return {
+    annotator: bindActionCreators(annotator.actions, dispatch),
+    dataset: bindActionCreators(dataset.actions, dispatch),
+  }
 }
 
 export default function AnnotatorProvider({
