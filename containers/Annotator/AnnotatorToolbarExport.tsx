@@ -8,28 +8,28 @@ import {
   DialogPanel,
   DialogTitle,
 } from '@headlessui/react'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import AnnotatorToolbarExportForm from './AnnotatorToolbarExportForm'
 import { useAnnotatorState } from '@/providers/AnnotatorProvider'
 import { XMarkIcon } from '@heroicons/react/24/solid'
 
 export default function AnnotatorToolbarExport() {
-  const file = useAnnotatorState((state) => state.annotator.file)
+  const currentImageId = useAnnotatorState(
+    (state) => state.annotator.currentImageId,
+  )
   const [open, setOpen] = useState(false)
-
-  function handleOpen() {
+  const handleOpen = useCallback(() => {
     setOpen(true)
-  }
-
-  function handleClose() {
+  }, [])
+  const handleClose = useCallback(() => {
     setOpen(false)
-  }
+  }, [])
 
   return (
     <>
       <Button
         onClick={handleOpen}
-        disabled={!file}
+        disabled={!currentImageId}
         className="rounded-md data-[disabled]:text-white/60 data-[disabled]:pointer-events-none bg-black/20 py-2 px-4 text-sm font-medium text-white focus:outline-none data-[hover]:bg-black/30 data-[focus]:outline-1 data-[focus]:outline-white">
         Export
       </Button>
@@ -43,7 +43,7 @@ export default function AnnotatorToolbarExport() {
             <DialogPanel
               transition
               className="w-full max-w-md bg-neutral-900 duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
-              <DialogTitle className="flex items-center pl-4 text-xs font-medium tracking-wider uppercase">
+              <DialogTitle className="flex items-center pl-4 text-xs font-medium tracking-wider uppercase bg-neutral-800">
                 Details
                 <CloseButton className="inline-flex w-10 h-10 ml-auto hover:bg-white/5">
                   <XMarkIcon className="m-auto size-6" />
