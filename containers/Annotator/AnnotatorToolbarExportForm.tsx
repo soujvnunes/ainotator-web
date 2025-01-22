@@ -20,18 +20,22 @@ import {
   TabList,
   TabPanel,
   TabPanels,
+  useClose,
 } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/24/solid'
 import { useCallback, useState, useTransition } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { fieldsInitialState, tabs } from './annotatorToolbarExportForm.utils'
+import { useAnnotatorRefs } from '@/providers/AnnotatorRefsProvider'
 
 export default function AnnotatorToolbarExportForm() {
   const dispatch = useAnnotatorDispatch()
-  const [isPending, startTransition] = useTransition()
+  const annotatorRef = useAnnotatorRefs()
   const images = useAnnotatorState((state) => state.dataset.images)
   const categories = useAnnotatorState((state) => state.dataset.categories)
   const annotations = useAnnotatorState((state) => state.dataset.annotations)
+  const closeAnnotatorToolbarExport = useClose()
+  const [isPending, startTransition] = useTransition()
   const [tabId, setTabId] = useState(0)
   const [validation, setValidation] = useState<ValidateDataset | null>(null)
   // TODO: add the possibility of filling this with previous info and licenses from state.annotator.
@@ -74,6 +78,7 @@ export default function AnnotatorToolbarExportForm() {
 
           if (!isValidationSuccessful(validation)) return
 
+          // CREATE THE LINK AND DOWNLOAD THE FILE
           // TODO: get the file by a route probably
           const blob = new Blob([JSON.stringify(newDataset, null, 2)], {
             type: 'application/json',
@@ -84,8 +89,16 @@ export default function AnnotatorToolbarExportForm() {
           link.download = `${images[0].file_name}_${fields.info.date_created}_annotations.json`
           link.click()
           URL.revokeObjectURL(url)
+          // DISPATCH VALID DETAILS AND RESET ANNOTATING STATE
           dispatch.annotator.addLicense(newLicense)
           dispatch.annotator.setInfo(newInfo)
+          dispatch.annotator.setIsAnnotating(false)
+          // CLEAR REFS
+          annotatorRef.file.current = null
+          annotatorRef.image.current = null
+          annotatorRef.canvas.current?.clear()
+          // CLOSE MODAL
+          closeAnnotatorToolbarExport()
         })
       })
     },
