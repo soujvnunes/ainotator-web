@@ -6,39 +6,67 @@ import type {
 import { createSlice } from '@reduxjs/toolkit'
 import { type PayloadAction } from '@reduxjs/toolkit'
 
+export type Category = 'brush' | 'polygon'
+
+export type AnnotatorStateAction =
+  | { name: 'waiting' }
+  | { name: 'editting' }
+  | { name: 'annotating'; category: Category }
+  | { name: 'exporting' }
+
 interface AnnotatorState {
-  isAnnotating: boolean
-  info: DatasetInfo | null
-  categories: DatasetCategory[]
-  licenses: DatasetLicense[]
+  /**
+   * TODO: this is the object DatasetCategory to be setted
+   * in dispatch.dataset.addCategory on select
+   */
+  action: AnnotatorStateAction
+  added: {
+    categories: DatasetCategory[]
+  }
+  previous: {
+    info: DatasetInfo | null
+    licenses: DatasetLicense[]
+  }
 }
 
 const initialState: AnnotatorState = {
-  isAnnotating: false,
-  info: null,
-  categories: [],
-  licenses: [],
+  action: {
+    name: 'waiting',
+  },
+  added: {
+    categories: [],
+  },
+  previous: {
+    info: null,
+    licenses: [],
+  },
 }
 
 export default createSlice({
   name: 'annotator',
   initialState,
   reducers: {
-    setIsAnnotating: (state, action: PayloadAction<boolean>) => ({
+    setAction: (state, action: PayloadAction<AnnotatorStateAction>) => ({
       ...state,
-      isAnnotating: action.payload,
-    }),
-    setInfo: (state, action: PayloadAction<DatasetInfo>) => ({
-      ...state,
-      info: action.payload,
+      action: action.payload,
     }),
     addCategory: (state, action: PayloadAction<DatasetCategory>) => ({
       ...state,
-      categories: [...state.categories, action.payload],
+      added: {
+        ...state.added,
+        categories: [...state.added.categories, action.payload],
+      },
+    }),
+    setInfo: (state, action: PayloadAction<DatasetInfo>) => ({
+      ...state,
+      previous: { ...state.previous, info: action.payload },
     }),
     addLicense: (state, action: PayloadAction<DatasetLicense>) => ({
       ...state,
-      licenses: [...state.licenses, action.payload],
+      previous: {
+        ...state.previous,
+        licenses: [...state.previous.licenses, action.payload],
+      },
     }),
   },
 })

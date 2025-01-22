@@ -1,73 +1,27 @@
 'use client'
 
-import getDatasetAnnotation from '@/helpers/getDatasetAnnotation'
 import { useAnnotatorRefs } from '@/providers/AnnotatorRefsProvider'
 import { Canvas } from 'fabric'
-import type { TPointerEvent, TPointerEventInfo } from 'fabric'
 import { useCallback } from 'react'
 import AnnotatorCanvasUploader from './AnnotatorCanvasUploader'
 import { twMerge } from 'tailwind-merge'
-import {
-  useAnnotatorDispatch,
-  useAnnotatorState,
-} from '@/providers/AnnotatorProvider'
+import { useAnnotatorState } from '@/providers/AnnotatorProvider'
 import { TOOLBAR_Y } from './annotatorToolbar.utils'
 
 export default function AnnotatorCanvas() {
   const annotatorRefs = useAnnotatorRefs()
-  const isAnnotating = useAnnotatorState(
-    (state) => state.annotator.isAnnotating,
-  )
-  const dispatch = useAnnotatorDispatch()
+  const name = useAnnotatorState((state) => state.annotator.action.name)
   const handleCanvas = useCallback((node: HTMLCanvasElement) => {
     const canvas = new Canvas(node.id, {
       width: window.innerWidth,
       height: window.innerHeight - TOOLBAR_Y,
     })
 
-    function handleMouseUp() {
-      const datasetAnnotation = getDatasetAnnotation(canvas, {
-        isCrowded: false,
-        id: {
-          image: 0, // TODO: dynamically when image is setted
-          category: 0, // TODO: dynamically when class is setted
-          annotation: 0, // TODO: dynamically when mouse's up
-        },
-      })
-
-      if (datasetAnnotation) dispatch.dataset.addAnnotation(datasetAnnotation)
-    }
-    function handleMouseMove(event: TPointerEventInfo<TPointerEvent>) {
-      const viewportPoint = canvas.getViewportPoint(event.e)
-      const image = annotatorRefs.image.current
-
-      if (image == null) return
-
-      /* TODO: move image around using the offset size
-
- console.log(
-        'move',
-        viewportPoint,
-        image.width - canvas.width,
-        viewportPoint.x - image.width / 2,
-      )
-        
-      */
-    }
-
-    canvas.on({
-      'mouse:up': handleMouseUp,
-      'mouse:move': handleMouseMove,
-    })
-
     annotatorRefs.canvas.current = canvas
 
     return () => {
       canvas.dispose()
-      canvas.off({
-        'mouse:up': handleMouseUp,
-        'mouse:move': handleMouseMove,
-      })
+      annotatorRefs.canvas.current = null
     }
   }, [])
 
@@ -76,7 +30,7 @@ export default function AnnotatorCanvas() {
       style={{ height: `calc(100vh - ${TOOLBAR_Y}px)` }}
       className={twMerge(
         'relative bg-neutral-900 transition-[background-color]',
-        !isAnnotating && 'hover:bg-neutral-900/60',
+        name === 'waiting' && 'hover:bg-neutral-900/60',
       )}>
       <AnnotatorCanvasUploader />
       <canvas
