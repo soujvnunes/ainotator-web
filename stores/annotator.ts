@@ -6,9 +6,9 @@ import type {
 import { createSlice } from '@reduxjs/toolkit'
 import { type PayloadAction } from '@reduxjs/toolkit'
 
-type Category = 'brush' | 'polygon'
+export type Category = 'brush' | 'polygon'
 
-type AnnotatorStateAction =
+export type AnnotatorStateAction =
   | { name: 'waiting' }
   | { name: 'editting' }
   | { name: 'annotating'; category: Category }
