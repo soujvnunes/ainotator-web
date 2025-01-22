@@ -11,7 +11,7 @@ import {
   useAnnotatorDispatch,
   useAnnotatorState,
 } from '@/providers/AnnotatorProvider'
-import { TOOLBAR_Y } from './utils'
+import { TOOLBAR_Y } from './annotatorToolbar.utils'
 
 export default function AnnotatorCanvas() {
   const annotatorRefs = useAnnotatorRefs()
