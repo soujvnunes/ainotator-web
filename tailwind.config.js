@@ -2,7 +2,11 @@ import defaultTheme from 'tailwindcss/defaultTheme'
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./app/**/*.{ts,tsx,mdx}', './ui/**/*.{ts,tsx,mdx}'],
+  content: [
+    './app/**/*.{ts,tsx,mdx}',
+    './ui/**/*.{ts,tsx,mdx}',
+    './containers/**/*.{ts,tsx,mdx}',
+  ],
   theme: {
     fontFamily: {
       sans: [
