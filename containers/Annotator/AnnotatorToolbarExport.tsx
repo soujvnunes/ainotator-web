@@ -14,9 +14,7 @@ import { useAnnotatorState } from '@/providers/AnnotatorProvider'
 import { XMarkIcon } from '@heroicons/react/24/solid'
 
 export default function AnnotatorToolbarExport() {
-  const isAnnotating = useAnnotatorState(
-    (state) => state.annotator.isAnnotating,
-  )
+  const annotations = useAnnotatorState((state) => state.dataset.annotations)
   const [open, setOpen] = useState(false)
   const handleOpen = useCallback(() => {
     setOpen(true)
@@ -29,7 +27,8 @@ export default function AnnotatorToolbarExport() {
     <>
       <Button
         onClick={handleOpen}
-        disabled={!isAnnotating}
+        // TODO: implement action === 'annotating' && hasDatasetAnnotation
+        disabled={!annotations.length}
         className="rounded-md data-[disabled]:text-white/60 data-[disabled]:pointer-events-none bg-black/20 py-2 px-4 text-sm font-medium text-white focus:outline-none data-[hover]:bg-black/30 data-[focus]:outline-1 data-[focus]:outline-white">
         Export
       </Button>
