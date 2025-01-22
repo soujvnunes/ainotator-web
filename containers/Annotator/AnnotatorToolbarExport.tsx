@@ -14,8 +14,8 @@ import { useAnnotatorState } from '@/providers/AnnotatorProvider'
 import { XMarkIcon } from '@heroicons/react/24/solid'
 
 export default function AnnotatorToolbarExport() {
-  const currentImageId = useAnnotatorState(
-    (state) => state.annotator.currentImageId,
+  const isAnnotating = useAnnotatorState(
+    (state) => state.annotator.isAnnotating,
   )
   const [open, setOpen] = useState(false)
   const handleOpen = useCallback(() => {
@@ -29,7 +29,7 @@ export default function AnnotatorToolbarExport() {
     <>
       <Button
         onClick={handleOpen}
-        disabled={!currentImageId}
+        disabled={!isAnnotating}
         className="rounded-md data-[disabled]:text-white/60 data-[disabled]:pointer-events-none bg-black/20 py-2 px-4 text-sm font-medium text-white focus:outline-none data-[hover]:bg-black/30 data-[focus]:outline-1 data-[focus]:outline-white">
         Export
       </Button>
