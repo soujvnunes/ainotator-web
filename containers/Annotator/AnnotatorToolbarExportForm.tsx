@@ -24,7 +24,7 @@ import {
 import { CheckIcon } from '@heroicons/react/24/solid'
 import { useCallback, useState, useTransition } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { fieldsInitialState, tabs } from './annotatorToolbarExportFormTabs'
+import { fieldsInitialState, tabs } from './annotatorToolbarExportForm.utils'
 
 export default function AnnotatorToolbarExportForm() {
   const dispatch = useAnnotatorDispatch()
@@ -35,7 +35,7 @@ export default function AnnotatorToolbarExportForm() {
   const [tabId, setTabId] = useState(0)
   const [validation, setValidation] = useState<ValidateDataset | null>(null)
   // TODO: add the possibility of filling this with previous info and licenses from state.annotator.
-  const [fields, setFields] = useState(fieldsInitialState)
+  const [fields, setFields] = useState(() => fieldsInitialState)
   const handleChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const currentTab = !tabId ? 'license' : 'info'
