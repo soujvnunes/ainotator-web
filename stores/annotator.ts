@@ -7,14 +7,14 @@ import { createSlice } from '@reduxjs/toolkit'
 import { type PayloadAction } from '@reduxjs/toolkit'
 
 interface AnnotatorState {
-  currentImageId: number | null
+  isAnnotating: boolean
   info: DatasetInfo | null
   categories: DatasetCategory[]
   licenses: DatasetLicense[]
 }
 
 const initialState: AnnotatorState = {
-  currentImageId: null,
+  isAnnotating: false,
   info: null,
   categories: [],
   licenses: [],
@@ -24,9 +24,9 @@ export default createSlice({
   name: 'annotator',
   initialState,
   reducers: {
-    setCurrentImageId: (state, action: PayloadAction<number>) => ({
+    setisAnnotating: (state, action: PayloadAction<boolean>) => ({
       ...state,
-      currentImageId: action.payload,
+      isAnnotating: action.payload,
     }),
     setInfo: (state, action: PayloadAction<DatasetInfo>) => ({
       ...state,
