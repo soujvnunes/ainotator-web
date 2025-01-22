@@ -11,9 +11,7 @@ import { useCallback } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 export default function AnnotatorCanvasUploader() {
-  const isAnnotating = useAnnotatorState(
-    (state) => state.annotator.isAnnotating,
-  )
+  const action = useAnnotatorState((state) => state.annotator.action.name)
   const dispatch = useAnnotatorDispatch()
   const annotatorRefs = useAnnotatorRefs()
   const handleFileChange = useCallback(
@@ -54,7 +52,7 @@ export default function AnnotatorCanvasUploader() {
         annotatorRefs.image.current = image
         canvas.add(image)
         canvas.renderAll()
-        dispatch.annotator.setIsAnnotating(true)
+        dispatch.annotator.setAction({ name: 'editting' })
         dispatch.dataset.addImage(datasetImage)
       }
       reader.readAsDataURL(file)
@@ -65,16 +63,15 @@ export default function AnnotatorCanvasUploader() {
   return (
     <label
       className={twMerge(
-        'absolute flex w-full h-full cursor-pointer',
-        !isAnnotating && 'z-10',
-        isAnnotating && 'opacity-0',
+        'absolute flex w-full h-full cursor-pointer opacity-0',
+        action === 'waiting' && 'z-10 opacity-100',
       )}>
       <span className="m-auto">Add a file</span>
       <input
         type="file"
         accept="image/*"
         className="sr-only"
-        disabled={!!isAnnotating}
+        disabled={action !== 'waiting'}
         onChange={handleFileChange}
       />
     </label>
