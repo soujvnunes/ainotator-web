@@ -11,7 +11,9 @@ import { useCallback } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 export default function AnnotatorCanvasUploader() {
-  const file = useAnnotatorState((state) => state.annotator.file)
+  const currentImageId = useAnnotatorState(
+    (state) => state.annotator.currentImageId,
+  )
   const dispatch = useAnnotatorDispatch()
   const annotatorRefs = useAnnotatorRefs()
   const handleFileChange = useCallback(
@@ -28,13 +30,14 @@ export default function AnnotatorCanvasUploader() {
         if (typeof result !== 'string' || canvas == null) return
 
         const image = await FabricImage.fromURL(result)
+        const imageId = file.lastModified
         const datasetImage = getDatasetImage({
           name: file.name,
-          lastModified: file.lastModified,
+          lastModified: imageId,
           height: image.height,
           width: image.width,
           id: {
-            image: file.lastModified,
+            image: imageId,
             license: 0,
           },
         })
@@ -48,12 +51,11 @@ export default function AnnotatorCanvasUploader() {
 
         image.selectable = false
         image.hasControls = false
+        annotatorRefs.image.current = image
         canvas.add(image)
         canvas.renderAll()
-
-        annotatorRefs.image.current = image
-        dispatch.setFile(true)
-        dispatch.addImage(datasetImage)
+        dispatch.annotator.setCurrentImageId(imageId)
+        dispatch.dataset.addImage(datasetImage)
       }
       reader.readAsDataURL(file)
     },
@@ -64,15 +66,15 @@ export default function AnnotatorCanvasUploader() {
     <label
       className={twMerge(
         'absolute flex w-full h-full cursor-pointer',
-        !file && 'z-10',
-        file && 'opacity-0',
+        !currentImageId && 'z-10',
+        currentImageId && 'opacity-0',
       )}>
       <span className="m-auto">Add a file</span>
       <input
         type="file"
         accept="image/*"
         className="sr-only"
-        disabled={file}
+        disabled={!!currentImageId}
         onChange={handleFileChange}
       />
     </label>
