@@ -109,7 +109,7 @@ export default function AnnotatorToolbarExportForm() {
   return (
     <form>
       <Fieldset disabled={isPending}>
-        <Legend className="px-4 pb-4 bg-neutral-800 text-white/60">
+        <Legend className="px-4 pb-2 bg-neutral-800 text-white/60">
           Fill in the license and information dataset details to validate it
           before exporting.
         </Legend>
