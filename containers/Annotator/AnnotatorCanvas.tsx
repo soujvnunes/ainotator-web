@@ -11,18 +11,18 @@ import {
   useAnnotatorDispatch,
   useAnnotatorState,
 } from '@/providers/AnnotatorProvider'
+import { TOOLBAR_Y } from './utils'
 
 export default function AnnotatorCanvas() {
   const annotatorRefs = useAnnotatorRefs()
-  const currentImageId = useAnnotatorState(
-    (state) => state.annotator.currentImageId,
+  const isAnnotating = useAnnotatorState(
+    (state) => state.annotator.isAnnotating,
   )
   const dispatch = useAnnotatorDispatch()
   const handleCanvas = useCallback((node: HTMLCanvasElement) => {
     const canvas = new Canvas(node.id, {
       width: window.innerWidth,
-      // TODO: move 64 (toolbar's height) to the design system
-      height: window.innerHeight - 64,
+      height: window.innerHeight - TOOLBAR_Y,
     })
 
     function handleMouseUp() {
@@ -73,9 +73,10 @@ export default function AnnotatorCanvas() {
 
   return (
     <div
+      style={{ height: `calc(100vh - ${TOOLBAR_Y}px)` }}
       className={twMerge(
-        'relative bg-neutral-900 transition-[background-color] h-[calc(100vh-64px)]',
-        !currentImageId && 'hover:bg-neutral-900/60',
+        'relative bg-neutral-900 transition-[background-color]',
+        !isAnnotating && 'hover:bg-neutral-900/60',
       )}>
       <AnnotatorCanvasUploader />
       <canvas
