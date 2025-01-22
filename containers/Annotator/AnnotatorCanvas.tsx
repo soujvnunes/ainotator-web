@@ -14,7 +14,9 @@ import {
 
 export default function AnnotatorCanvas() {
   const annotatorRefs = useAnnotatorRefs()
-  const file = useAnnotatorState((state) => state.annotator.file)
+  const currentImageId = useAnnotatorState(
+    (state) => state.annotator.currentImageId,
+  )
   const dispatch = useAnnotatorDispatch()
   const handleCanvas = useCallback((node: HTMLCanvasElement) => {
     const canvas = new Canvas(node.id, {
@@ -33,7 +35,7 @@ export default function AnnotatorCanvas() {
         },
       })
 
-      if (datasetAnnotation) dispatch.addAnnotation(datasetAnnotation)
+      if (datasetAnnotation) dispatch.dataset.addAnnotation(datasetAnnotation)
     }
     function handleMouseMove(event: TPointerEventInfo<TPointerEvent>) {
       const viewportPoint = canvas.getViewportPoint(event.e)
@@ -73,7 +75,7 @@ export default function AnnotatorCanvas() {
     <div
       className={twMerge(
         'relative bg-neutral-900 transition-[background-color] h-[calc(100vh-64px)]',
-        !file && 'hover:bg-neutral-900/60',
+        !currentImageId && 'hover:bg-neutral-900/60',
       )}>
       <AnnotatorCanvasUploader />
       <canvas
