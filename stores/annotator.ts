@@ -24,7 +24,7 @@ export default createSlice({
   name: 'annotator',
   initialState,
   reducers: {
-    setisAnnotating: (state, action: PayloadAction<boolean>) => ({
+    setIsAnnotating: (state, action: PayloadAction<boolean>) => ({
       ...state,
       isAnnotating: action.payload,
     }),
