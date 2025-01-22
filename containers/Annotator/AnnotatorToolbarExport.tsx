@@ -43,7 +43,7 @@ export default function AnnotatorToolbarExport() {
               transition
               className="w-full max-w-md bg-neutral-900 duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
               <DialogTitle className="flex items-center pl-4 text-xs font-medium tracking-wider uppercase bg-neutral-800">
-                Details
+                Dataset Details
                 <CloseButton className="inline-flex w-10 h-10 ml-auto hover:bg-white/5">
                   <XMarkIcon className="m-auto size-6" />
                 </CloseButton>
