@@ -15,9 +15,7 @@ import { TOOLBAR_Y } from './annotatorToolbar.utils'
 
 export default function AnnotatorCanvas() {
   const annotatorRefs = useAnnotatorRefs()
-  const isAnnotating = useAnnotatorState(
-    (state) => state.annotator.isAnnotating,
-  )
+  const action = useAnnotatorState((state) => state.annotator.action.name)
   const dispatch = useAnnotatorDispatch()
   const handleCanvas = useCallback((node: HTMLCanvasElement) => {
     const canvas = new Canvas(node.id, {
@@ -76,7 +74,7 @@ export default function AnnotatorCanvas() {
       style={{ height: `calc(100vh - ${TOOLBAR_Y}px)` }}
       className={twMerge(
         'relative bg-neutral-900 transition-[background-color]',
-        !isAnnotating && 'hover:bg-neutral-900/60',
+        action === 'waiting' && 'hover:bg-neutral-900/60',
       )}>
       <AnnotatorCanvasUploader />
       <canvas
