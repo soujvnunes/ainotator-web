@@ -61,7 +61,7 @@ export default function AnnotatorToolbarExportForm() {
       const newLicense = { ...fields.license, id: images[0].id }
       const newInfo = fields.info
 
-      dispatch.annotator.setAction({ name: 'exporting' })
+      dispatch.annotator.setCurrent({ mode: 'exporting' })
       startTransition(async () => {
         const newDataset = {
           images,
@@ -93,7 +93,7 @@ export default function AnnotatorToolbarExportForm() {
           // DISPATCH VALID DETAILS AND RESET ANNOTATING STATE
           dispatch.annotator.addLicense(newLicense)
           dispatch.annotator.setInfo(newInfo)
-          dispatch.annotator.setAction({ name: 'waiting' })
+          dispatch.annotator.setCurrent({ mode: 'waiting' })
           // CLEAR REFS
           annotatorRef.file.current = null
           annotatorRef.image.current = null
@@ -109,7 +109,7 @@ export default function AnnotatorToolbarExportForm() {
   return (
     <form>
       <Fieldset disabled={isPending}>
-        <Legend className="px-4 pb-4 bg-neutral-800 text-white/60">
+        <Legend className="px-4 pb-2 bg-neutral-800 text-white/60">
           Fill in the license and information dataset details to validate it
           before exporting.
         </Legend>

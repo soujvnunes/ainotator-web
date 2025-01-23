@@ -6,22 +6,29 @@ import type {
 import { createSlice } from '@reduxjs/toolkit'
 import { type PayloadAction } from '@reduxjs/toolkit'
 
-export type Category = 'brush' | 'polygon'
+export const annotatorCategoryType = ['brush', 'polygon'] as const
+export const annotatorCategoryCrowds = ['yes', 'no'] as const
 
-export type AnnotatorStateAction =
-  | { name: 'waiting' }
-  | { name: 'editting' }
-  | { name: 'annotating'; category: Category }
-  | { name: 'exporting' }
+export type AnnotatorCategoryType = (typeof annotatorCategoryType)[number]
+
+export type AnnotatorCategoryCrowds = (typeof annotatorCategoryCrowds)[number]
+
+export interface AnnotatorCategory extends DatasetCategory {
+  isCrowd: AnnotatorCategoryCrowds
+  type: AnnotatorCategoryType
+  color: string
+}
+
+export type AnnotatorCurrent =
+  | { mode: 'waiting'; category?: undefined }
+  | { mode: 'editting'; category?: undefined }
+  | { mode: 'annotating'; category: AnnotatorCategory }
+  | { mode: 'exporting'; category?: undefined }
 
 interface AnnotatorState {
-  /**
-   * TODO: this is the object DatasetCategory to be setted
-   * in dispatch.dataset.addCategory on select
-   */
-  action: AnnotatorStateAction
+  current: AnnotatorCurrent
   added: {
-    categories: DatasetCategory[]
+    categories: AnnotatorCategory[]
   }
   previous: {
     info: DatasetInfo | null
@@ -30,8 +37,8 @@ interface AnnotatorState {
 }
 
 const initialState: AnnotatorState = {
-  action: {
-    name: 'waiting',
+  current: {
+    mode: 'waiting',
   },
   added: {
     categories: [],
@@ -46,11 +53,11 @@ export default createSlice({
   name: 'annotator',
   initialState,
   reducers: {
-    setAction: (state, action: PayloadAction<AnnotatorStateAction>) => ({
+    setCurrent: (state, action: PayloadAction<AnnotatorCurrent>) => ({
       ...state,
-      action: action.payload,
+      current: action.payload,
     }),
-    addCategory: (state, action: PayloadAction<DatasetCategory>) => ({
+    addCategory: (state, action: PayloadAction<AnnotatorCategory>) => ({
       ...state,
       added: {
         ...state.added,
