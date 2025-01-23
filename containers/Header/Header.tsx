@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import HeaderControls from './HeaderControls'
+import HeaderExport from './HeaderExport'
 
 export default function Header() {
   return (
@@ -14,7 +15,7 @@ export default function Header() {
         />
       </h1>
       <HeaderControls />
-      <div className="w-10" />
+      <HeaderExport />
     </header>
   )
 }
