@@ -1,11 +1,11 @@
-import AnnotatorCanvas from '@/containers/Annotator/AnnotatorCanvas'
-import AnnotatorToolbar from '@/containers/Annotator/AnnotatorToolbar'
+import Canvas from '@/containers/Canvas'
+import Toolbar from '@/containers/Toolbar'
 
 export default function Home() {
   return (
     <main>
-      <AnnotatorCanvas />
-      <AnnotatorToolbar />
+      <Canvas />
+      <Toolbar />
     </main>
   )
 }
