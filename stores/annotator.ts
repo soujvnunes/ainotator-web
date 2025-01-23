@@ -13,18 +13,14 @@ export interface AnnotatorCategory extends DatasetCategory {
   color: string
 }
 
-export type AnnotatorMode =
-  | { name: 'waiting' }
-  | { name: 'editting' }
-  | { name: 'annotating'; category: AnnotatorCategory }
-  | { name: 'exporting' }
+export type AnnotatorCurrent =
+  | { mode: 'waiting'; category?: undefined }
+  | { mode: 'editting'; category?: undefined }
+  | { mode: 'annotating'; category: AnnotatorCategory }
+  | { mode: 'exporting'; category?: undefined }
 
 interface AnnotatorState {
-  /**
-   * TODO: this is the object DatasetCategory to be setted
-   * in dispatch.dataset.addCategory on select
-   */
-  mode: AnnotatorMode
+  current: AnnotatorCurrent
   added: {
     categories: AnnotatorCategory[]
   }
@@ -35,8 +31,8 @@ interface AnnotatorState {
 }
 
 const initialState: AnnotatorState = {
-  mode: {
-    name: 'waiting',
+  current: {
+    mode: 'waiting',
   },
   added: {
     categories: [],
@@ -51,9 +47,9 @@ export default createSlice({
   name: 'annotator',
   initialState,
   reducers: {
-    setMode: (state, action: PayloadAction<AnnotatorMode>) => ({
+    setCurrent: (state, action: PayloadAction<AnnotatorCurrent>) => ({
       ...state,
-      mode: action.payload,
+      current: action.payload,
     }),
     addCategory: (state, action: PayloadAction<AnnotatorCategory>) => ({
       ...state,
