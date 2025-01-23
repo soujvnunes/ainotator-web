@@ -82,6 +82,7 @@ export default createSlice({
       current: {
         ...state.current,
         category:
+          // TODO: side-effect
           state.current.mode !== 'annotating' ? undefined : action.payload,
       },
     }),
