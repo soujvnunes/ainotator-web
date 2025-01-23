@@ -11,8 +11,10 @@ import {
 import { useCallback, useState } from 'react'
 import AnnotatorToolbarAddForm from './AnnotatorToolbarAddForm'
 import { PlusIcon, XMarkIcon } from '@heroicons/react/24/solid'
+import { useAnnotatorState } from '@/providers/AnnotatorProvider'
 
 export default function AnnotatorToolbarAdd() {
+  const action = useAnnotatorState((state) => state.annotator.action)
   const [open, setOpen] = useState(false)
   const handleOpen = useCallback(() => {
     setOpen(true)
@@ -25,7 +27,8 @@ export default function AnnotatorToolbarAdd() {
     <>
       <Button
         onClick={handleOpen}
-        className="h-16 w-16 inline-flex bg-white py-2 px-4 text-sm font-medium text-black focus:outline-none data-[hover]:bg-white/60 ">
+        disabled={!['editting', 'annotating'].includes(action.name)}
+        className="h-16 w-16 flex-shrink-0 inline-flex bg-white py-2 px-4 text-sm font-medium text-black disabled:cursor-not-allowed focus:outline-none data-[hover]:bg-white/60 disabled:bg-white/60 disabled:text-black/60">
         <PlusIcon className="m-auto size-6" />
       </Button>
       <Dialog
