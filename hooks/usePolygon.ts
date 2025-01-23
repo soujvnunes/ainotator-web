@@ -1,15 +1,13 @@
-import { useAnnotatorState } from '@/providers/AnnotatorProvider'
-import { useAnnotatorRefs } from '@/providers/AnnotatorRefsProvider'
 import { Line, Point, Polygon, util } from 'fabric'
 import type { TPointerEvent, TPointerEventInfo } from 'fabric'
 import { useEffect, useId, useState } from 'react'
+import useAppState from './useAppState'
+import useCanvasRefs from './useCanvasRefs'
 
 // TODO: not finishing when closes
 export default function usePolygon() {
-  const annotatorRefs = useAnnotatorRefs()
-  const category = useAnnotatorState(
-    (state) => state.annotator.current.category,
-  )
+  const annotatorRefs = useCanvasRefs()
+  const category = useAppState((state) => state.annotator.current.category)
   const id = useId()
   const [lines, setLines] = useState<Line[]>([])
   const [isDrawing, setDrawing] = useState(false)
