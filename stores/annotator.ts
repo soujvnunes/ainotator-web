@@ -23,6 +23,7 @@ export type AnnotatorCurrentModes =
   | 'waiting'
   | 'editting'
   | 'annotating'
+  | 'erasing'
   | 'exporting'
 
 export type AnnotatorCurrentSize = {

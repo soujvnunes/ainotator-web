@@ -5,10 +5,10 @@ import { useEffect } from 'react'
 
 export default function useBrush() {
   const annotatorRefs = useAnnotatorRefs()
+  const size = useAnnotatorState((state) => state.annotator.current.size.brush)
   const category = useAnnotatorState(
     (state) => state.annotator.current.category,
   )
-  const size = useAnnotatorState((state) => state.annotator.current.size.brush)
 
   useEffect(() => {
     const canvas = annotatorRefs.canvas.current
