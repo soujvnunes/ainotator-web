@@ -45,7 +45,14 @@ export default function ToolbarCategoriesItem(props: AnnotatorCategory) {
       },
     })
 
-    if (datasetAnnotation) dispatch.dataset.addAnnotation(datasetAnnotation)
+    if (datasetAnnotation) {
+      dispatch.dataset.addAnnotation(datasetAnnotation)
+      dispatch.dataset.addCategory({
+        supercategory: props.supercategory,
+        id: props.id,
+        name: props.name,
+      })
+    }
   }, [mode, images, props.id, annotatorRefs])
 
   return (
