@@ -11,7 +11,7 @@ import { useCallback } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 export default function AnnotatorCanvasUploader() {
-  const mode = useAnnotatorState((state) => state.annotator.mode.name)
+  const mode = useAnnotatorState((state) => state.annotator.current.mode)
   const dispatch = useAnnotatorDispatch()
   const annotatorRefs = useAnnotatorRefs()
   const handleFileChange = useCallback(
@@ -52,7 +52,7 @@ export default function AnnotatorCanvasUploader() {
         annotatorRefs.image.current = image
         canvas.add(image)
         canvas.renderAll()
-        dispatch.annotator.setMode({ name: 'editting' })
+        dispatch.annotator.setCurrent({ mode: 'editting' })
         dispatch.dataset.addImage(datasetImage)
       }
       reader.readAsDataURL(file)
