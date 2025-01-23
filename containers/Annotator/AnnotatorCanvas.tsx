@@ -10,7 +10,7 @@ import { TOOLBAR_Y } from './annotatorToolbar.utils'
 
 export default function AnnotatorCanvas() {
   const annotatorRefs = useAnnotatorRefs()
-  const name = useAnnotatorState((state) => state.annotator.action.name)
+  const name = useAnnotatorState((state) => state.annotator.mode.name)
   const handleCanvas = useCallback((node: HTMLCanvasElement) => {
     const canvas = new Canvas(node.id, {
       width: window.innerWidth,
