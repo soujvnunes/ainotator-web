@@ -30,8 +30,13 @@ export default function AnnotatorToolbarCategoriesItem(
   const isCurrent = category?.id === props.id
   const isDisabled = category && category.id !== props.id
   const handleCategory = useCallback(() => {
-    dispatch.annotator.setMode(isCurrent ? 'editting' : 'annotating')
-    dispatch.annotator.setCategory(props)
+    if (isCurrent) {
+      dispatch.annotator.setMode('editting')
+      dispatch.annotator.unsetCategory()
+    } else {
+      dispatch.annotator.setMode('annotating')
+      dispatch.annotator.setCategory(props)
+    }
 
     const canvas = annotatorRefs.canvas.current
 
