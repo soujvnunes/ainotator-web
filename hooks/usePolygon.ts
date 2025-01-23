@@ -17,6 +17,7 @@ export default function usePolygon() {
 
   useEffect(() => {
     const canvas = annotatorRefs.canvas.current
+    const defaultOptions = { selectable: false, hasControls: false }
 
     if (canvas == null || category?.type !== 'polygon') return
 
@@ -40,7 +41,7 @@ export default function usePolygon() {
             pointer.x,
             pointer.y,
           ],
-          { stroke: color, strokeWidth: 2 },
+          { stroke: color, strokeWidth: 2, ...defaultOptions },
         )
         canvas.add(line)
         setLines((prevLines) => [...prevLines, line])
@@ -60,7 +61,7 @@ export default function usePolygon() {
     function handleDoubleClick(event: TPointerEventInfo<TPointerEvent>) {
       if (points.length <= 2 || !canvas) return
 
-      const polygon = new Polygon(points, { fill: color })
+      const polygon = new Polygon(points, { fill: color, ...defaultOptions })
 
       polygon.set({ id })
       canvas.add(polygon)
