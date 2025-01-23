@@ -40,12 +40,7 @@ export default function usePolygon() {
             pointer.x,
             pointer.y,
           ],
-          {
-            stroke: color,
-            strokeWidth: 2,
-            selectable: false,
-            hasControls: false,
-          },
+          { stroke: color, strokeWidth: 2 },
         )
         canvas.add(line)
         setLines((prevLines) => [...prevLines, line])
@@ -65,9 +60,7 @@ export default function usePolygon() {
     function handleDoubleClick(event: TPointerEventInfo<TPointerEvent>) {
       if (points.length <= 2 || !canvas) return
 
-      const polygon = new Polygon(points, {
-        fill: color,
-      })
+      const polygon = new Polygon(points, { fill: color })
 
       polygon.set({ id })
       canvas.add(polygon)
@@ -86,5 +79,5 @@ export default function usePolygon() {
       canvas.off('mouse:move', handleMouseMove)
       canvas.off('mouse:dblclick', handleDoubleClick)
     }
-  })
+  }, [lines, isDrawing, points, id, category, annotatorRefs])
 }
