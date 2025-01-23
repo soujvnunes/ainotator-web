@@ -6,7 +6,7 @@ import {
   useAnnotatorState,
 } from '@/providers/AnnotatorProvider'
 import { useAnnotatorRefs } from '@/providers/AnnotatorRefsProvider'
-import type { AnnotatorCategory, AnnotatorCurrent } from '@/stores/annotator'
+import type { AnnotatorCategory } from '@/stores/annotator'
 import { Button } from '@headlessui/react'
 import {
   CubeTransparentIcon,
@@ -30,11 +30,13 @@ export default function AnnotatorToolbarCategoriesItem(
   const isCurrent = category?.id === props.id
   const isDisabled = category && category.id !== props.id
   const handleCategory = useCallback(() => {
-    const newCurrent: AnnotatorCurrent = isCurrent
-      ? { mode: 'editting' }
-      : { mode: 'annotating', category: props }
-
-    dispatch.annotator.setCurrent(newCurrent)
+    if (isCurrent) {
+      dispatch.annotator.setMode('editting')
+      dispatch.annotator.unsetCategory()
+    } else {
+      dispatch.annotator.setMode('annotating')
+      dispatch.annotator.setCategory(props)
+    }
 
     const canvas = annotatorRefs.canvas.current
 

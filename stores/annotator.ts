@@ -19,14 +19,22 @@ export interface AnnotatorCategory extends DatasetCategory {
   color: string
 }
 
-export type AnnotatorCurrent =
-  | { mode: 'waiting'; category?: undefined }
-  | { mode: 'editting'; category?: undefined }
-  | { mode: 'annotating'; category: AnnotatorCategory }
-  | { mode: 'exporting'; category?: undefined }
+export type AnnotatorCurrentModes =
+  | 'waiting'
+  | 'editting'
+  | 'annotating'
+  | 'exporting'
+
+export type AnnotatorCurrentSize = {
+  brush: number
+}
 
 interface AnnotatorState {
-  current: AnnotatorCurrent
+  current: {
+    mode: AnnotatorCurrentModes
+    category?: AnnotatorCategory
+    size: AnnotatorCurrentSize
+  }
   added: {
     categories: AnnotatorCategory[]
   }
@@ -39,6 +47,9 @@ interface AnnotatorState {
 const initialState: AnnotatorState = {
   current: {
     mode: 'waiting',
+    size: {
+      brush: 25,
+    },
   },
   added: {
     categories: [],
@@ -53,9 +64,33 @@ export default createSlice({
   name: 'annotator',
   initialState,
   reducers: {
-    setCurrent: (state, action: PayloadAction<AnnotatorCurrent>) => ({
+    setMode: (state, action: PayloadAction<AnnotatorCurrentModes>) => {
+      const newMode = action.payload
+
+      return {
+        ...state,
+        current: {
+          ...state.current,
+          category:
+            newMode !== 'annotating' ? undefined : state.current.category,
+          mode: action.payload,
+        },
+      }
+    },
+    setCategory: (state, action: PayloadAction<AnnotatorCategory>) => ({
       ...state,
-      current: action.payload,
+      current: { ...state.current, category: action.payload },
+    }),
+    unsetCategory: (state) => ({
+      ...state,
+      current: { ...state.current, category: undefined },
+    }),
+    setSize: (state, action: PayloadAction<AnnotatorCurrentSize>) => ({
+      ...state,
+      current: {
+        ...state.current,
+        size: { ...state.current.size, ...action.payload },
+      },
     }),
     addCategory: (state, action: PayloadAction<AnnotatorCategory>) => ({
       ...state,
