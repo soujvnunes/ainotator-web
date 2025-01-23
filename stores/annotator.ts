@@ -6,10 +6,16 @@ import type {
 import { createSlice } from '@reduxjs/toolkit'
 import { type PayloadAction } from '@reduxjs/toolkit'
 
-export type Category = 'brush' | 'polygon'
+export const annotatorCategoryType = ['brush', 'polygon'] as const
+export const annotatorCategoryCrowds = ['yes', 'no'] as const
+
+export type AnnotatorCategoryType = (typeof annotatorCategoryType)[number]
+
+export type AnnotatorCategoryCrowds = (typeof annotatorCategoryCrowds)[number]
 
 export interface AnnotatorCategory extends DatasetCategory {
-  type: Category
+  isCrowd: AnnotatorCategoryCrowds
+  type: AnnotatorCategoryType
   color: string
 }
 
