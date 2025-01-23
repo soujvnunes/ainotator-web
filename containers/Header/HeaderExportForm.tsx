@@ -27,7 +27,7 @@ import useAppDispatch from '@/hooks/useAppDispatch'
 import useCanvasRefs from '@/hooks/useCanvasRefs'
 import useAppState from '@/hooks/useAppState'
 
-export default function ToolbarExportForm() {
+export default function HeaderExportForm() {
   const dispatch = useAppDispatch()
   const annotatorRef = useCanvasRefs()
   const images = useAppState((state) => state.dataset.images)
@@ -106,7 +106,7 @@ export default function ToolbarExportForm() {
   )
 
   return (
-    <form>
+    <form className="bg-neutral-900">
       <Fieldset disabled={isPending}>
         <Legend className="px-4 pb-2 bg-neutral-800 text-white/60">
           Fill in the license and information dataset details to validate it
