@@ -48,7 +48,7 @@ const initialState: AnnotatorState = {
   current: {
     mode: 'waiting',
     size: {
-      brush: 40,
+      brush: 25,
     },
   },
   added: {
