@@ -8,10 +8,15 @@ import { type PayloadAction } from '@reduxjs/toolkit'
 
 export type Category = 'brush' | 'polygon'
 
-export type AnnotatorStateAction =
+export interface AnnotatorCategory extends DatasetCategory {
+  type: Category
+  color: string
+}
+
+export type AnnotatorMode =
   | { name: 'waiting' }
   | { name: 'editting' }
-  | { name: 'annotating'; category: Category }
+  | { name: 'annotating'; category: AnnotatorCategory }
   | { name: 'exporting' }
 
 interface AnnotatorState {
@@ -19,9 +24,9 @@ interface AnnotatorState {
    * TODO: this is the object DatasetCategory to be setted
    * in dispatch.dataset.addCategory on select
    */
-  action: AnnotatorStateAction
+  mode: AnnotatorMode
   added: {
-    categories: DatasetCategory[]
+    categories: AnnotatorCategory[]
   }
   previous: {
     info: DatasetInfo | null
@@ -30,7 +35,7 @@ interface AnnotatorState {
 }
 
 const initialState: AnnotatorState = {
-  action: {
+  mode: {
     name: 'waiting',
   },
   added: {
@@ -46,11 +51,11 @@ export default createSlice({
   name: 'annotator',
   initialState,
   reducers: {
-    setAction: (state, action: PayloadAction<AnnotatorStateAction>) => ({
+    setMode: (state, action: PayloadAction<AnnotatorMode>) => ({
       ...state,
-      action: action.payload,
+      mode: action.payload,
     }),
-    addCategory: (state, action: PayloadAction<DatasetCategory>) => ({
+    addCategory: (state, action: PayloadAction<AnnotatorCategory>) => ({
       ...state,
       added: {
         ...state.added,
