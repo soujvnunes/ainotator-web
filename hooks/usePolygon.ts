@@ -7,24 +7,20 @@ import { useEffect, useId, useState } from 'react'
 // TODO: not finishing when closes
 export default function usePolygon() {
   const annotatorRefs = useAnnotatorRefs()
-  const mode = useAnnotatorState((state) => state.annotator.mode)
+  const category = useAnnotatorState(
+    (state) => state.annotator.current.category,
+  )
   const id = useId()
   const [lines, setLines] = useState<Line[]>([])
   const [isDrawing, setDrawing] = useState(false)
-  const [hasPolygon, setPolygon] = useState(false)
   const [points, setPoints] = useState<Record<'x' | 'y', number>[]>([])
 
   useEffect(() => {
     const canvas = annotatorRefs.canvas.current
 
-    if (
-      canvas == null ||
-      mode.name !== 'annotating' ||
-      mode.category.type !== 'polygon'
-    )
-      return
+    if (canvas == null || category?.type !== 'polygon') return
 
-    const color = `rgb(${mode.category.color} / 0.4)`
+    const color = `rgb(${category.color} / 0.4)`
 
     function handleMouseDown(event: TPointerEventInfo<TPointerEvent>) {
       if (!canvas) return
@@ -67,13 +63,7 @@ export default function usePolygon() {
       canvas.renderAll()
     }
     function handleDoubleClick(event: TPointerEventInfo<TPointerEvent>) {
-      if (
-        points.length <= 2 ||
-        !canvas ||
-        mode.name !== 'annotating' ||
-        mode.category.type !== 'polygon'
-      )
-        return
+      if (points.length <= 2 || !canvas) return
 
       const polygon = new Polygon(points, {
         fill: color,
