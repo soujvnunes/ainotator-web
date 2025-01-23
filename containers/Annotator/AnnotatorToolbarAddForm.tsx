@@ -2,7 +2,6 @@
 
 import { useCallback } from 'react'
 import { useAnnotatorDispatch } from '@/providers/AnnotatorProvider'
-import type { Category } from '@/stores/annotator'
 import {
   Button,
   Field,
@@ -16,44 +15,43 @@ import {
 } from '@headlessui/react'
 import {
   CheckIcon,
-  CubeTransparentIcon,
   PaintBrushIcon,
+  UserGroupIcon,
+  UserIcon,
 } from '@heroicons/react/24/solid'
+import { StarIcon } from '@heroicons/react/24/outline'
+import {
+  annotatorCategoryCrowds,
+  annotatorCategoryType,
+  type AnnotatorCategoryCrowds,
+  type AnnotatorCategoryType,
+} from '@/stores/annotator'
 
 export default function AnnotatorToolbarAddForm() {
   const dispatch = useAnnotatorDispatch()
-  const closeAnnotatorToolbarAddForm = useClose()
-  const handleAdd = useCallback(
-    (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-      const form = event.currentTarget.form
-      const name = event.currentTarget.name as Category
+  const handleAdd = useCallback((event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const formData = new FormData(event.currentTarget)
+    const formEntries = Object.fromEntries(formData.entries())
 
-      if (form) {
-        const formData = new FormData(form)
-        const formEntries = Object.fromEntries(formData.entries())
+    console.log(formEntries)
 
-        console.log(formEntries)
+    if (Object.values(formEntries).some((field) => !field)) return
 
-        // TODO: add error UI
-        if (Object.values(formEntries).some((field) => !field)) return
+    const id = Date.now()
 
-        const id = Date.now()
-
-        dispatch.annotator.addCategory({
-          supercategory: formEntries.supercategory as string,
-          id,
-          name: formEntries.name as string,
-          type: name,
-          color: formEntries.color as string,
-        })
-        closeAnnotatorToolbarAddForm()
-      }
-    },
-    [],
-  )
+    dispatch.annotator.addCategory({
+      id,
+      name: formEntries.name as string,
+      color: formEntries.color as string,
+      supercategory: formEntries.supercategory as string,
+      type: formEntries.type as AnnotatorCategoryType,
+      isCrowd: formEntries.isCrowd as AnnotatorCategoryCrowds,
+    })
+  }, [])
 
   return (
-    <form onSubmit={(event) => event.preventDefault()}>
+    <form onSubmit={handleAdd}>
       <Fieldset>
         <Legend className="px-4 pb-2 bg-neutral-800 text-white/60">
           Define class names and assign a unique color to each one.
@@ -63,6 +61,7 @@ export default function AnnotatorToolbarAddForm() {
             Name
           </Label>
           <Input
+            autoComplete="annotation class name"
             type="text"
             name="name"
             placeholder="Cat"
@@ -74,54 +73,78 @@ export default function AnnotatorToolbarAddForm() {
             Supercategory
           </Label>
           <Input
+            autoComplete="annotation super category name"
             type="text"
             name="supercategory"
             placeholder="Animal"
             className="mt-2 block w-full border-x-none border-t-none border-b-transparent border-b-2 bg-white/5 h-10 px-4 text-sm  focus:outline-none data-[focus]:border-b-2  data-[focus]:border-gray-50/20"
           />
         </Field>
-        <Field className="mt-4">
-          <Label className="px-4 text-sm font-medium cursor-pointer">
-            Color
-          </Label>
-          <RadioGroup
-            className="flex mt-2"
-            name="color"
-            defaultValue={colors.red}>
-            {Object.entries(colors).map(([color, code]) => (
-              <Radio
-                className="inline-flex w-full cursor-pointer group aspect-square"
-                key={color}
-                value={code}
-                aria-label={color}
-                style={{ backgroundColor: `rgb(${code})` }}>
-                <CheckIcon className="m-auto size-6 opacity-0 text-white group-data-[hover]:opacity-100 group-data-[checked]:opacity-100" />
-              </Radio>
-            ))}
-          </RadioGroup>
-        </Field>
-        <div className="flex items-center">
-          {types.map((type) => (
-            <Button
-              className="inline-flex items-center data-[disabled]:text-white/40 data-[disabled]:cursor-not-allowed justify-center w-full px-4 text-xs uppercase font-semibold tracking-wider h-10	 text-white  data-[hover]:bg-white/5 "
+        <p className="px-4 mt-4 text-sm font-medium cursor-pointer">Crowd</p>
+        <RadioGroup
+          aria-label="Is crowded?"
+          className="flex mt-2"
+          name="is_crowded"
+          defaultValue={annotatorCategoryCrowds[0]}>
+          {annotatorCategoryCrowds.map((crowd) => (
+            <Radio
+              className="inline-flex cursor-pointer items-center justify-center w-full px-4 text-xs uppercase font-semibold tracking-wider h-10	 text-white  data-[hover]:bg-white/5 data-[checked]:bg-white data-[checked]:data-[hover]:bg-white/60 data-[checked]:text-black"
+              key={crowd}
+              value={crowd}
+              aria-label={crowd}>
+              {crowd === 'yes' ? (
+                <UserGroupIcon className="size-4" />
+              ) : (
+                <UserIcon className="size-4" />
+              )}
+            </Radio>
+          ))}
+        </RadioGroup>
+        <p className="px-4 mt-4 text-sm font-medium cursor-pointer">Type</p>
+        <RadioGroup
+          aria-label="Type"
+          className="flex mt-2"
+          name="type"
+          defaultValue={annotatorCategoryType[0]}>
+          {annotatorCategoryType.map((type) => (
+            <Radio
+              className="inline-flex cursor-pointer items-center justify-center w-full px-4 text-xs uppercase font-semibold tracking-wider h-10	 text-white  data-[hover]:bg-white/5 data-[checked]:bg-white data-[checked]:data-[hover]:bg-white/60 data-[checked]:text-black"
               key={type}
-              name={type}
-              aria-label={type}
-              onClick={handleAdd}>
+              value={type}
+              aria-label={type}>
               {type === 'polygon' ? (
-                <CubeTransparentIcon className="size-4" />
+                <StarIcon className="size-4" />
               ) : (
                 <PaintBrushIcon className="size-4" />
               )}
-            </Button>
+            </Radio>
           ))}
-        </div>
+        </RadioGroup>
+        <RadioGroup
+          className="flex"
+          name="color"
+          defaultValue={colors.red}>
+          {Object.entries(colors).map(([color, code]) => (
+            <Radio
+              className="inline-flex w-full cursor-pointer group aspect-square"
+              key={color}
+              value={code}
+              aria-label={color}
+              style={{ backgroundColor: `rgb(${code})` }}>
+              <CheckIcon className="m-auto size-6 opacity-0 text-white group-data-[hover]:opacity-100 group-data-[checked]:opacity-100" />
+            </Radio>
+          ))}
+        </RadioGroup>
+        <Button
+          type="submit"
+          className="inline-flex items-center data-[disabled]:text-white/40 data-[disabled]:cursor-not-allowed justify-center w-full px-4 text-xs uppercase font-semibold tracking-wider h-10	 text-white  data-[hover]:bg-white/5 ">
+          Add
+        </Button>
       </Fieldset>
     </form>
   )
 }
 
-const types = ['brush', 'polygon']
 const colors = {
   red: '255 51 51', // #f33
   orange: '255 153 51', // #f93
