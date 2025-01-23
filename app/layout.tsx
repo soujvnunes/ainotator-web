@@ -2,6 +2,9 @@ import { Outfit } from 'next/font/google'
 import '@/ui/tailwind.css'
 import type { Metadata, Viewport } from 'next'
 import Script from 'next/script'
+import Header from '@/containers/Header/Header'
+import AnnotatorProvider from '@/providers/AnnotatorProvider'
+import AnnotatorRefsProvider from '@/providers/AnnotatorRefsProvider'
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -26,7 +29,14 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
     <html
       lang="en"
       className={`${outfit.variable} h-full`}>
-      <body className="h-full text-white bg-black">{children}</body>
+      <body className="h-full text-white bg-black">
+        <AnnotatorProvider>
+          <AnnotatorRefsProvider>
+            <Header />
+            {children}
+          </AnnotatorRefsProvider>
+        </AnnotatorProvider>
+      </body>
       <Script
         id="splash-screen"
         src="https://unpkg.com/ios-pwa-splash@1.0.0/cdn.min.js"
