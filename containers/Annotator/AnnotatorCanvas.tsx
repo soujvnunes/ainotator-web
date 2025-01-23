@@ -9,6 +9,7 @@ import { useAnnotatorState } from '@/providers/AnnotatorProvider'
 import { TOOLBAR_Y } from './annotatorToolbar.utils'
 import usePolygon from '@/hooks/usePolygon'
 import useBrush from '@/hooks/useBrush'
+import useUnselectableCanvas from '@/hooks/useUnselectableCanvas'
 
 export default function AnnotatorCanvas() {
   const mode = useAnnotatorState((state) => state.annotator.current.mode)
@@ -25,6 +26,7 @@ export default function AnnotatorCanvas() {
       annotatorRefs.canvas.current?.dispose()
     }
   }, [canvasId])
+  useUnselectableCanvas()
   useBrush()
   usePolygon()
 
