@@ -36,7 +36,6 @@ export default function Dialog({
   return (
     <>
       <Button
-        className="h-16 w-16 flex-shrink-0 inline-flex bg-white py-2 px-4 text-sm font-medium text-black disabled:cursor-not-allowed focus:outline-none data-[hover]:bg-white/60 disabled:bg-white/60 disabled:text-black/60"
         {...buttonProps}
         onClick={handleOpen}
       />
