@@ -11,7 +11,7 @@ import usePolygon from '@/hooks/usePolygon'
 import useBrush from '@/hooks/useBrush'
 
 export default function AnnotatorCanvas() {
-  const mode = useAnnotatorState((state) => state.annotator.mode)
+  const mode = useAnnotatorState((state) => state.annotator.current.mode)
   const annotatorRefs = useAnnotatorRefs()
   const canvasId = useId()
 
@@ -33,7 +33,7 @@ export default function AnnotatorCanvas() {
       style={{ height: `calc(100vh - ${TOOLBAR_Y}px)` }}
       className={twMerge(
         'relative bg-neutral-900 transition-[background-color]',
-        mode.name === 'waiting' && 'hover:bg-neutral-900/60',
+        mode === 'waiting' && 'hover:bg-neutral-900/60',
       )}>
       <AnnotatorCanvasUploader />
       <canvas id={canvasId} />
