@@ -11,7 +11,6 @@ import {
   Legend,
   Radio,
   RadioGroup,
-  useClose,
 } from '@headlessui/react'
 import {
   CheckIcon,
@@ -31,10 +30,9 @@ export default function AnnotatorToolbarAddForm() {
   const dispatch = useAnnotatorDispatch()
   const handleAdd = useCallback((event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+
     const formData = new FormData(event.currentTarget)
     const formEntries = Object.fromEntries(formData.entries())
-
-    console.log(formEntries)
 
     if (Object.values(formEntries).some((field) => !field)) return
 
@@ -46,12 +44,14 @@ export default function AnnotatorToolbarAddForm() {
       color: formEntries.color as string,
       supercategory: formEntries.supercategory as string,
       type: formEntries.type as AnnotatorCategoryType,
-      isCrowd: formEntries.isCrowd as AnnotatorCategoryCrowds,
+      isCrowd: formEntries.is_crowded as AnnotatorCategoryCrowds,
     })
   }, [])
 
   return (
-    <form onSubmit={handleAdd}>
+    <form
+      className="bg-neutral-900"
+      onSubmit={handleAdd}>
       <Fieldset>
         <Legend className="px-4 pb-2 bg-neutral-800 text-white/60">
           Define class names and assign a unique color to each one.
