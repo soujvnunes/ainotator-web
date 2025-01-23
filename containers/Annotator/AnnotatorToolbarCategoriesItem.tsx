@@ -4,7 +4,7 @@ import {
   useAnnotatorDispatch,
   useAnnotatorState,
 } from '@/providers/AnnotatorProvider'
-import type { AnnotatorCategory } from '@/stores/annotator'
+import type { AnnotatorCategory, AnnotatorMode } from '@/stores/annotator'
 import { Button } from '@headlessui/react'
 import { CubeTransparentIcon, PaintBrushIcon } from '@heroicons/react/24/solid'
 import { useCallback } from 'react'
@@ -16,11 +16,14 @@ export default function AnnotatorToolbarCategoriesItem(
   const mode = useAnnotatorState((state) => state.annotator.mode)
   const dispatch = useAnnotatorDispatch()
   const handleCategory = useCallback(() => {
-    dispatch.annotator.setMode({
-      name: 'annotating',
-      category: props,
-    })
-  }, [])
+    const newMode = (
+      mode.name === 'annotating' && mode.category.id === props.id
+        ? { name: 'editting' }
+        : { name: 'annotating', category: props }
+    ) as AnnotatorMode
+
+    dispatch.annotator.setMode(newMode)
+  }, [mode])
   const isAction = (mode.name === 'annotating' && mode.category.id) === props.id
 
   return (
