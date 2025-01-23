@@ -52,7 +52,7 @@ export default function AnnotatorCanvasUploader() {
         annotatorRefs.image.current = image
         canvas.add(image)
         canvas.renderAll()
-        dispatch.annotator.setCurrent({ mode: 'editting' })
+        dispatch.annotator.setMode('editting')
         dispatch.dataset.addImage(datasetImage)
       }
       reader.readAsDataURL(file)
