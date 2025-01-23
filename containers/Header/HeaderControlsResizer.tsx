@@ -1,9 +1,7 @@
 'use client'
 
-import {
-  useAnnotatorDispatch,
-  useAnnotatorState,
-} from '@/providers/AnnotatorProvider'
+import useAppDispatch from '@/hooks/useAppDispatch'
+import useAppState from '@/hooks/useAppState'
 import { Field, Input, Label } from '@headlessui/react'
 import { useCallback } from 'react'
 
@@ -14,10 +12,11 @@ function translateY(input: number) {
   return -0.5 * input + 20
 }
 
-export default function HeaderControlsSize() {
-  const mode = useAnnotatorState((state) => state.annotator.current.mode)
-  const size = useAnnotatorState((state) => state.annotator.current.size.brush)
-  const dispatch = useAnnotatorDispatch()
+export default function HeaderControlsResizer() {
+  const mode = useAppState((state) => state.annotator.current.mode)
+  const category = useAppState((state) => state.annotator.current.category)
+  const size = useAppState((state) => state.annotator.current.size.brush)
+  const dispatch = useAppDispatch()
   const handleSize = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       dispatch.annotator.setSize({ brush: +event.target.value })
@@ -28,7 +27,7 @@ export default function HeaderControlsSize() {
 
   return (
     <Field
-      disabled={mode !== 'annotating'}
+      disabled={mode !== 'annotating' || category?.type !== 'brush'}
       className="relative inline-flex items-center w-40 h-10 mx-5 group">
       <Label className="sr-only">Brush size</Label>
       <Input

@@ -1,7 +1,6 @@
 'use client'
 
 import { useCallback } from 'react'
-import { useAnnotatorDispatch } from '@/providers/AnnotatorProvider'
 import {
   Button,
   Field,
@@ -24,10 +23,11 @@ import {
   annotatorCategoryType,
   type AnnotatorCategoryCrowds,
   type AnnotatorCategoryType,
-} from '@/stores/annotator'
+} from '@/lib/annotatorSlice'
+import useAppDispatch from '@/hooks/useAppDispatch'
 
-export default function AnnotatorToolbarAddForm() {
-  const dispatch = useAnnotatorDispatch()
+export default function ToolbarAddForm() {
+  const dispatch = useAppDispatch()
   const handleAdd = useCallback((event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 

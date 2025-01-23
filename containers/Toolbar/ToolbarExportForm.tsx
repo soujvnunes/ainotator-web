@@ -3,11 +3,7 @@
 import validateDataset, {
   type ValidateDataset,
 } from '@/actions/validateDataset'
-import isValidationSuccessful from '@/helpers/isValidationSuccessful'
-import {
-  useAnnotatorDispatch,
-  useAnnotatorState,
-} from '@/providers/AnnotatorProvider'
+import isValidationSuccessful from '@/lib/isValidationSuccessful'
 import {
   Button,
   Field,
@@ -25,21 +21,24 @@ import {
 import { CheckIcon } from '@heroicons/react/24/solid'
 import { useCallback, useState, useTransition } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { fieldsInitialState, tabs } from './annotatorToolbarExportForm.utils'
-import { useAnnotatorRefs } from '@/providers/AnnotatorRefsProvider'
+import { toolbarExportFormState } from '@/lib/toolbarExportFormState'
+import { toolbarExportFormFields } from '@/lib/toolbarExportFormFields'
+import useAppDispatch from '@/hooks/useAppDispatch'
+import useCanvasRefs from '@/hooks/useCanvasRefs'
+import useAppState from '@/hooks/useAppState'
 
-export default function AnnotatorToolbarExportForm() {
-  const dispatch = useAnnotatorDispatch()
-  const annotatorRef = useAnnotatorRefs()
-  const images = useAnnotatorState((state) => state.dataset.images)
-  const categories = useAnnotatorState((state) => state.dataset.categories)
-  const annotations = useAnnotatorState((state) => state.dataset.annotations)
-  const closeAnnotatorToolbarExport = useClose()
+export default function ToolbarExportForm() {
+  const dispatch = useAppDispatch()
+  const annotatorRef = useCanvasRefs()
+  const images = useAppState((state) => state.dataset.images)
+  const categories = useAppState((state) => state.dataset.categories)
+  const annotations = useAppState((state) => state.dataset.annotations)
+  const closeToolbarExport = useClose()
   const [isPending, startTransition] = useTransition()
   const [tabId, setTabId] = useState(0)
   const [validation, setValidation] = useState<ValidateDataset | null>(null)
   // TODO: add the possibility of filling this with previous info and licenses from state.annotator.
-  const [fields, setFields] = useState(() => fieldsInitialState)
+  const [fields, setFields] = useState(() => toolbarExportFormState)
   const handleChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const currentTab = !tabId ? 'license' : 'info'
@@ -99,7 +98,7 @@ export default function AnnotatorToolbarExportForm() {
           annotatorRef.image.current = null
           annotatorRef.canvas.current?.clear()
           // CLOSE MODAL
-          closeAnnotatorToolbarExport()
+          closeToolbarExport()
         })
       })
     },
@@ -117,7 +116,7 @@ export default function AnnotatorToolbarExportForm() {
           selectedIndex={tabId}
           onChange={setTabId}>
           <TabList className="flex bg-neutral-800">
-            {tabs.map((tab) => (
+            {toolbarExportFormFields.map((tab) => (
               <Tab
                 key={tab.name}
                 className="inline-flex items-center  justify-center w-full px-4 text-xs uppercase font-semibold tracking-wider h-10	 text-white  data-[hover]:bg-white/5 border-b-2 border-b-transparent hover:border-gray-50 hover:data-[selected]:border-gray-50 data-[selected]:border-gray-50/20 ">
@@ -126,7 +125,7 @@ export default function AnnotatorToolbarExportForm() {
             ))}
           </TabList>
           <TabPanels>
-            {tabs.map((tab) => (
+            {toolbarExportFormFields.map((tab) => (
               <TabPanel key={tab.name}>
                 {tab.fields.map((field) => (
                   <Field

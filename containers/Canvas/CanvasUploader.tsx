@@ -1,19 +1,17 @@
 'use client'
 
-import getDatasetImage from '@/helpers/getDatasetImage'
-import { useAnnotatorRefs } from '@/providers/AnnotatorRefsProvider'
-import {
-  useAnnotatorState,
-  useAnnotatorDispatch,
-} from '@/providers/AnnotatorProvider'
+import useAppDispatch from '@/hooks/useAppDispatch'
+import useAppState from '@/hooks/useAppState'
+import useCanvasRefs from '@/hooks/useCanvasRefs'
+import getDatasetImage from '@/lib/getDatasetImage'
 import { FabricImage } from 'fabric'
 import { useCallback } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-export default function AnnotatorCanvasUploader() {
-  const mode = useAnnotatorState((state) => state.annotator.current.mode)
-  const dispatch = useAnnotatorDispatch()
-  const annotatorRefs = useAnnotatorRefs()
+export default function CanvasUploader() {
+  const mode = useAppState((state) => state.annotator.current.mode)
+  const dispatch = useAppDispatch()
+  const annotatorRefs = useCanvasRefs()
   const handleFileChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.item(0)

@@ -1,11 +1,11 @@
-import HeaderControlsErase from './HeaderControlsErase'
-import HeaderControlsSize from './HeaderControlsSize'
+import HeaderControlsEraser from './HeaderControlsEraser'
+import HeaderControlsResizer from './HeaderControlsResizer'
 
 export default function HeaderControls() {
   return (
     <div className="flex">
-      <HeaderControlsSize />
-      <HeaderControlsErase />
+      <HeaderControlsResizer />
+      <HeaderControlsEraser />
     </div>
   )
 }

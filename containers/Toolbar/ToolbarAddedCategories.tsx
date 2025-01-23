@@ -1,18 +1,16 @@
 'use client'
 
+import useAppState from '@/hooks/useAppState'
 import {
   CubeTransparentIcon,
   PaintBrushIcon,
   UserGroupIcon,
 } from '@heroicons/react/24/solid'
-import { useAnnotatorState } from '@/providers/AnnotatorProvider'
 import { useId } from 'react'
 
-export default function AnnotatorToolbarAddedCategories() {
+export default function ToolbarAddedCategories() {
   const id = useId()
-  const categories = useAnnotatorState(
-    (state) => state.annotator.added.categories,
-  )
+  const categories = useAppState((state) => state.annotator.added.categories)
 
   return (
     <div className="w-full max-w-md mt-4 bg-neutral-900 duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">

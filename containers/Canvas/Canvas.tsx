@@ -1,26 +1,26 @@
 'use client'
 
-import { useAnnotatorRefs } from '@/providers/AnnotatorRefsProvider'
-import { Canvas } from 'fabric'
+import { Canvas as FabricCanvas } from 'fabric'
 import { useEffect, useId } from 'react'
-import AnnotatorCanvasUploader from './AnnotatorCanvasUploader'
+import CanvasUploader from './CanvasUploader'
 import { twMerge } from 'tailwind-merge'
-import { useAnnotatorState } from '@/providers/AnnotatorProvider'
 import usePolygon from '@/hooks/usePolygon'
 import useBrush from '@/hooks/useBrush'
 import useUnselectableCanvas from '@/hooks/useUnselectableCanvas'
+import useAppState from '@/hooks/useAppState'
+import useCanvasRefs from '@/hooks/useCanvasRefs'
 
 const CONTROLS_Y =
   64 + // TOOLBAR
   40 // HEADER
 
-export default function AnnotatorCanvas() {
-  const mode = useAnnotatorState((state) => state.annotator.current.mode)
-  const annotatorRefs = useAnnotatorRefs()
+export default function Canvas() {
+  const mode = useAppState((state) => state.annotator.current.mode)
+  const annotatorRefs = useCanvasRefs()
   const canvasId = useId()
 
   useEffect(() => {
-    annotatorRefs.canvas.current = new Canvas(canvasId, {
+    annotatorRefs.canvas.current = new FabricCanvas(canvasId, {
       width: window.innerWidth,
       height: window.innerHeight - CONTROLS_Y,
     })
@@ -40,7 +40,7 @@ export default function AnnotatorCanvas() {
         'relative bg-neutral-900 transition-[background-color]',
         mode === 'waiting' && 'hover:bg-neutral-900/60',
       )}>
-      <AnnotatorCanvasUploader />
+      <CanvasUploader />
       <canvas id={canvasId} />
     </div>
   )
