@@ -61,7 +61,7 @@ export default function AnnotatorToolbarExportForm() {
       const newLicense = { ...fields.license, id: images[0].id }
       const newInfo = fields.info
 
-      dispatch.annotator.setMode({ name: 'exporting' })
+      dispatch.annotator.setCurrent({ mode: 'exporting' })
       startTransition(async () => {
         const newDataset = {
           images,
@@ -93,7 +93,7 @@ export default function AnnotatorToolbarExportForm() {
           // DISPATCH VALID DETAILS AND RESET ANNOTATING STATE
           dispatch.annotator.addLicense(newLicense)
           dispatch.annotator.setInfo(newInfo)
-          dispatch.annotator.setMode({ name: 'waiting' })
+          dispatch.annotator.setCurrent({ mode: 'waiting' })
           // CLEAR REFS
           annotatorRef.file.current = null
           annotatorRef.image.current = null
