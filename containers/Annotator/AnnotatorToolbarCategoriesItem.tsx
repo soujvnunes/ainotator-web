@@ -7,15 +7,21 @@ import {
 import type { AnnotatorCategory } from '@/stores/annotator'
 import { Button } from '@headlessui/react'
 import { CubeTransparentIcon, PaintBrushIcon } from '@heroicons/react/24/solid'
+import { useCallback } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 export default function AnnotatorToolbarCategoriesItem(
   props: AnnotatorCategory,
 ) {
-  const action = useAnnotatorState((state) => state.annotator.action)
+  const mode = useAnnotatorState((state) => state.annotator.mode)
   const dispatch = useAnnotatorDispatch()
-  const isAction =
-    (action.name === 'annotating' && action.category.id) === props.id
+  const handleCategory = useCallback(() => {
+    dispatch.annotator.setMode({
+      name: 'annotating',
+      category: props,
+    })
+  }, [])
+  const isAction = (mode.name === 'annotating' && mode.category.id) === props.id
 
   return (
     <Button
@@ -23,12 +29,7 @@ export default function AnnotatorToolbarCategoriesItem(
         'cursor-pointer w-24 h-16 px-3 py-2 text-sm border-y-4 font-medium leading-none border-y-[--border-color] tracking-wider text-left uppercase truncate bg-opacity-20 hover:bg-opacity-40',
         isAction ? 'border-b-transparent' : ' border-t-transparent',
       )}
-      onClick={() =>
-        dispatch.annotator.setAction({
-          name: 'annotating',
-          category: props,
-        })
-      }
+      onClick={handleCategory}
       style={
         {
           backgroundColor: `rgb(${props.color} / var(--tw-bg-opacity))`,
