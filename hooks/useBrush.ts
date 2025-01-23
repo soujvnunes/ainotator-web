@@ -8,6 +8,7 @@ export default function useBrush() {
   const category = useAnnotatorState(
     (state) => state.annotator.current.category,
   )
+  const size = useAnnotatorState((state) => state.annotator.current.size.brush)
 
   useEffect(() => {
     const canvas = annotatorRefs.canvas.current
@@ -17,6 +18,6 @@ export default function useBrush() {
     canvas.isDrawingMode = true
     canvas.freeDrawingBrush = new PencilBrush(canvas)
     canvas.freeDrawingBrush.color = `rgb(${category.color} / 0.4)`
-    canvas.freeDrawingBrush.width = 20
-  }, [annotatorRefs, category])
+    canvas.freeDrawingBrush.width = size
+  }, [annotatorRefs, category, size])
 }
