@@ -15,6 +15,7 @@ function translateY(input: number) {
 }
 
 export default function HeaderControlsSize() {
+  const mode = useAnnotatorState((state) => state.annotator.current.mode)
   const size = useAnnotatorState((state) => state.annotator.current.size.brush)
   const dispatch = useAnnotatorDispatch()
   const handleSize = useCallback(
@@ -26,10 +27,12 @@ export default function HeaderControlsSize() {
   const max = 40
 
   return (
-    <Field className="relative inline-flex items-center w-40 h-10">
+    <Field
+      disabled={mode !== 'annotating'}
+      className="relative inline-flex items-center w-40 h-10 mx-5 group">
       <Label className="sr-only">Brush size</Label>
       <Input
-        className="w-full opacity-0 cursor-pointer"
+        className="w-full opacity-0 cursor-pointer group-data-[disabled]:cursor-not-allowed"
         type="range"
         min={10}
         max={max}
@@ -46,7 +49,7 @@ export default function HeaderControlsSize() {
         <button
           type="button"
           data-range-type="thumb"
-          className="absolute w-[--size] h-[--size] bg-white top-[--top] left-[--left]"
+          className="absolute w-[--size] h-[--size] group-data-[disabled]:bg-neutral-600 bg-white top-[--top] left-[--left]"
           style={
             {
               '--size': `${size}px`,
