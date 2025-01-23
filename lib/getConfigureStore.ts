@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
-import dataset from './dataset'
-import annotator from './annotator'
+import dataset from './datasetSlice'
+import annotator from './annotatorSlice'
 
-export const makeStore = () => {
+export const getConfigureStore = () => {
   return configureStore({
     reducer: {
       dataset: dataset.reducer,
@@ -11,6 +11,6 @@ export const makeStore = () => {
   })
 }
 
-export type AppStore = ReturnType<typeof makeStore>
+export type AppStore = ReturnType<typeof getConfigureStore>
 export type RootState = ReturnType<AppStore['getState']>
 export type AppDispatch = AppStore['dispatch']
