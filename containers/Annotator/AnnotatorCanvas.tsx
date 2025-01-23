@@ -1,21 +1,18 @@
 'use client'
 
 import { useAnnotatorRefs } from '@/providers/AnnotatorRefsProvider'
-import { Canvas, PencilBrush } from 'fabric'
+import { Canvas } from 'fabric'
 import { useEffect, useId } from 'react'
 import AnnotatorCanvasUploader from './AnnotatorCanvasUploader'
 import { twMerge } from 'tailwind-merge'
-import {
-  useAnnotatorDispatch,
-  useAnnotatorState,
-} from '@/providers/AnnotatorProvider'
+import { useAnnotatorState } from '@/providers/AnnotatorProvider'
 import { TOOLBAR_Y } from './annotatorToolbar.utils'
-import getDatasetAnnotation from '@/helpers/getDatasetAnnotation'
+import usePolygon from '@/hooks/usePolygon'
+import useBrush from '@/hooks/useBrush'
 
 export default function AnnotatorCanvas() {
-  const annotatorRefs = useAnnotatorRefs()
-  const dispatch = useAnnotatorDispatch()
   const mode = useAnnotatorState((state) => state.annotator.mode)
+  const annotatorRefs = useAnnotatorRefs()
   const canvasId = useId()
 
   useEffect(() => {
@@ -28,36 +25,8 @@ export default function AnnotatorCanvas() {
       annotatorRefs.canvas.current?.dispose()
     }
   }, [canvasId])
-  useEffect(() => {
-    const canvas = annotatorRefs.canvas.current
-
-    if (canvas == null) return
-
-    if (mode.name !== 'annotating') {
-      const datasetAnnotation = getDatasetAnnotation(canvas, {
-        isCrowded: false,
-        id: {
-          image: 0, // TODO: dynamically when image is set
-          category: 0, // TODO: dynamically when class is set
-          annotation: 0, // TODO: dynamically when mouse is up
-        },
-      })
-
-      if (datasetAnnotation) dispatch.dataset.addAnnotation(datasetAnnotation)
-
-      canvas.isDrawingMode = false
-    } else {
-      if (mode.category.type === 'brush') {
-        canvas.isDrawingMode = true
-        canvas.freeDrawingBrush = new PencilBrush(canvas)
-        canvas.freeDrawingBrush.color = `rgb(${mode.category.color} / 0.4)`
-        // TODO: size
-        canvas.freeDrawingBrush.width = 20
-      } else if (mode.category.type === 'polygon') {
-        // TODO: polygon
-      }
-    }
-  })
+  useBrush()
+  usePolygon()
 
   return (
     <div
