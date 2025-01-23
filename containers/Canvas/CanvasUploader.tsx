@@ -4,6 +4,12 @@ import useAppDispatch from '@/hooks/useAppDispatch'
 import useAppState from '@/hooks/useAppState'
 import useCanvasRefs from '@/hooks/useCanvasRefs'
 import getDatasetImage from '@/lib/getDatasetImage'
+import {
+  DocumentArrowDownIcon,
+  DocumentArrowUpIcon,
+  PaintBrushIcon,
+  PlusIcon,
+} from '@heroicons/react/24/solid'
 import { FabricImage } from 'fabric'
 import { useCallback } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -64,7 +70,38 @@ export default function CanvasUploader() {
         'absolute flex w-full h-full cursor-pointer opacity-0',
         mode === 'waiting' && 'z-10 opacity-100',
       )}>
-      <span className="m-auto">Add a file</span>
+      <h2 className="flex flex-col items-center m-auto text-4xl text-center lg:text-6xl">
+        <p className="text-xs font-medium tracking-wide uppercase text-white/60">
+          AINotator WEB
+        </p>
+        Start by adding <br /> an image
+        <ul className="inline-flex flex-col items-center mt-4 space-y-1 text-white/60">
+          <li className="flex items-center text-sm">
+            <span className="flex w-4 h-4 mr-2 bg-white">
+              <DocumentArrowUpIcon className="w-3 h-3 m-auto fill-black" />
+            </span>
+            Pick a image
+          </li>
+          <li className="flex items-center text-sm">
+            <span className="flex w-4 h-4 mr-2 bg-white">
+              <PlusIcon className="w-3 h-3 m-auto fill-black" />
+            </span>
+            Add class names
+          </li>
+          <li className="flex items-center text-sm">
+            <span className="flex w-4 h-4 mr-2 bg-white">
+              <PaintBrushIcon className="w-3 h-3 m-auto fill-black" />
+            </span>
+            Annotate your image
+          </li>
+          <li className="flex items-center text-sm">
+            <span className="flex w-4 h-4 mr-2 bg-white">
+              <DocumentArrowDownIcon className="w-3 h-3 m-auto fill-black" />
+            </span>
+            Export the annotations in COCO format
+          </li>
+        </ul>
+      </h2>
       <input
         type="file"
         accept="image/*"
