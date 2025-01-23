@@ -27,7 +27,6 @@ export default function AnnotatorToolbarExport() {
     <>
       <Button
         onClick={handleOpen}
-        // TODO: implement action === 'annotating' && hasDatasetAnnotation
         disabled={!annotations.length}
         className="rounded-md data-[disabled]:text-white/60 data-[disabled]:pointer-events-none bg-black/20 py-2 px-4 text-sm font-medium text-white focus:outline-none data-[hover]:bg-black/30 data-[focus]:outline-1 data-[focus]:outline-white">
         Export
