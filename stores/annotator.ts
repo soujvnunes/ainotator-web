@@ -79,12 +79,11 @@ export default createSlice({
     },
     setCategory: (state, action: PayloadAction<AnnotatorCategory>) => ({
       ...state,
-      current: {
-        ...state.current,
-        category:
-          // TODO: side-effect
-          state.current.mode !== 'annotating' ? undefined : action.payload,
-      },
+      current: { ...state.current, category: action.payload },
+    }),
+    unsetCategory: (state) => ({
+      ...state,
+      current: { ...state.current, category: undefined },
     }),
     setSize: (state, action: PayloadAction<AnnotatorCurrentSize>) => ({
       ...state,
