@@ -37,10 +37,13 @@ export default function Canvas() {
     <div
       style={{ height: `calc(100vh - ${CONTROLS_Y}px)` }}
       className={twMerge(
-        'relative bg-neutral-900 transition-[background-color]',
-        mode === 'waiting' && 'hover:bg-neutral-900/60',
+        'relative bg-black group transition-[background-color]',
+        mode === 'waiting' && 'hover:bg-white/5',
       )}>
       <CanvasUploader />
+      {mode === 'waiting' && (
+        <div className="from-black/20 absolute inset-0 to-black/0 h-full bg-[url(/rapport.png)] bg-repeat [mask-image:radial-gradient(circle_at_center,_var(--tw-gradient-stops))]" />
+      )}
       <canvas id={canvasId} />
     </div>
   )
