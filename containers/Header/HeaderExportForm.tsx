@@ -78,6 +78,8 @@ export default function HeaderExportForm() {
 
           if (!isValidationSuccessful(validation)) return
 
+          // CLEAN LOCAL STATES
+          setValidation(null)
           // CREATE THE LINK AND DOWNLOAD THE FILE
           // TODO: get the file by a route probably
           const blob = new Blob([JSON.stringify(newDataset, null, 2)], {
@@ -147,6 +149,14 @@ export default function HeaderExportForm() {
             ))}
           </TabPanels>
         </TabGroup>
+        <p
+          aria-live="polite"
+          className={twMerge(
+            'font-medium text-red-400',
+            validation?.details && 'py-4',
+          )}>
+          {validation?.details?.[0].msg || validation?.message}
+        </p>
         <div className="flex items-center">
           <Button
             type="submit"
