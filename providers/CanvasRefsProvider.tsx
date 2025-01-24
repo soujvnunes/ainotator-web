@@ -4,7 +4,7 @@ import CanvasRefsContext from '@/lib/CanvasRefsContext'
 import type { Canvas, FabricImage } from 'fabric'
 import { useRef, useState } from 'react'
 
-export default function AnnotatorRefsProvider(props: React.PropsWithChildren) {
+export default function CanvasRefsProvider(props: React.PropsWithChildren) {
   const canvas = useRef<Canvas>(null)
   const image = useRef<FabricImage>(null)
   const file = useRef<HTMLInputElement>(null)

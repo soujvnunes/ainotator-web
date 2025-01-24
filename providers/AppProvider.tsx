@@ -4,9 +4,7 @@ import { getConfigureStore, type AppStore } from '@/lib/getConfigureStore'
 import { useRef } from 'react'
 import { Provider } from 'react-redux'
 
-export default function AnnotatorProvider({
-  children,
-}: React.PropsWithChildren) {
+export default function AppProvider({ children }: React.PropsWithChildren) {
   const storeRef = useRef<AppStore | null>(null)
 
   if (!storeRef.current) {
