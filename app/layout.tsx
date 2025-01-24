@@ -2,8 +2,8 @@ import { Outfit } from 'next/font/google'
 import '@/ui/tailwind.css'
 import type { Metadata, Viewport } from 'next'
 import Header from '@/containers/Header/Header'
-import AnnotatorProvider from '@/providers/AnnotatorProvider'
-import AnnotatorRefsProvider from '@/providers/AnnotatorRefsProvider'
+import AppProvider from '@/providers/AppProvider'
+import CanvasRefsProvider from '@/providers/CanvasRefsProvider'
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -28,12 +28,12 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
       lang="en"
       className={`${outfit.variable} h-full`}>
       <body className="h-full text-white bg-black">
-        <AnnotatorProvider>
-          <AnnotatorRefsProvider>
+        <AppProvider>
+          <CanvasRefsProvider>
             <Header />
             {children}
-          </AnnotatorRefsProvider>
-        </AnnotatorProvider>
+          </CanvasRefsProvider>
+        </AppProvider>
       </body>
     </html>
   )
