@@ -2,6 +2,14 @@
 
 Upload images and configure classes to annotate semantic segmentation data interactively using brush tools or polygon drawing to export the results in COCO format.
 
+## Architecture
+
+### Branching
+
+    .
+    ├── main/ # Finished until the deadline
+    └── next/ # I wish I had more time
+
 ## How to use?
 
 ### Setup local development environment
