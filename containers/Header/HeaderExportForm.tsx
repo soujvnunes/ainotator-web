@@ -87,10 +87,12 @@ export default function HeaderExportForm() {
             type: 'application/json',
           })
           const url = URL.createObjectURL(blob)
-          const link = document.createElement('a')
+          const link = window.document.createElement('a')
           link.href = url
           link.download = `${images[0].file_name}_${fields.info.date_created}_annotations.json`
+          window.document.body.appendChild(link)
           link.click()
+          window.document.body.removeChild(link)
           URL.revokeObjectURL(url)
           // DISPATCH VALID DETAILS AND RESET ANNOTATING STATE
           dispatch.annotator.addLicense(newLicense)
@@ -100,15 +102,13 @@ export default function HeaderExportForm() {
           annotatorRef.file.current = null
           annotatorRef.image.current = null
           annotatorRef.canvas.current?.clear()
-          // CLOSE MODAL
+          // CLOSE DIALOG
           closeToolbarExport()
         })
       })
     },
-    [images, dispatch, categories, annotations],
+    [images, dispatch, categories, annotations, validation, closeToolbarExport],
   )
-
-  console.log({ validation })
 
   return (
     <form className="bg-neutral-900">
@@ -152,7 +152,7 @@ export default function HeaderExportForm() {
             ))}
           </TabPanels>
         </TabGroup>
-        {!!validation &&
+        {/*   {!!validation &&
           formatValidation(validation).map((validate) => (
             <p
               key={validate.message}
@@ -165,7 +165,7 @@ export default function HeaderExportForm() {
               )}
               {validate.message}
             </p>
-          ))}
+          ))} */}
         <div className="flex items-center">
           <Button
             type="submit"
