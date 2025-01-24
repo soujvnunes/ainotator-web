@@ -75,30 +75,30 @@ export default function CanvasUploader() {
           AINotator WEB
         </p>
         Start by adding <br /> an image
-        <ul className="inline-flex flex-col items-center mt-4 space-y-1 text-white/60">
-          <li className="flex items-center text-sm">
-            <span className="flex w-4 h-4 mr-2 bg-white">
-              <DocumentArrowUpIcon className="w-3 h-3 m-auto fill-black" />
+        <ul className="inline-flex flex-col items-center mt-4 text-white/60">
+          <li className="flex items-center text-base">
+            <span className="flex w-8 h-8 mr-2 bg-white">
+              <DocumentArrowUpIcon className="w-6 h-6 m-auto fill-black" />
             </span>
             Pick a image
           </li>
-          <li className="flex items-center text-sm">
-            <span className="flex w-4 h-4 mr-2 bg-white">
-              <PlusIcon className="w-3 h-3 m-auto fill-black" />
+          <li className="flex items-center text-base">
+            <span className="flex w-8 h-8 mr-2 bg-white">
+              <PlusIcon className="w-6 h-6 m-auto fill-black" />
             </span>
             Add class names
           </li>
-          <li className="flex items-center text-sm">
-            <span className="flex w-4 h-4 mr-2 bg-white">
-              <PaintBrushIcon className="w-3 h-3 m-auto fill-black" />
+          <li className="flex items-center text-base">
+            <span className="flex w-8 h-8 mr-2 bg-white">
+              <PaintBrushIcon className="w-6 h-6 m-auto fill-black" />
             </span>
             Annotate your image
           </li>
-          <li className="flex items-center text-sm">
-            <span className="flex w-4 h-4 mr-2 bg-white">
-              <DocumentArrowDownIcon className="w-3 h-3 m-auto fill-black" />
+          <li className="flex items-center text-base">
+            <span className="flex w-8 h-8 mr-2 bg-white">
+              <DocumentArrowDownIcon className="w-6 h-6 m-auto fill-black" />
             </span>
-            Export the annotations in COCO format
+            Export in the COCO format
           </li>
         </ul>
       </h2>
