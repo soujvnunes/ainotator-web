@@ -41,9 +41,12 @@ export default function Canvas() {
         mode === 'waiting' && 'hover:bg-white/5',
       )}>
       <CanvasUploader />
-      {mode === 'waiting' && (
-        <div className="from-black/20 absolute inset-0 to-black/0 h-full bg-[url(/rapport.png)] bg-repeat [mask-image:radial-gradient(circle_at_center,_var(--tw-gradient-stops))]" />
-      )}
+      <div
+        className={twMerge(
+          'from-black/20 absolute opacity-0 inset-0 to-black/0 h-full bg-[url(/rapport.png)] bg-repeat [mask-image:radial-gradient(circle_at_center,_var(--tw-gradient-stops))]',
+          mode === 'waiting' && 'opacity-100',
+        )}
+      />
       <canvas id={canvasId} />
     </div>
   )
