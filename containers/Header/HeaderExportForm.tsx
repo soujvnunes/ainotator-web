@@ -26,6 +26,7 @@ import { toolbarExportFormFields } from '@/lib/toolbarExportFormFields'
 import useAppDispatch from '@/hooks/useAppDispatch'
 import useCanvasRefs from '@/hooks/useCanvasRefs'
 import useAppState from '@/hooks/useAppState'
+import formatValidation from '@/lib/formatValidation'
 
 export default function HeaderExportForm() {
   const dispatch = useAppDispatch()
@@ -107,6 +108,8 @@ export default function HeaderExportForm() {
     [images, dispatch, categories, annotations],
   )
 
+  console.log({ validation })
+
   return (
     <form className="bg-neutral-900">
       <Fieldset disabled={isPending}>
@@ -149,14 +152,20 @@ export default function HeaderExportForm() {
             ))}
           </TabPanels>
         </TabGroup>
-        <p
-          aria-live="polite"
-          className={twMerge(
-            'font-medium text-red-400',
-            validation?.details && 'py-4',
-          )}>
-          {validation?.details?.[0].msg || validation?.message}
-        </p>
+        {!!validation &&
+          formatValidation(validation).map((validate) => (
+            <p
+              key={validate.message}
+              aria-live="polite"
+              className="p-3 font-medium text-red-500">
+              {!!validate.entry && (
+                <strong className="px-2 py-1 mr-2 uppercase rounded-md bg-red-400/20">
+                  {validate.entry}
+                </strong>
+              )}
+              {validate.message}
+            </p>
+          ))}
         <div className="flex items-center">
           <Button
             type="submit"
