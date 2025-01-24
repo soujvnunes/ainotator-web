@@ -1,12 +1,7 @@
 'use client'
 
-import getDatasetAnnotation from '@/helpers/getDatasetAnnotation'
-import {
-  useAnnotatorDispatch,
-  useAnnotatorState,
-} from '@/providers/AnnotatorProvider'
-import { useAnnotatorRefs } from '@/providers/AnnotatorRefsProvider'
-import type { AnnotatorCategory } from '@/stores/annotator'
+import getDatasetAnnotation from '@/lib/getDatasetAnnotation'
+import type { AnnotatorCategory } from '@/lib/annotatorSlice'
 import { Button } from '@headlessui/react'
 import {
   CubeTransparentIcon,
@@ -15,18 +10,17 @@ import {
 } from '@heroicons/react/24/solid'
 import { useCallback } from 'react'
 import { twMerge } from 'tailwind-merge'
+import useAppState from '@/hooks/useAppState'
+import useCanvasRefs from '@/hooks/useCanvasRefs'
+import useAppDispatch from '@/hooks/useAppDispatch'
 
-export default function AnnotatorToolbarCategoriesItem(
-  props: AnnotatorCategory,
-) {
+export default function ToolbarCategoriesItem(props: AnnotatorCategory) {
   const id = Date.now()
-  const annotatorRefs = useAnnotatorRefs()
-  const images = useAnnotatorState((state) => state.dataset.images)
-  const mode = useAnnotatorState((state) => state.annotator.current.mode)
-  const category = useAnnotatorState(
-    (state) => state.annotator.current.category,
-  )
-  const dispatch = useAnnotatorDispatch()
+  const annotatorRefs = useCanvasRefs()
+  const images = useAppState((state) => state.dataset.images)
+  const mode = useAppState((state) => state.annotator.current.mode)
+  const category = useAppState((state) => state.annotator.current.category)
+  const dispatch = useAppDispatch()
   const isCurrent = category?.id === props.id
   const isDisabled = category && category.id !== props.id
   const handleCategory = useCallback(() => {
@@ -51,7 +45,14 @@ export default function AnnotatorToolbarCategoriesItem(
       },
     })
 
-    if (datasetAnnotation) dispatch.dataset.addAnnotation(datasetAnnotation)
+    if (datasetAnnotation) {
+      dispatch.dataset.addAnnotation(datasetAnnotation)
+      dispatch.dataset.addCategory({
+        supercategory: props.supercategory,
+        id: props.id,
+        name: props.name,
+      })
+    }
   }, [mode, images, props.id, annotatorRefs])
 
   return (

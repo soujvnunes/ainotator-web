@@ -1,12 +1,10 @@
-import { useAnnotatorState } from '@/providers/AnnotatorProvider'
-import { useAnnotatorRefs } from '@/providers/AnnotatorRefsProvider'
 import { useEffect } from 'react'
+import useCanvasRefs from './useCanvasRefs'
+import useAppState from './useAppState'
 
 export default function useUnselectableCanvas() {
-  const annotatorRefs = useAnnotatorRefs()
-  const category = useAnnotatorState(
-    (state) => state.annotator.current.category,
-  )
+  const annotatorRefs = useCanvasRefs()
+  const category = useAppState((state) => state.annotator.current.category)
 
   useEffect(() => {
     const canvas = annotatorRefs.canvas.current

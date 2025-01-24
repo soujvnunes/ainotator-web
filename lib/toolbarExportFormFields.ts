@@ -1,18 +1,4 @@
-export const fieldsInitialState = {
-  license: {
-    url: '',
-    name: '',
-  },
-  info: {
-    description: '',
-    url: '',
-    version: '',
-    year: 0,
-    contributor: '',
-    date_created: '',
-  },
-}
-export const tabs = [
+export const toolbarExportFormFields = [
   {
     name: 'License',
     fields: [

@@ -1,14 +1,12 @@
-import { useAnnotatorState } from '@/providers/AnnotatorProvider'
-import { useAnnotatorRefs } from '@/providers/AnnotatorRefsProvider'
 import { PencilBrush } from 'fabric'
 import { useEffect } from 'react'
+import useAppState from './useAppState'
+import useCanvasRefs from './useCanvasRefs'
 
 export default function useBrush() {
-  const annotatorRefs = useAnnotatorRefs()
-  const size = useAnnotatorState((state) => state.annotator.current.size.brush)
-  const category = useAnnotatorState(
-    (state) => state.annotator.current.category,
-  )
+  const annotatorRefs = useCanvasRefs()
+  const size = useAppState((state) => state.annotator.current.size.brush)
+  const category = useAppState((state) => state.annotator.current.category)
 
   useEffect(() => {
     const canvas = annotatorRefs.canvas.current

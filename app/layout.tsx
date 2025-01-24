@@ -1,7 +1,6 @@
 import { Outfit } from 'next/font/google'
 import '@/ui/tailwind.css'
 import type { Metadata, Viewport } from 'next'
-import Script from 'next/script'
 import Header from '@/containers/Header/Header'
 import AnnotatorProvider from '@/providers/AnnotatorProvider'
 import AnnotatorRefsProvider from '@/providers/AnnotatorRefsProvider'
@@ -12,8 +11,7 @@ const outfit = Outfit({
 })
 export const metadata: Metadata = {
   title: 'AINotator',
-  description:
-    'Interactive AI-Powered Annotation for Precise Data Segmentation',
+  description: 'Brush and polygon design tools for precise data segmentation',
   appleWebApp: {
     capable: true,
     title: 'AINotator',
@@ -37,13 +35,6 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
           </AnnotatorRefsProvider>
         </AnnotatorProvider>
       </body>
-      <Script
-        id="splash-screen"
-        src="https://unpkg.com/ios-pwa-splash@1.0.0/cdn.min.js"
-        dangerouslySetInnerHTML={{
-          __html: `(function(){if(typeof window.iosPWASplash === 'function'){window.iosPWASplash('/apple-icon.png','#000000');}})();`,
-        }}
-      />
     </html>
   )
 }

@@ -3,11 +3,7 @@
 import validateDataset, {
   type ValidateDataset,
 } from '@/actions/validateDataset'
-import isValidationSuccessful from '@/helpers/isValidationSuccessful'
-import {
-  useAnnotatorDispatch,
-  useAnnotatorState,
-} from '@/providers/AnnotatorProvider'
+import isValidationSuccessful from '@/lib/isValidationSuccessful'
 import {
   Button,
   Field,
@@ -25,21 +21,25 @@ import {
 import { CheckIcon } from '@heroicons/react/24/solid'
 import { useCallback, useState, useTransition } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { fieldsInitialState, tabs } from './annotatorToolbarExportForm.utils'
-import { useAnnotatorRefs } from '@/providers/AnnotatorRefsProvider'
+import { toolbarExportFormState } from '@/lib/toolbarExportFormState'
+import { toolbarExportFormFields } from '@/lib/toolbarExportFormFields'
+import useAppDispatch from '@/hooks/useAppDispatch'
+import useCanvasRefs from '@/hooks/useCanvasRefs'
+import useAppState from '@/hooks/useAppState'
+import formatValidation from '@/lib/formatValidation'
 
-export default function AnnotatorToolbarExportForm() {
-  const dispatch = useAnnotatorDispatch()
-  const annotatorRef = useAnnotatorRefs()
-  const images = useAnnotatorState((state) => state.dataset.images)
-  const categories = useAnnotatorState((state) => state.dataset.categories)
-  const annotations = useAnnotatorState((state) => state.dataset.annotations)
-  const closeAnnotatorToolbarExport = useClose()
+export default function HeaderExportForm() {
+  const dispatch = useAppDispatch()
+  const annotatorRef = useCanvasRefs()
+  const images = useAppState((state) => state.dataset.images)
+  const categories = useAppState((state) => state.dataset.categories)
+  const annotations = useAppState((state) => state.dataset.annotations)
+  const closeToolbarExport = useClose()
   const [isPending, startTransition] = useTransition()
   const [tabId, setTabId] = useState(0)
   const [validation, setValidation] = useState<ValidateDataset | null>(null)
   // TODO: add the possibility of filling this with previous info and licenses from state.annotator.
-  const [fields, setFields] = useState(() => fieldsInitialState)
+  const [fields, setFields] = useState(() => toolbarExportFormState)
   const handleChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const currentTab = !tabId ? 'license' : 'info'
@@ -79,6 +79,8 @@ export default function AnnotatorToolbarExportForm() {
 
           if (!isValidationSuccessful(validation)) return
 
+          // CLEAN LOCAL STATES
+          setValidation(null)
           // CREATE THE LINK AND DOWNLOAD THE FILE
           // TODO: get the file by a route probably
           const blob = new Blob([JSON.stringify(newDataset, null, 2)], {
@@ -99,15 +101,17 @@ export default function AnnotatorToolbarExportForm() {
           annotatorRef.image.current = null
           annotatorRef.canvas.current?.clear()
           // CLOSE MODAL
-          closeAnnotatorToolbarExport()
+          closeToolbarExport()
         })
       })
     },
     [images, dispatch, categories, annotations],
   )
 
+  console.log({ validation })
+
   return (
-    <form>
+    <form className="bg-neutral-900">
       <Fieldset disabled={isPending}>
         <Legend className="px-4 pb-2 bg-neutral-800 text-white/60">
           Fill in the license and information dataset details to validate it
@@ -117,7 +121,7 @@ export default function AnnotatorToolbarExportForm() {
           selectedIndex={tabId}
           onChange={setTabId}>
           <TabList className="flex bg-neutral-800">
-            {tabs.map((tab) => (
+            {toolbarExportFormFields.map((tab) => (
               <Tab
                 key={tab.name}
                 className="inline-flex items-center  justify-center w-full px-4 text-xs uppercase font-semibold tracking-wider h-10	 text-white  data-[hover]:bg-white/5 border-b-2 border-b-transparent hover:border-gray-50 hover:data-[selected]:border-gray-50 data-[selected]:border-gray-50/20 ">
@@ -126,7 +130,7 @@ export default function AnnotatorToolbarExportForm() {
             ))}
           </TabList>
           <TabPanels>
-            {tabs.map((tab) => (
+            {toolbarExportFormFields.map((tab) => (
               <TabPanel key={tab.name}>
                 {tab.fields.map((field) => (
                   <Field
@@ -148,6 +152,20 @@ export default function AnnotatorToolbarExportForm() {
             ))}
           </TabPanels>
         </TabGroup>
+        {!!validation &&
+          formatValidation(validation).map((validate) => (
+            <p
+              key={validate.message}
+              aria-live="polite"
+              className="p-3 font-medium text-red-500">
+              {!!validate.entry && (
+                <strong className="px-2 py-1 mr-2 uppercase rounded-md bg-red-400/20">
+                  {validate.entry}
+                </strong>
+              )}
+              {validate.message}
+            </p>
+          ))}
         <div className="flex items-center">
           <Button
             type="submit"

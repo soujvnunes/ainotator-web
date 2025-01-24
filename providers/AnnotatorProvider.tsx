@@ -1,28 +1,8 @@
 'use client'
 
-import {
-  makeStore,
-  type AppDispatch,
-  type AppStore,
-  type RootState,
-} from '@/stores'
-import annotator from '@/stores/annotator'
-import dataset from '@/stores/dataset'
-import { bindActionCreators } from '@reduxjs/toolkit'
+import { getConfigureStore, type AppStore } from '@/lib/getConfigureStore'
 import { useRef } from 'react'
 import { Provider } from 'react-redux'
-import { useDispatch, useSelector } from 'react-redux'
-
-export const useAnnotatorState = useSelector.withTypes<RootState>()
-
-export function useAnnotatorDispatch() {
-  const dispatch = useDispatch<AppDispatch>()
-
-  return {
-    annotator: bindActionCreators(annotator.actions, dispatch),
-    dataset: bindActionCreators(dataset.actions, dispatch),
-  }
-}
 
 export default function AnnotatorProvider({
   children,
@@ -30,7 +10,7 @@ export default function AnnotatorProvider({
   const storeRef = useRef<AppStore | null>(null)
 
   if (!storeRef.current) {
-    storeRef.current = makeStore()
+    storeRef.current = getConfigureStore()
   }
 
   return <Provider store={storeRef.current}>{children}</Provider>

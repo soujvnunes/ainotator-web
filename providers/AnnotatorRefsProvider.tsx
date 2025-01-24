@@ -1,23 +1,9 @@
 'use client'
 
+import CanvasRefsContext from '@/lib/CanvasRefsContext'
 import type { Canvas, FabricImage } from 'fabric'
-import { createContext, createRef, useContext, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
-interface AnnotatorRefsContextProps {
-  canvas: React.RefObject<Canvas | null>
-  image: React.RefObject<FabricImage | null>
-  file: React.RefObject<HTMLInputElement | null>
-}
-
-const AnnotatorRefsContext = createContext<AnnotatorRefsContextProps>({
-  canvas: createRef<Canvas>(),
-  image: createRef<FabricImage>(),
-  file: createRef<HTMLInputElement>(),
-})
-
-export function useAnnotatorRefs() {
-  return useContext(AnnotatorRefsContext)
-}
 export default function AnnotatorRefsProvider(props: React.PropsWithChildren) {
   const canvas = useRef<Canvas>(null)
   const image = useRef<FabricImage>(null)
@@ -29,7 +15,7 @@ export default function AnnotatorRefsProvider(props: React.PropsWithChildren) {
   }))
 
   return (
-    <AnnotatorRefsContext
+    <CanvasRefsContext
       value={value}
       {...props}
     />
