@@ -22,7 +22,10 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    ".eslintrc.js"
+    ".eslintrc.js",
+    "postcss.config.js",
+    "prettier.config.js",
+    "tailwind.config.js"
   ],
   "exclude": ["node_modules"]
 }
