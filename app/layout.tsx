@@ -28,8 +28,8 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
     <html
       lang="en"
-      className={`${outfit.variable} h-full`}>
-      <body className="h-full bg-black text-white">
+      className={outfit.variable}>
+      <body>
         <AppProvider>
           <CanvasRefsProvider>
             <Header />
