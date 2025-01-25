@@ -1,9 +1,16 @@
 'use client'
 
+import { useCallback, useState, useTransition } from 'react'
+
 import validateDataset, {
   type ValidateDataset,
 } from '@/actions/validateDataset'
+import useAppDispatch from '@/hooks/useAppDispatch'
+import useAppState from '@/hooks/useAppState'
+import useCanvasRefs from '@/hooks/useCanvasRefs'
 import isValidationSuccessful from '@/lib/isValidationSuccessful'
+import { toolbarExportFormFields } from '@/lib/toolbarExportFormFields'
+import { toolbarExportFormState } from '@/lib/toolbarExportFormState'
 import {
   Button,
   Field,
@@ -19,16 +26,9 @@ import {
   useClose,
 } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/24/solid'
-import { useCallback, useState, useTransition } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { toolbarExportFormState } from '@/lib/toolbarExportFormState'
-import { toolbarExportFormFields } from '@/lib/toolbarExportFormFields'
-import useAppDispatch from '@/hooks/useAppDispatch'
-import useCanvasRefs from '@/hooks/useCanvasRefs'
-import useAppState from '@/hooks/useAppState'
-import formatValidation from '@/lib/formatValidation'
 
-export default function HeaderExportForm() {
+export default function ExportForm() {
   const dispatch = useAppDispatch()
   const annotatorRef = useCanvasRefs()
   const images = useAppState((state) => state.dataset.images)
@@ -88,6 +88,7 @@ export default function HeaderExportForm() {
           })
           const url = URL.createObjectURL(blob)
           const link = window.document.createElement('a')
+
           link.href = url
           link.download = `${images[0].file_name}_${fields.info.date_created}_annotations.json`
           window.document.body.appendChild(link)
@@ -107,13 +108,24 @@ export default function HeaderExportForm() {
         })
       })
     },
-    [images, dispatch, categories, annotations, validation, closeToolbarExport],
+    [
+      fields.license,
+      fields.info,
+      images,
+      dispatch.annotator,
+      categories,
+      annotations,
+      annotatorRef.file,
+      annotatorRef.image,
+      annotatorRef.canvas,
+      closeToolbarExport,
+    ],
   )
 
   return (
     <form className="bg-neutral-900">
       <Fieldset disabled={isPending}>
-        <Legend className="px-4 pb-2 bg-neutral-800 text-white/60">
+        <Legend className="bg-neutral-800 px-4 pb-2 text-white/60">
           Fill in the license and information dataset details to validate it
           before exporting.
         </Legend>
@@ -124,7 +136,7 @@ export default function HeaderExportForm() {
             {toolbarExportFormFields.map((tab) => (
               <Tab
                 key={tab.name}
-                className="inline-flex items-center  justify-center w-full px-4 text-xs uppercase font-semibold tracking-wider h-10	 text-white  data-[hover]:bg-white/5 border-b-2 border-b-transparent hover:border-gray-50 hover:data-[selected]:border-gray-50 data-[selected]:border-gray-50/20 ">
+                className="inline-flex h-10 w-full items-center justify-center border-b-2 border-b-transparent px-4 text-xs font-semibold uppercase tracking-wider text-white hover:border-gray-50 data-[selected]:border-gray-50/20 data-[hover]:bg-white/5 hover:data-[selected]:border-gray-50">
                 {tab.name}
               </Tab>
             ))}
@@ -136,14 +148,14 @@ export default function HeaderExportForm() {
                   <Field
                     className="mt-4"
                     key={field.name}>
-                    <Label className="px-4 text-sm font-medium cursor-pointer">
+                    <Label className="cursor-pointer px-4 text-sm font-medium">
                       {field.label}
                     </Label>
                     <Input
                       type="text"
                       name={field.name}
                       placeholder={field.placeholder}
-                      className="mt-2 block w-full border-x-none border-t-none border-b-transparent border-b-2 bg-white/5 h-10 px-4 text-sm  focus:outline-none data-[focus]:border-b-2  data-[focus]:border-gray-50/20"
+                      className="border-x-none border-t-none mt-2 block h-10 w-full border-b-2 border-b-transparent bg-white/5 px-4 text-sm focus:outline-none data-[focus]:border-b-2 data-[focus]:border-gray-50/20"
                       onChange={handleChange}
                     />
                   </Field>
@@ -152,28 +164,14 @@ export default function HeaderExportForm() {
             ))}
           </TabPanels>
         </TabGroup>
-        {/*   {!!validation &&
-          formatValidation(validation).map((validate) => (
-            <p
-              key={validate.message}
-              aria-live="polite"
-              className="p-3 font-medium text-red-500">
-              {!!validate.entry && (
-                <strong className="px-2 py-1 mr-2 uppercase rounded-md bg-red-400/20">
-                  {validate.entry}
-                </strong>
-              )}
-              {validate.message}
-            </p>
-          ))} */}
         <div className="flex items-center">
           <Button
             type="submit"
             onClick={handleValidate}
             className={twMerge(
-              'inline-flex items-center data-[disabled]:text-white/40 data-[disabled]:cursor-not-allowed justify-center w-full px-4 text-xs uppercase font-semibold tracking-wider h-10	 text-white  data-[hover]:bg-white/5 ',
+              'inline-flex h-10 w-full items-center justify-center px-4 text-xs font-semibold uppercase tracking-wider text-white data-[disabled]:cursor-not-allowed data-[hover]:bg-white/5 data-[disabled]:text-white/40',
               isValidationSuccessful(validation) &&
-                'text-green-400 pointer-events-none',
+                'pointer-events-none text-green-400',
             )}
             disabled={Object.values(
               Object.assign({}, ...Object.values(fields)),

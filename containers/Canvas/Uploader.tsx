@@ -1,5 +1,7 @@
 'use client'
 
+import { useCallback } from 'react'
+
 import useAppDispatch from '@/hooks/useAppDispatch'
 import useAppState from '@/hooks/useAppState'
 import useCanvasRefs from '@/hooks/useCanvasRefs'
@@ -11,10 +13,9 @@ import {
   PlusIcon,
 } from '@heroicons/react/24/solid'
 import { FabricImage } from 'fabric'
-import { useCallback } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-export default function CanvasUploader() {
+export default function Uploader() {
   const mode = useAppState((state) => state.annotator.current.mode)
   const dispatch = useAppDispatch()
   const annotatorRefs = useCanvasRefs()
@@ -61,42 +62,47 @@ export default function CanvasUploader() {
       }
       reader.readAsDataURL(file)
     },
-    [],
+    [
+      annotatorRefs.canvas,
+      annotatorRefs.image,
+      dispatch.annotator,
+      dispatch.dataset,
+    ],
   )
 
   return (
     <label
       className={twMerge(
-        'absolute flex w-full h-full cursor-pointer opacity-0',
+        'absolute flex h-full w-full cursor-pointer opacity-0',
         mode === 'waiting' && 'z-10 opacity-100',
       )}>
-      <h2 className="flex flex-col items-center m-auto text-4xl text-center lg:text-6xl">
-        <p className="text-xs font-medium tracking-wide uppercase text-white/60">
+      <h2 className="m-auto flex flex-col items-center text-center text-4xl lg:text-6xl">
+        <p className="text-xs font-medium uppercase tracking-wide text-white/60">
           AINotator WEB
         </p>
         Start by adding <br /> an image
-        <ul className="inline-flex flex-col items-center mt-4 text-white/60">
+        <ul className="mt-4 inline-flex flex-col items-center text-white/60">
           <li className="flex items-center text-base">
-            <span className="flex w-8 h-8 mr-2 bg-white">
-              <DocumentArrowUpIcon className="w-6 h-6 m-auto fill-black" />
+            <span className="mr-2 flex h-8 w-8 bg-white">
+              <DocumentArrowUpIcon className="m-auto h-6 w-6 fill-black" />
             </span>
             Pick a image
           </li>
           <li className="flex items-center text-base">
-            <span className="flex w-8 h-8 mr-2 bg-white">
-              <PlusIcon className="w-6 h-6 m-auto fill-black" />
+            <span className="mr-2 flex h-8 w-8 bg-white">
+              <PlusIcon className="m-auto h-6 w-6 fill-black" />
             </span>
             Add class names
           </li>
           <li className="flex items-center text-base">
-            <span className="flex w-8 h-8 mr-2 bg-white">
-              <PaintBrushIcon className="w-6 h-6 m-auto fill-black" />
+            <span className="mr-2 flex h-8 w-8 bg-white">
+              <PaintBrushIcon className="m-auto h-6 w-6 fill-black" />
             </span>
             Annotate your image
           </li>
           <li className="flex items-center text-base">
-            <span className="flex w-8 h-8 mr-2 bg-white">
-              <DocumentArrowDownIcon className="w-6 h-6 m-auto fill-black" />
+            <span className="mr-2 flex h-8 w-8 bg-white">
+              <DocumentArrowDownIcon className="m-auto h-6 w-6 fill-black" />
             </span>
             Export in the COCO format
           </li>
