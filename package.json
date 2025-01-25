@@ -11,7 +11,7 @@
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "pnpm dlx chromatic --project-token=chpt_89692664a02052a"
+    "chromatic": "pnpm dlx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
@@ -42,6 +42,7 @@
     "autoprefixer": "10.4.20",
     "chromatic": "^11.25.1",
     "concurrently": "^9.1.2",
+    "cross-env": "^7.0.3",
     "eslint": "8.57.0",
     "eslint-config-next": "15.1.5",
     "eslint-config-prettier": "^10.0.1",
