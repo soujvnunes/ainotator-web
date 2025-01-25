@@ -1,12 +1,12 @@
 'use client'
 
 import { PlusIcon } from '@heroicons/react/24/solid'
-import ToolbarAddForm from './ToolbarAddForm'
-import ToolbarAddedCategories from './ToolbarAddedCategories'
+import AddForm from './AddForm'
+import AddedCategories from './AddedCategories'
 import useAppState from '@/hooks/useAppState'
 import Dialog from '@/ui/Dialog'
 
-export default function ToolbarAdd() {
+export default function Add() {
   const mode = useAppState((state) => state.annotator.current.mode)
 
   return (
@@ -19,8 +19,8 @@ export default function ToolbarAdd() {
         disabled: !['editting', 'annotating'].includes(mode),
         children: <PlusIcon className="m-auto size-6" />,
       }}>
-      <ToolbarAddForm />
-      <ToolbarAddedCategories />
+      <AddForm />
+      <AddedCategories />
     </Dialog>
   )
 }

@@ -12,7 +12,7 @@ function translateY(input: number) {
   return -0.5 * input + 20
 }
 
-export default function HeaderControlsResizer() {
+export default function ControlsResizer() {
   const mode = useAppState((state) => state.annotator.current.mode)
   const category = useAppState((state) => state.annotator.current.category)
   const size = useAppState((state) => state.annotator.current.size.brush)
@@ -31,7 +31,7 @@ export default function HeaderControlsResizer() {
       className="relative inline-flex items-center w-40 h-10 mx-5 group">
       <Label className="sr-only">Brush size</Label>
       <Input
-        className="w-full opacity-0 cursor-pointer group-data-[disabled]:cursor-not-allowed"
+        className="w-full cursor-pointer opacity-0 group-data-[disabled]:cursor-not-allowed"
         type="range"
         min={10}
         max={max}
@@ -43,12 +43,12 @@ export default function HeaderControlsResizer() {
         className="absolute inset-0 -z-10">
         <div
           data-range-type="track"
-          className="h-[10px] top-[15px] absolute w-full bg-neutral-800"
+          className="absolute top-[15px] h-[10px] w-full bg-neutral-800"
         />
         <button
           type="button"
           data-range-type="thumb"
-          className="absolute w-[--size] h-[--size] group-data-[disabled]:bg-neutral-600 bg-white top-[--top] left-[--left]"
+          className="absolute left-[--left] top-[--top] h-[--size] w-[--size] bg-white group-data-[disabled]:bg-neutral-600"
           style={
             {
               '--size': `${size}px`,

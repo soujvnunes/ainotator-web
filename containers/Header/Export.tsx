@@ -1,11 +1,11 @@
 'use client'
 
-import ToolbarExportForm from './HeaderExportForm'
+import ExportForm from './ExportForm'
 import useAppState from '@/hooks/useAppState'
 import Dialog from '@/ui/Dialog'
 import { DocumentArrowDownIcon } from '@heroicons/react/24/solid'
 
-export default function HeaderExport() {
+export default function Export() {
   const annotations = useAppState((state) => state.dataset.annotations)
 
   return (
@@ -18,7 +18,7 @@ export default function HeaderExport() {
         className:
           'h-10 relative w-10 inline-flex text-sm font-medium text-white data-[hover]:text-white/60 data-[disabled]:text-white/40 data-[disabled]:cursor-not-allowed ',
       }}>
-      <ToolbarExportForm />
+      <ExportForm />
     </Dialog>
   )
 }

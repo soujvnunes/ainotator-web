@@ -2,7 +2,7 @@
 
 import { Canvas as FabricCanvas } from 'fabric'
 import { useEffect, useId } from 'react'
-import CanvasUploader from './CanvasUploader'
+import Uploader from './Uploader'
 import { twMerge } from 'tailwind-merge'
 import usePolygon from '@/hooks/usePolygon'
 import useBrush from '@/hooks/useBrush'
@@ -37,13 +37,13 @@ export default function Canvas() {
     <div
       style={{ height: `calc(100vh - ${CONTROLS_Y}px)` }}
       className={twMerge(
-        'relative bg-black group transition-[background-color]',
+        'group relative bg-black transition-[background-color]',
         mode === 'waiting' && 'hover:bg-white/5',
       )}>
-      <CanvasUploader />
+      <Uploader />
       <div
         className={twMerge(
-          'from-black/20 absolute opacity-0 inset-0 to-black/0 h-full bg-[url(/rapport.png)] bg-repeat [mask-image:radial-gradient(circle_at_center,_var(--tw-gradient-stops))]',
+          'absolute inset-0 h-full bg-[url(/rapport.png)] from-black/20 to-black/0 bg-repeat opacity-0 [mask-image:radial-gradient(circle_at_center,_var(--tw-gradient-stops))]',
           mode === 'waiting' && 'opacity-100',
         )}
       />

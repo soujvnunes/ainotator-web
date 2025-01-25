@@ -28,7 +28,7 @@ import useCanvasRefs from '@/hooks/useCanvasRefs'
 import useAppState from '@/hooks/useAppState'
 import formatValidation from '@/lib/formatValidation'
 
-export default function HeaderExportForm() {
+export default function ExportForm() {
   const dispatch = useAppDispatch()
   const annotatorRef = useCanvasRefs()
   const images = useAppState((state) => state.dataset.images)
@@ -113,7 +113,7 @@ export default function HeaderExportForm() {
   return (
     <form className="bg-neutral-900">
       <Fieldset disabled={isPending}>
-        <Legend className="px-4 pb-2 bg-neutral-800 text-white/60">
+        <Legend className="bg-neutral-800 px-4 pb-2 text-white/60">
           Fill in the license and information dataset details to validate it
           before exporting.
         </Legend>
@@ -124,7 +124,7 @@ export default function HeaderExportForm() {
             {toolbarExportFormFields.map((tab) => (
               <Tab
                 key={tab.name}
-                className="inline-flex items-center  justify-center w-full px-4 text-xs uppercase font-semibold tracking-wider h-10	 text-white  data-[hover]:bg-white/5 border-b-2 border-b-transparent hover:border-gray-50 hover:data-[selected]:border-gray-50 data-[selected]:border-gray-50/20 ">
+                className="inline-flex h-10 w-full items-center justify-center border-b-2 border-b-transparent px-4 text-xs font-semibold uppercase tracking-wider text-white hover:border-gray-50 data-[selected]:border-gray-50/20 data-[hover]:bg-white/5 hover:data-[selected]:border-gray-50">
                 {tab.name}
               </Tab>
             ))}
@@ -136,14 +136,14 @@ export default function HeaderExportForm() {
                   <Field
                     className="mt-4"
                     key={field.name}>
-                    <Label className="px-4 text-sm font-medium cursor-pointer">
+                    <Label className="cursor-pointer px-4 text-sm font-medium">
                       {field.label}
                     </Label>
                     <Input
                       type="text"
                       name={field.name}
                       placeholder={field.placeholder}
-                      className="mt-2 block w-full border-x-none border-t-none border-b-transparent border-b-2 bg-white/5 h-10 px-4 text-sm  focus:outline-none data-[focus]:border-b-2  data-[focus]:border-gray-50/20"
+                      className="border-x-none border-t-none mt-2 block h-10 w-full border-b-2 border-b-transparent bg-white/5 px-4 text-sm focus:outline-none data-[focus]:border-b-2 data-[focus]:border-gray-50/20"
                       onChange={handleChange}
                     />
                   </Field>
@@ -171,9 +171,9 @@ export default function HeaderExportForm() {
             type="submit"
             onClick={handleValidate}
             className={twMerge(
-              'inline-flex items-center data-[disabled]:text-white/40 data-[disabled]:cursor-not-allowed justify-center w-full px-4 text-xs uppercase font-semibold tracking-wider h-10	 text-white  data-[hover]:bg-white/5 ',
+              'inline-flex h-10 w-full items-center justify-center px-4 text-xs font-semibold uppercase tracking-wider text-white data-[disabled]:cursor-not-allowed data-[hover]:bg-white/5 data-[disabled]:text-white/40',
               isValidationSuccessful(validation) &&
-                'text-green-400 pointer-events-none',
+                'pointer-events-none text-green-400',
             )}
             disabled={Object.values(
               Object.assign({}, ...Object.values(fields)),

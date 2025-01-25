@@ -8,26 +8,26 @@ import {
 } from '@heroicons/react/24/solid'
 import { useId } from 'react'
 
-export default function ToolbarAddedCategories() {
+export default function AddedCategories() {
   const id = useId()
   const categories = useAppState((state) => state.annotator.added.categories)
 
   return (
-    <div className="w-full max-w-md mt-4 bg-neutral-900 duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
+    <div className="data-[closed]:transform-[scale(95%)] mt-4 w-full max-w-md bg-neutral-900 duration-300 ease-out data-[closed]:opacity-0">
       <h2
         id={id}
-        className="flex items-center h-10 pl-4 text-xs font-medium tracking-wider uppercase bg-neutral-800">
+        className="flex h-10 items-center bg-neutral-800 pl-4 text-xs font-medium uppercase tracking-wider">
         Added classes
       </h2>
       <ul
         aria-labelledby={id}
-        className="flex items-center h-16 overflow-y-auto">
+        className="flex h-16 items-center overflow-y-auto">
         {categories.map((category) => (
           <li
             key={category.id}
-            className="h-16 px-3 py-2 text-sm font-medium tracking-wider text-left uppercase truncate min-w-24"
+            className="h-16 min-w-24 truncate px-3 py-2 text-left text-sm font-medium uppercase tracking-wider"
             style={{ backgroundColor: `rgb(${category.color} / 0.6)` }}>
-            <span className="flex mb-3">
+            <span className="mb-3 flex">
               {category.type === 'polygon' ? (
                 <CubeTransparentIcon className="size-4" />
               ) : (
