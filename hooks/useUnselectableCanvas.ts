@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
-import useCanvasRefs from './useCanvasRefs'
+
 import useAppState from './useAppState'
+import useCanvasRefs from './useCanvasRefs'
 
 export default function useUnselectableCanvas() {
   const annotatorRefs = useCanvasRefs()
