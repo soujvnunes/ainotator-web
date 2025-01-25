@@ -1,12 +1,13 @@
 'use client'
 
+import { useId } from 'react'
+
 import useAppState from '@/hooks/useAppState'
 import {
   CubeTransparentIcon,
   PaintBrushIcon,
   UserGroupIcon,
 } from '@heroicons/react/24/solid'
-import { useId } from 'react'
 
 export default function AddedCategories() {
   const id = useId()

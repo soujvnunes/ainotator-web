@@ -1,10 +1,11 @@
 'use client'
 
-import { PlusIcon } from '@heroicons/react/24/solid'
-import AddForm from './AddForm'
-import AddedCategories from './AddedCategories'
 import useAppState from '@/hooks/useAppState'
 import Dialog from '@/ui/Dialog'
+import { PlusIcon } from '@heroicons/react/24/solid'
+
+import AddedCategories from './AddedCategories'
+import AddForm from './AddForm'
 
 export default function Add() {
   const mode = useAppState((state) => state.annotator.current.mode)

@@ -1,5 +1,7 @@
 'use client'
 
+import { useCallback } from 'react'
+
 import useAppDispatch from '@/hooks/useAppDispatch'
 import useAppState from '@/hooks/useAppState'
 import useCanvasRefs from '@/hooks/useCanvasRefs'
@@ -11,7 +13,6 @@ import {
   PlusIcon,
 } from '@heroicons/react/24/solid'
 import { FabricImage } from 'fabric'
-import { useCallback } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 export default function Uploader() {
@@ -61,7 +62,12 @@ export default function Uploader() {
       }
       reader.readAsDataURL(file)
     },
-    [],
+    [
+      annotatorRefs.canvas,
+      annotatorRefs.image,
+      dispatch.annotator,
+      dispatch.dataset,
+    ],
   )
 
   return (

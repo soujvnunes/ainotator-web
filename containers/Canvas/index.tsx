@@ -1,14 +1,16 @@
 'use client'
 
-import { Canvas as FabricCanvas } from 'fabric'
 import { useEffect, useId } from 'react'
-import Uploader from './Uploader'
-import { twMerge } from 'tailwind-merge'
-import usePolygon from '@/hooks/usePolygon'
-import useBrush from '@/hooks/useBrush'
-import useUnselectableCanvas from '@/hooks/useUnselectableCanvas'
+
 import useAppState from '@/hooks/useAppState'
+import useBrush from '@/hooks/useBrush'
 import useCanvasRefs from '@/hooks/useCanvasRefs'
+import usePolygon from '@/hooks/usePolygon'
+import useUnselectableCanvas from '@/hooks/useUnselectableCanvas'
+import { Canvas as FabricCanvas } from 'fabric'
+import { twMerge } from 'tailwind-merge'
+
+import Uploader from './Uploader'
 
 const CONTROLS_Y =
   64 + // TOOLBAR
@@ -28,7 +30,7 @@ export default function Canvas() {
     return () => {
       annotatorRefs.canvas.current?.dispose()
     }
-  }, [canvasId])
+  }, [annotatorRefs.canvas, canvasId])
   useUnselectableCanvas()
   useBrush()
   usePolygon()

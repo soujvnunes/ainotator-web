@@ -1,6 +1,14 @@
 'use client'
 
 import { useCallback } from 'react'
+
+import useAppDispatch from '@/hooks/useAppDispatch'
+import {
+  annotatorCategoryCrowds,
+  annotatorCategoryType,
+  type AnnotatorCategoryCrowds,
+  type AnnotatorCategoryType,
+} from '@/lib/annotatorSlice'
 import {
   Button,
   Field,
@@ -11,42 +19,38 @@ import {
   Radio,
   RadioGroup,
 } from '@headlessui/react'
+import { StarIcon } from '@heroicons/react/24/outline'
 import {
   CheckIcon,
   PaintBrushIcon,
   UserGroupIcon,
   UserIcon,
 } from '@heroicons/react/24/solid'
-import { StarIcon } from '@heroicons/react/24/outline'
-import {
-  annotatorCategoryCrowds,
-  annotatorCategoryType,
-  type AnnotatorCategoryCrowds,
-  type AnnotatorCategoryType,
-} from '@/lib/annotatorSlice'
-import useAppDispatch from '@/hooks/useAppDispatch'
 
 export default function AddForm() {
   const dispatch = useAppDispatch()
-  const handleAdd = useCallback((event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+  const handleAdd = useCallback(
+    (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault()
 
-    const formData = new FormData(event.currentTarget)
-    const formEntries = Object.fromEntries(formData.entries())
+      const formData = new FormData(event.currentTarget)
+      const formEntries = Object.fromEntries(formData.entries())
 
-    if (Object.values(formEntries).some((field) => !field)) return
+      if (Object.values(formEntries).some((field) => !field)) return
 
-    const id = Date.now()
+      const id = Date.now()
 
-    dispatch.annotator.addCategory({
-      id,
-      name: formEntries.name as string,
-      color: formEntries.color as string,
-      supercategory: formEntries.supercategory as string,
-      type: formEntries.type as AnnotatorCategoryType,
-      isCrowd: formEntries.is_crowded as AnnotatorCategoryCrowds,
-    })
-  }, [])
+      dispatch.annotator.addCategory({
+        id,
+        name: formEntries.name as string,
+        color: formEntries.color as string,
+        supercategory: formEntries.supercategory as string,
+        type: formEntries.type as AnnotatorCategoryType,
+        isCrowd: formEntries.is_crowded as AnnotatorCategoryCrowds,
+      })
+    },
+    [dispatch.annotator],
+  )
 
   return (
     <form

@@ -1,9 +1,16 @@
 'use client'
 
+import { useCallback, useState, useTransition } from 'react'
+
 import validateDataset, {
   type ValidateDataset,
 } from '@/actions/validateDataset'
+import useAppDispatch from '@/hooks/useAppDispatch'
+import useAppState from '@/hooks/useAppState'
+import useCanvasRefs from '@/hooks/useCanvasRefs'
 import isValidationSuccessful from '@/lib/isValidationSuccessful'
+import { toolbarExportFormFields } from '@/lib/toolbarExportFormFields'
+import { toolbarExportFormState } from '@/lib/toolbarExportFormState'
 import {
   Button,
   Field,
@@ -19,14 +26,7 @@ import {
   useClose,
 } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/24/solid'
-import { useCallback, useState, useTransition } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { toolbarExportFormState } from '@/lib/toolbarExportFormState'
-import { toolbarExportFormFields } from '@/lib/toolbarExportFormFields'
-import useAppDispatch from '@/hooks/useAppDispatch'
-import useCanvasRefs from '@/hooks/useCanvasRefs'
-import useAppState from '@/hooks/useAppState'
-import formatValidation from '@/lib/formatValidation'
 
 export default function ExportForm() {
   const dispatch = useAppDispatch()
@@ -88,6 +88,7 @@ export default function ExportForm() {
           })
           const url = URL.createObjectURL(blob)
           const link = window.document.createElement('a')
+
           link.href = url
           link.download = `${images[0].file_name}_${fields.info.date_created}_annotations.json`
           window.document.body.appendChild(link)
@@ -107,7 +108,18 @@ export default function ExportForm() {
         })
       })
     },
-    [images, dispatch, categories, annotations, validation, closeToolbarExport],
+    [
+      fields.license,
+      fields.info,
+      images,
+      dispatch.annotator,
+      categories,
+      annotations,
+      annotatorRef.file,
+      annotatorRef.image,
+      annotatorRef.canvas,
+      closeToolbarExport,
+    ],
   )
 
   return (
@@ -152,20 +164,6 @@ export default function ExportForm() {
             ))}
           </TabPanels>
         </TabGroup>
-        {/*   {!!validation &&
-          formatValidation(validation).map((validate) => (
-            <p
-              key={validate.message}
-              aria-live="polite"
-              className="p-3 font-medium text-red-500">
-              {!!validate.entry && (
-                <strong className="px-2 py-1 mr-2 uppercase rounded-md bg-red-400/20">
-                  {validate.entry}
-                </strong>
-              )}
-              {validate.message}
-            </p>
-          ))} */}
         <div className="flex items-center">
           <Button
             type="submit"

@@ -1,9 +1,10 @@
 'use client'
 
+import { useCallback } from 'react'
+
 import useAppDispatch from '@/hooks/useAppDispatch'
 import useAppState from '@/hooks/useAppState'
 import { Field, Input, Label } from '@headlessui/react'
-import { useCallback } from 'react'
 
 function translateX(input: number) {
   return ((160 - 0) / (40 - 10)) * (input - 10)
@@ -21,14 +22,14 @@ export default function ControlsResizer() {
     (event: React.ChangeEvent<HTMLInputElement>) => {
       dispatch.annotator.setSize({ brush: +event.target.value })
     },
-    [],
+    [dispatch.annotator],
   )
   const max = 40
 
   return (
     <Field
       disabled={mode !== 'annotating' || category?.type !== 'brush'}
-      className="relative inline-flex items-center w-40 h-10 mx-5 group">
+      className="group relative mx-5 inline-flex h-10 w-40 items-center">
       <Label className="sr-only">Brush size</Label>
       <Input
         className="w-full cursor-pointer opacity-0 group-data-[disabled]:cursor-not-allowed"

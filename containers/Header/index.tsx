@@ -1,10 +1,11 @@
 import Image from 'next/image'
+
 import HeaderControls from './Controls'
 import HeaderExport from './Export'
 
 export default function Header() {
   return (
-    <header className="flex h-10 items-center justify-between">
+    <header className="flex items-center justify-between h-10">
       <h1>
         <Image
           priority

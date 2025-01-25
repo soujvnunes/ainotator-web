@@ -1,18 +1,19 @@
 'use client'
 
-import getDatasetAnnotation from '@/lib/getDatasetAnnotation'
+import { useCallback } from 'react'
+
+import useAppDispatch from '@/hooks/useAppDispatch'
+import useAppState from '@/hooks/useAppState'
+import useCanvasRefs from '@/hooks/useCanvasRefs'
 import type { AnnotatorCategory } from '@/lib/annotatorSlice'
+import getDatasetAnnotation from '@/lib/getDatasetAnnotation'
 import { Button } from '@headlessui/react'
 import {
   CubeTransparentIcon,
   PaintBrushIcon,
   UserGroupIcon,
 } from '@heroicons/react/24/solid'
-import { useCallback } from 'react'
 import { twMerge } from 'tailwind-merge'
-import useAppState from '@/hooks/useAppState'
-import useCanvasRefs from '@/hooks/useCanvasRefs'
-import useAppDispatch from '@/hooks/useAppDispatch'
 
 export default function CategoriesItem(props: AnnotatorCategory) {
   const id = Date.now()
@@ -53,7 +54,15 @@ export default function CategoriesItem(props: AnnotatorCategory) {
         name: props.name,
       })
     }
-  }, [mode, images, props.id, annotatorRefs])
+  }, [
+    isCurrent,
+    annotatorRefs.canvas,
+    props,
+    images,
+    id,
+    dispatch.annotator,
+    dispatch.dataset,
+  ])
 
   return (
     <Button

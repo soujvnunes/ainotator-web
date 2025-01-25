@@ -1,6 +1,7 @@
 'use client'
 
 import useAppState from '@/hooks/useAppState'
+
 import CategoriesItem from './CategoriesItem'
 
 export default function Categories() {
