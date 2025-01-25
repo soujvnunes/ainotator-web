@@ -1,8 +1,9 @@
 'use client'
 
+import { useRef, useState } from 'react'
+
 import CanvasRefsContext from '@/lib/CanvasRefsContext'
 import type { Canvas, FabricImage } from 'fabric'
-import { useRef, useState } from 'react'
 
 export default function CanvasRefsProvider(props: React.PropsWithChildren) {
   const canvas = useRef<Canvas>(null)
