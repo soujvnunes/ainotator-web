@@ -11,7 +11,8 @@
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "pnpm dlx chromatic --project-token=chpt_89692664a02052a"
+    "chromatic": "pnpm dlx chromatic --project-token=chpt_89692664a02052a",
+    "eslint": "pnpm eslint ."
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
@@ -41,21 +42,17 @@
     "autoprefixer": "10.4.20",
     "chromatic": "^11.25.1",
     "concurrently": "^9.1.2",
-    "eslint": "9.18.0",
+    "eslint": "8.57.0",
     "eslint-config-next": "15.1.5",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-import-helpers": "^2.0.1",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-storybook": "^0.11.2",
     "postcss": "8.5.1",
+    "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "storybook": "^8.5.1",
     "tailwindcss": "3.4.17",
     "typescript": "5.7.3"
-  },
-  "eslintConfig": {
-    "extends": [
-      "plugin:storybook/recommended"
-    ]
   }
 }
