@@ -1,6 +1,10 @@
+'use client'
+
+import { useEffect, useId, useState } from 'react'
+
 import { Line, Point, Polygon, util } from 'fabric'
 import type { TPointerEvent, TPointerEventInfo } from 'fabric'
-import { useEffect, useId, useState } from 'react'
+
 import useAppState from './useAppState'
 import useCanvasRefs from './useCanvasRefs'
 
@@ -41,6 +45,7 @@ export default function usePolygon() {
           ],
           { stroke: color, strokeWidth: 2, ...defaultOptions },
         )
+
         canvas.add(line)
         setLines((prevLines) => [...prevLines, line])
       }
@@ -56,7 +61,7 @@ export default function usePolygon() {
       lines[lines.length - 1].set({ x2: pointer.x, y2: pointer.y })
       canvas.renderAll()
     }
-    function handleDoubleClick(event: TPointerEventInfo<TPointerEvent>) {
+    function handleDoubleClick() {
       if (points.length <= 2 || !canvas) return
 
       const polygon = new Polygon(points, { fill: color, ...defaultOptions })

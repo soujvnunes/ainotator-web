@@ -1,5 +1,6 @@
-import type { Canvas, FabricImage } from 'fabric'
 import { createContext, createRef } from 'react'
+
+import type { Canvas, FabricImage } from 'fabric'
 
 export interface AnnotatorRefsContextProps {
   canvas: React.RefObject<Canvas | null>

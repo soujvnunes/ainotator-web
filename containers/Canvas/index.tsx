@@ -1,14 +1,16 @@
 'use client'
 
-import { Canvas as FabricCanvas } from 'fabric'
 import { useEffect, useId } from 'react'
-import CanvasUploader from './CanvasUploader'
-import { twMerge } from 'tailwind-merge'
-import usePolygon from '@/hooks/usePolygon'
-import useBrush from '@/hooks/useBrush'
-import useUnselectableCanvas from '@/hooks/useUnselectableCanvas'
+
 import useAppState from '@/hooks/useAppState'
+import useBrush from '@/hooks/useBrush'
 import useCanvasRefs from '@/hooks/useCanvasRefs'
+import usePolygon from '@/hooks/usePolygon'
+import useUnselectableCanvas from '@/hooks/useUnselectableCanvas'
+import { Canvas as FabricCanvas } from 'fabric'
+import { twMerge } from 'tailwind-merge'
+
+import Uploader from './Uploader'
 
 const CONTROLS_Y =
   64 + // TOOLBAR
@@ -28,7 +30,7 @@ export default function Canvas() {
     return () => {
       annotatorRefs.canvas.current?.dispose()
     }
-  }, [canvasId])
+  }, [annotatorRefs.canvas, canvasId])
   useUnselectableCanvas()
   useBrush()
   usePolygon()
@@ -37,13 +39,13 @@ export default function Canvas() {
     <div
       style={{ height: `calc(100vh - ${CONTROLS_Y}px)` }}
       className={twMerge(
-        'relative bg-black group transition-[background-color]',
+        'group relative bg-black transition-[background-color]',
         mode === 'waiting' && 'hover:bg-white/5',
       )}>
-      <CanvasUploader />
+      <Uploader />
       <div
         className={twMerge(
-          'from-black/20 absolute opacity-0 inset-0 to-black/0 h-full bg-[url(/rapport.png)] bg-repeat [mask-image:radial-gradient(circle_at_center,_var(--tw-gradient-stops))]',
+          'absolute inset-0 h-full bg-[url(/rapport.png)] from-black/20 to-black/0 bg-repeat opacity-0 [mask-image:radial-gradient(circle_at_center,_var(--tw-gradient-stops))]',
           mode === 'waiting' && 'opacity-100',
         )}
       />

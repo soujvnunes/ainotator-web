@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
-import dataset from './datasetSlice'
+
 import annotator from './annotatorSlice'
+import dataset from './datasetSlice'
 
 export const getConfigureStore = () => {
   return configureStore({

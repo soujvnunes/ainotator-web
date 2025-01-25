@@ -22,7 +22,7 @@ export default function getDatasetAnnotation(
     const { width, height } = brush.getBoundingRect()
 
     return {
-      segmentation: brush.path.map(([cmd, ...points]) => points),
+      segmentation: brush.path.map(([, ...points]) => points),
       area: width * height,
       iscrowd: isCrowd,
       image_id: options.id.image,

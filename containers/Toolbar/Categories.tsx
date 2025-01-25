@@ -1,16 +1,17 @@
 'use client'
 
 import useAppState from '@/hooks/useAppState'
-import ToolbarCategoriesItem from './ToolbarCategoriesItem'
 
-export default function ToolbarCategories() {
+import CategoriesItem from './CategoriesItem'
+
+export default function Categories() {
   const categories = useAppState((state) => state.annotator.added.categories)
 
   return (
     <ul className="flex w-full overflow-y-hidden">
       {categories.map((category) => (
         <li key={category.id}>
-          <ToolbarCategoriesItem {...category} />
+          <CategoriesItem {...category} />
         </li>
       ))}
     </ul>

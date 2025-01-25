@@ -1,6 +1,7 @@
 import Image from 'next/image'
-import HeaderControls from './HeaderControls'
-import HeaderExport from './HeaderExport'
+
+import HeaderControls from './Controls'
+import HeaderExport from './Export'
 
 export default function Header() {
   return (

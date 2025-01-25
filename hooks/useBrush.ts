@@ -1,5 +1,7 @@
-import { PencilBrush } from 'fabric'
 import { useEffect } from 'react'
+
+import { PencilBrush } from 'fabric'
+
 import useAppState from './useAppState'
 import useCanvasRefs from './useCanvasRefs'
 
