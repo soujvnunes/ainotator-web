@@ -10,6 +10,17 @@ Upload images and configure classes to annotate semantic segmentation data inter
     ├── main/ # Finished until the deadline
     └── next/ # I wish I had more time
 
+## Design System Composition Convention
+
+    .
+    └── ui/
+        ├── Component/
+        │   ├── index.tsx                   # Root component and sub components wrapped
+        │   ├── SubComponent.tsx            # Any sub component to help composition
+        .   ├── Component.stories.tsx|ts    # Storybook component story
+        .   ├── Component.lib.ts            # Local component library with consts or helper functions
+        .   └── Component.styles.ts         # Component styles using CVA
+
 ## How to use?
 
 ### Setup local development environment
