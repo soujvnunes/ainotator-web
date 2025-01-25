@@ -11,8 +11,7 @@
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "pnpm dlx chromatic --project-token=chpt_89692664a02052a",
-    "eslint": "pnpm eslint ."
+    "chromatic": "pnpm dlx chromatic --project-token=chpt_89692664a02052a"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
