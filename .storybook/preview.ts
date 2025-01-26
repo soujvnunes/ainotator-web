@@ -10,7 +10,7 @@ const preview: Preview = {
       },
     },
     backgrounds: {
-      values: [{ name: 'default', value: '#171717' }],
+      values: [{ name: 'default', value: '#000000' }],
       default: 'default',
     },
   },
