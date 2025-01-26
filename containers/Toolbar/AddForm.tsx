@@ -40,13 +40,9 @@ export default function AddForm() {
   })
 
   return (
-    <form
-      className="bg-neutral-900"
-      onSubmit={formSubmit.onSubmit}>
+    <form onSubmit={formSubmit.onSubmit}>
       <Fieldset>
-        <Legend className="px-4 pb-2 bg-neutral-800 text-white/60">
-          Define class names and assign a unique color to each one.
-        </Legend>
+        <Legend className="p-4">Class details</Legend>
         <FieldText
           name="name"
           label="Name"
@@ -60,6 +56,7 @@ export default function AddForm() {
         <FieldText
           name="supercategory"
           label="Supercategory"
+          className="mt-4"
           placeholder="Animal"
           autoComplete="annotation super category name"
           invalid={{
