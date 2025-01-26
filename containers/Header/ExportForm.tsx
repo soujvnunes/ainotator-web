@@ -16,12 +16,10 @@ import useFormSubmit from '@/hooks/useFormSubmit'
 import { fields, tabs } from '@/lib/exportForm'
 import generateLink from '@/lib/generateLink'
 import isValidationSuccessful from '@/lib/isValidationSuccessful'
+import FieldText from '@/ui/FieldText'
 import {
   Button,
-  Field,
   Fieldset,
-  Input,
-  Label,
   Legend,
   Tab,
   TabGroup,
@@ -129,6 +127,8 @@ export default function ExportForm() {
                 {fields
                   .filter((field) => field.tab === tab.name)
                   .map((field) => {
+                    const name =
+                      `${tab.name}_${field.name}` as keyof ExportFormFields
                     let defaultValue: string | number | undefined
 
                     if (tab.name === 'license' && !!licenses.length) {
@@ -143,20 +143,17 @@ export default function ExportForm() {
                     }
 
                     return (
-                      <Field
-                        className="mt-4"
-                        key={field.name}>
-                        <Label className="cursor-pointer px-4 text-sm font-medium">
-                          {field.label}
-                        </Label>
-                        <Input
-                          type="text"
-                          className="border-x-none border-t-none mt-2 block h-10 w-full border-b-2 border-b-transparent bg-white/5 px-4 text-sm focus:outline-none data-[focus]:border-b-2 data-[focus]:border-gray-50/20"
-                          name={`${tab.name}_${field.name}`}
-                          placeholder={field.placeholder}
-                          defaultValue={defaultValue}
-                        />
-                      </Field>
+                      <FieldText
+                        name={name}
+                        key={field.name}
+                        label={field.label}
+                        placeholder={field.placeholder}
+                        defaultValue={defaultValue}
+                        invalid={{
+                          when: formSubmit.fields.empty.includes(name),
+                          message: `Empty`,
+                        }}
+                      />
                     )
                   })}
               </TabPanel>
