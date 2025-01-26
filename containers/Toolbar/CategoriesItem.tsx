@@ -19,7 +19,6 @@ export default function CategoriesItem(props: AnnotatorCategory) {
   const id = Date.now()
   const annotatorRefs = useCanvasRefs()
   const images = useAppState((state) => state.dataset.images)
-  const mode = useAppState((state) => state.annotator.current.mode)
   const category = useAppState((state) => state.annotator.current.category)
   const dispatch = useAppDispatch()
   const isCurrent = category?.id === props.id
