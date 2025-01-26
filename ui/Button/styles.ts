@@ -1,9 +1,9 @@
 import { cva } from 'class-variance-authority'
 import { twMerge } from 'tailwind-merge'
 
-import { typographyStyles } from '../Typography'
+import typographyStyles from '../Typography/styles'
 
-const button = {
+const buttonStyles = {
   root: cva(
     twMerge(
       typographyStyles.root({
@@ -34,4 +34,4 @@ const button = {
   ),
 }
 
-export default button
+export default buttonStyles

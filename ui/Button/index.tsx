@@ -1,7 +1,7 @@
 import { Button as HeadlessButton } from '@headlessui/react'
 import { twMerge } from 'tailwind-merge'
 
-import button from './Button.styles'
+import buttonStyles from './styles'
 
 export interface ButtonProps extends React.ComponentPropsWithRef<'button'> {
   fullWidth?: boolean
@@ -25,7 +25,7 @@ export default function Button({
   return (
     <HeadlessButton
       className={twMerge(
-        button.root({
+        buttonStyles.root({
           variant,
           size,
           fullWidth,

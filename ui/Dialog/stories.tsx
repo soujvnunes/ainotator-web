@@ -2,8 +2,8 @@ import { XMarkIcon } from '@heroicons/react/24/solid'
 import type { Meta, StoryObj } from '@storybook/react'
 
 import IconButton from '../IconButton'
-import OriginalDialog, { type DialogProps } from './Dialog'
-import dialog from './Dialog.styles'
+import OriginalDialog, { type DialogProps } from './index'
+import dialogStyles from './styles'
 
 // TODO: remove this workaround when Headless make a way to render a element inside Stories available
 function Dialog(props: React.PropsWithChildren<DialogProps>) {
@@ -12,16 +12,16 @@ function Dialog(props: React.PropsWithChildren<DialogProps>) {
       role="dialog"
       aria-labelledby="title"
       aria-describedby="description"
-      className={dialog.root()}>
-      <header className={dialog.header.root}>
+      className={dialogStyles.root()}>
+      <header className={dialogStyles.header.root}>
         <h2
           id="title"
-          className={dialog.header.title.root}>
+          className={dialogStyles.header.title.root}>
           {props.title}
           <IconButton
             aria-label={`Close ${props.title} dialog`}
-            className={dialog.header.title.close.root}>
-            <XMarkIcon className={dialog.header.title.close.icon} />
+            className={dialogStyles.header.title.close.root}>
+            <XMarkIcon className={dialogStyles.header.title.close.icon} />
           </IconButton>
         </h2>
         <p id="description">{props.description}</p>

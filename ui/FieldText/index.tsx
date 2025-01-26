@@ -5,7 +5,7 @@ import { useId } from 'react'
 import { Field, Input, Label } from '@headlessui/react'
 import { twMerge } from 'tailwind-merge'
 
-import fieldText from './FieldText.styles'
+import fieldTextStyles from './styles'
 
 export interface FieldTextProps
   extends Omit<React.ComponentPropsWithRef<'input'>, 'type'> {
@@ -29,8 +29,8 @@ export default function FieldText({
   return (
     <Field
       disabled={disabled}
-      className={twMerge(fieldText.root({ className }))}>
-      <Label className={fieldText.label}>
+      className={twMerge(fieldTextStyles.root({ className }))}>
+      <Label className={fieldTextStyles.label}>
         {label}
         {props.required && <span className="text-red-400"> *</span>}
       </Label>
@@ -39,12 +39,12 @@ export default function FieldText({
         invalid={invalid?.when}
         aria-description={errorMessageId}
         aria-errormessage={errorMessageId}
-        className={fieldText.input}
+        className={fieldTextStyles.input}
         {...props}
       />
       <p
         aria-live="polite"
-        className={fieldText.invalid.message}
+        className={fieldTextStyles.invalid.message}
         id={errorMessageId}>
         {invalid?.when && invalid?.message}
       </p>

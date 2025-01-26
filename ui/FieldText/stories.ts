@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import FieldText from './FieldText'
+import FieldText from './index'
 
 const meta = {
   component: FieldText,

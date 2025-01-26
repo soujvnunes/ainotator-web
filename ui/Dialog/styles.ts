@@ -1,8 +1,8 @@
 import { cva } from 'class-variance-authority'
 
-import { typographyStyles } from '../Typography'
+import typographyStyles from '../Typography/styles'
 
-const dialog = {
+const dialogStyles = {
   root: cva(
     'data-[closed]:transform-[scale(95%)] w-full max-w-md bg-neutral-900 duration-300 ease-out data-[closed]:opacity-0',
   ),
@@ -23,4 +23,4 @@ const dialog = {
   },
 }
 
-export default dialog
+export default dialogStyles

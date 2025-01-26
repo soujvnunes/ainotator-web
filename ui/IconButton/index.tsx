@@ -1,7 +1,7 @@
 import { twMerge } from 'tailwind-merge'
 
 import Button, { type ButtonProps } from '../Button'
-import iconButton from './IconButton.styles'
+import iconButtonStyles from './styles'
 
 interface IconButtonProps
   extends Omit<ButtonProps, 'aria-label' | 'fullWidth'> {
@@ -15,9 +15,8 @@ export default function IconButton({
 }: IconButtonProps) {
   return (
     <Button
-      className={twMerge(iconButton.root({ size, className }))}
+      className={twMerge(iconButtonStyles.root({ size, className }))}
       {...props}
     />
   )
 }
- 

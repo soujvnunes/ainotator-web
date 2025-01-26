@@ -1,6 +1,6 @@
 import { cva } from 'class-variance-authority'
 
-const iconButton = {
+const iconButtonStyles = {
   root: cva('', {
     variants: {
       size: { lg: 'h-16 w-16', md: 'h-10 w-10' },
@@ -9,4 +9,4 @@ const iconButton = {
   }),
 }
 
-export default iconButton
+export default iconButtonStyles

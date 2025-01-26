@@ -14,7 +14,7 @@ import { XMarkIcon } from '@heroicons/react/24/solid'
 import { twMerge } from 'tailwind-merge'
 
 import IconButton from '../IconButton'
-import dialog from './Dialog.styles'
+import dialog from './styles'
 
 export interface DialogProps {
   title: string
@@ -50,7 +50,7 @@ export default function Dialog({
         className="relative z-10 focus:outline-none">
         <DialogBackdrop className="fixed inset-0 bg-black/80 backdrop-blur-lg" />
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-          <div className="flex items-center justify-center min-h-full p-4">
+          <div className="flex min-h-full items-center justify-center p-4">
             <DialogPanel
               transition
               className={twMerge(dialog.root({ className }))}>

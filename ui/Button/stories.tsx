@@ -1,23 +1,21 @@
-import { PlusIcon } from '@heroicons/react/24/solid'
 import type { Meta, StoryObj } from '@storybook/react'
 
-import IconButton from './IconButton'
-
-// TODO: remove it when heroicon package provide a displayName for their icons
-PlusIcon.displayName = 'PlusIcon'
+import Button from '.'
 
 const meta = {
-  component: IconButton,
+  component: Button,
   tags: ['autodocs'],
   args: {
+    children: 'Button',
     size: 'md',
-    children: <PlusIcon className="size-6" />,
-    'aria-label': 'Add button',
+    variant: 'text',
+    disabled: false,
+    fullWidth: false,
   },
   parameters: {
     layout: 'centered',
   },
-} satisfies Meta<typeof IconButton>
+} satisfies Meta<typeof Button>
 
 export default meta
 
@@ -39,7 +37,7 @@ export const Disabled: Story = {
 
 export const FilledDisabled: Story = {
   args: {
-    ...Disabled.args,
     ...Filled.args,
+    ...Disabled.args,
   },
 }

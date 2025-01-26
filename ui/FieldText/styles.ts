@@ -1,8 +1,8 @@
 import { cva } from 'class-variance-authority'
 
-import { typographyStyles } from '../Typography'
+import typographyStyles from '../Typography/styles'
 
-const fieldText = {
+const fieldTextStyles = {
   root: cva('data-[disabled]:opacity-60'),
   label: typographyStyles.root({
     variant: 'label',
@@ -19,4 +19,4 @@ const fieldText = {
   },
 }
 
-export default fieldText
+export default fieldTextStyles

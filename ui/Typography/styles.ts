@@ -1,6 +1,6 @@
 import { cva } from 'class-variance-authority'
 
-const typography = {
+const typographyStyles = {
   root: cva('', {
     variants: {
       variant: {
@@ -11,4 +11,4 @@ const typography = {
   }),
 }
 
-export default typography
+export default typographyStyles
