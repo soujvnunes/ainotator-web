@@ -1,8 +1,7 @@
 'use client'
 
-import { useCallback } from 'react'
-
 import useAppDispatch from '@/hooks/useAppDispatch'
+import useFormSubmit from '@/hooks/useFormSubmit'
 import {
   annotatorCategoryCrowds,
   annotatorCategoryType,
@@ -27,35 +26,31 @@ import {
   UserIcon,
 } from '@heroicons/react/24/solid'
 
+interface AddFormFields {
+  name: string
+  supercategory: string
+  is_crowded: AnnotatorCategoryCrowds
+  type: AnnotatorCategoryType
+  color: string
+}
+
 export default function AddForm() {
   const dispatch = useAppDispatch()
-  const handleAdd = useCallback(
-    (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault()
-
-      const formData = new FormData(event.currentTarget)
-      const formEntries = Object.fromEntries(formData.entries())
-
-      if (Object.values(formEntries).some((field) => !field)) return
-
-      const id = Date.now()
-
-      dispatch.annotator.addCategory({
-        id,
-        name: formEntries.name as string,
-        color: formEntries.color as string,
-        supercategory: formEntries.supercategory as string,
-        type: formEntries.type as AnnotatorCategoryType,
-        isCrowd: formEntries.is_crowded as AnnotatorCategoryCrowds,
-      })
-    },
-    [dispatch.annotator],
-  )
+  const formSubmit = useFormSubmit<AddFormFields>((fields) => {
+    dispatch.annotator.addCategory({
+      id: Date.now(),
+      name: fields.name,
+      color: fields.color,
+      supercategory: fields.supercategory,
+      type: fields.type,
+      isCrowd: fields.is_crowded,
+    })
+  })
 
   return (
     <form
       className="bg-neutral-900"
-      onSubmit={handleAdd}>
+      onSubmit={formSubmit.onSubmit}>
       <Fieldset>
         <Legend className="bg-neutral-800 px-4 pb-2 text-white/60">
           Define class names and assign a unique color to each one.
