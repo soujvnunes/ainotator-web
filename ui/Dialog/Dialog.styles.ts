@@ -7,17 +7,19 @@ const dialog = {
     'data-[closed]:transform-[scale(95%)] w-full max-w-md bg-neutral-900 duration-300 ease-out data-[closed]:opacity-0',
   ),
   header: {
-    root: 'bg-neutral-800 pl-4 pb-2 text-white/60',
+    root: 'bg-neutral-800 pb-2 text-white/60',
     title: {
-      root: typographyStyles.root({
+      root: 'flex items-center',
+      text: typographyStyles.root({
         variant: 'label',
-        className: 'flex items-center',
+        className: 'pl-4',
       }),
       close: {
-        root: 'ml-auto inline-flex h-10 w-10 data-[hover]:bg-white/5',
-        icon: 'm-auto size-6',
+        root: 'ml-auto',
+        icon: 'size-6',
       },
     },
+    description: 'mt-1 px-4 font-normal',
   },
 }
 

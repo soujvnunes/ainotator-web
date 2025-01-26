@@ -1,6 +1,7 @@
 import { XMarkIcon } from '@heroicons/react/24/solid'
 import type { Meta, StoryObj } from '@storybook/react'
 
+import IconButton from '../IconButton'
 import OriginalDialog, { type DialogProps } from './Dialog'
 import dialog from './Dialog.styles'
 
@@ -17,12 +18,11 @@ function Dialog(props: React.PropsWithChildren<DialogProps>) {
           id="title"
           className={dialog.header.title.root}>
           {props.title}
-          <button
-            className={dialog.header.title.close.root}
-            type="button"
-            aria-label={`Close ${props.title} dialog`}>
+          <IconButton
+            aria-label={`Close ${props.title} dialog`}
+            className={dialog.header.title.close.root}>
             <XMarkIcon className={dialog.header.title.close.icon} />
-          </button>
+          </IconButton>
         </h2>
         <p id="description">{props.description}</p>
       </header>

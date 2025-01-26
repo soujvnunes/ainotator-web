@@ -13,6 +13,7 @@ import {
 import { XMarkIcon } from '@heroicons/react/24/solid'
 import { twMerge } from 'tailwind-merge'
 
+import IconButton from '../IconButton'
 import dialog from './Dialog.styles'
 
 export interface DialogProps {
@@ -44,26 +45,28 @@ export default function Dialog({
     <>
       {renderController(handleOpen)}
       <HeadlessDialog
-        unmount={false}
         open={open}
         onClose={handleClose}
         className="relative z-10 focus:outline-none">
         <DialogBackdrop className="fixed inset-0 bg-black/80 backdrop-blur-lg" />
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4">
+          <div className="flex items-center justify-center min-h-full p-4">
             <DialogPanel
               transition
               className={twMerge(dialog.root({ className }))}>
               <header className={dialog.header.root}>
                 <DialogTitle className={dialog.header.title.root}>
-                  {title}
+                  <span className={dialog.header.title.text}>{title}</span>
                   <CloseButton
+                    as={IconButton}
                     aria-label={`Close ${title} dialog`}
                     className={dialog.header.title.close.root}>
-                    <XMarkIcon className={dialog.header.title.close.root} />
+                    <XMarkIcon className={dialog.header.title.close.icon} />
                   </CloseButton>
                 </DialogTitle>
-                <Description>{description}</Description>
+                <Description className={dialog.header.description}>
+                  {description}
+                </Description>
               </header>
               {children}
             </DialogPanel>
