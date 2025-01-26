@@ -1,6 +1,7 @@
-import { AnnotatorCategoryCrowds } from '@/lib/annotatorSlice'
 import { Canvas } from 'fabric'
 import type { Path, Polygon } from 'fabric'
+
+import { AnnotatorCategoryCrowds } from '@/lib/annotator'
 
 interface DatasetAnnotationOptions {
   isCrowd?: AnnotatorCategoryCrowds
