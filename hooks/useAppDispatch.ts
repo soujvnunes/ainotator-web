@@ -1,15 +1,5 @@
 import { useDispatch } from 'react-redux'
 
-import annotatorSlice from '@/lib/annotatorSlice'
-import datasetSlice from '@/lib/datasetSlice'
-import type { AppDispatch } from '@/lib/getConfigureStore'
-import { bindActionCreators } from '@reduxjs/toolkit'
+import type { AppDispatch } from './useAppStore'
 
-export default function useAppDispatch() {
-  const dispatch = useDispatch<AppDispatch>()
-
-  return {
-    annotator: bindActionCreators(annotatorSlice.actions, dispatch),
-    dataset: bindActionCreators(datasetSlice.actions, dispatch),
-  }
-}
+export default useDispatch.withTypes<AppDispatch>()
