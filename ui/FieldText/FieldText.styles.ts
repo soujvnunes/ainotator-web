@@ -3,7 +3,7 @@ import { cva } from 'class-variance-authority'
 import { typographyStyles } from '../Typography'
 
 const fieldText = {
-  root: cva('mt-4 data-[disabled]:opacity-60'),
+  root: cva('data-[disabled]:opacity-60'),
   label: typographyStyles.root({
     variant: 'label',
     className: 'cursor-pointer px-4 data-[disabled]:cursor-not-allowed',
