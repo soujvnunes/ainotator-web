@@ -8,16 +8,8 @@ import {
   type AnnotatorCategoryCrowds,
   type AnnotatorCategoryType,
 } from '@/lib/annotatorSlice'
-import {
-  Button,
-  Field,
-  Fieldset,
-  Input,
-  Label,
-  Legend,
-  Radio,
-  RadioGroup,
-} from '@headlessui/react'
+import FieldText from '@/ui/FieldText'
+import { Button, Fieldset, Legend, Radio, RadioGroup } from '@headlessui/react'
 import { StarIcon } from '@heroicons/react/24/outline'
 import {
   CheckIcon,
@@ -52,37 +44,33 @@ export default function AddForm() {
       className="bg-neutral-900"
       onSubmit={formSubmit.onSubmit}>
       <Fieldset>
-        <Legend className="bg-neutral-800 px-4 pb-2 text-white/60">
+        <Legend className="px-4 pb-2 bg-neutral-800 text-white/60">
           Define class names and assign a unique color to each one.
         </Legend>
-        <Field className="mt-4">
-          <Label className="cursor-pointer px-4 text-sm font-medium">
-            Name
-          </Label>
-          <Input
-            autoComplete="annotation class name"
-            type="text"
-            name="name"
-            placeholder="Cat"
-            className="border-x-none border-t-none mt-2 block h-10 w-full border-b-2 border-b-transparent bg-white/5 px-4 text-sm focus:outline-none data-[focus]:border-b-2 data-[focus]:border-gray-50/20"
-          />
-        </Field>
-        <Field className="mt-4">
-          <Label className="cursor-pointer px-4 text-sm font-medium">
-            Supercategory
-          </Label>
-          <Input
-            autoComplete="annotation super category name"
-            type="text"
-            name="supercategory"
-            placeholder="Animal"
-            className="border-x-none border-t-none mt-2 block h-10 w-full border-b-2 border-b-transparent bg-white/5 px-4 text-sm focus:outline-none data-[focus]:border-b-2 data-[focus]:border-gray-50/20"
-          />
-        </Field>
-        <p className="mt-4 cursor-pointer px-4 text-sm font-medium">Crowd</p>
+        <FieldText
+          name="name"
+          label="Name"
+          placeholder="Cat"
+          autoComplete="annotation class name"
+          invalid={{
+            when: formSubmit.fields.empty.includes('name'),
+            message: 'Empty',
+          }}
+        />
+        <FieldText
+          name="supercategory"
+          label="Supercategory"
+          placeholder="Animal"
+          autoComplete="annotation super category name"
+          invalid={{
+            when: formSubmit.fields.empty.includes('supercategory'),
+            message: 'Empty',
+          }}
+        />
+        <p className="px-4 mt-4 text-sm font-medium cursor-pointer">Crowd</p>
         <RadioGroup
           aria-label="Is crowded?"
-          className="mt-2 flex"
+          className="flex mt-2"
           name="is_crowded"
           defaultValue={annotatorCategoryCrowds[0]}>
           {annotatorCategoryCrowds.map((crowd) => (
@@ -99,10 +87,10 @@ export default function AddForm() {
             </Radio>
           ))}
         </RadioGroup>
-        <p className="mt-4 cursor-pointer px-4 text-sm font-medium">Type</p>
+        <p className="px-4 mt-4 text-sm font-medium cursor-pointer">Type</p>
         <RadioGroup
           aria-label="Type"
-          className="mt-2 flex"
+          className="flex mt-2"
           name="type"
           defaultValue={annotatorCategoryType[0]}>
           {annotatorCategoryType.map((type) => (
@@ -125,7 +113,7 @@ export default function AddForm() {
           defaultValue={colors.red}>
           {Object.entries(colors).map(([color, code]) => (
             <Radio
-              className="group inline-flex aspect-square w-full cursor-pointer"
+              className="inline-flex w-full cursor-pointer group aspect-square"
               key={color}
               value={code}
               aria-label={color}
@@ -144,6 +132,7 @@ export default function AddForm() {
   )
 }
 
+// TODO: implement just the name based of button categories
 const colors = {
   red: '255 51 51', // #f33
   orange: '255 153 51', // #f93
