@@ -30,9 +30,11 @@ export default function FieldText({
     <Field
       disabled={disabled}
       className={twMerge(fieldTextStyles.root({ className }))}>
-      <Label className={fieldTextStyles.label}>
+      <Label className={fieldTextStyles.label.root()}>
         {label}
-        {props.required && <span className="text-red-400"> *</span>}
+        {props.required && (
+          <span className={fieldTextStyles.label.required}> *</span>
+        )}
       </Label>
       <Input
         type="text"
@@ -44,7 +46,7 @@ export default function FieldText({
       />
       <p
         aria-live="polite"
-        className={fieldTextStyles.invalid.message}
+        className={fieldTextStyles.invalid.message()}
         id={errorMessageId}>
         {invalid?.when && invalid?.message}
       </p>
