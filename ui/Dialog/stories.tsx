@@ -17,7 +17,9 @@ function Dialog(props: React.PropsWithChildren<DialogProps>) {
         <h2
           id="title"
           className={dialogStyles.header.title.root}>
-          {props.title}
+          <span className={dialogStyles.header.title.text()}>
+            {props.title}
+          </span>
           <IconButton
             aria-label={`Close ${props.title} dialog`}
             className={dialogStyles.header.title.close.root}>
