@@ -8,12 +8,30 @@ module.exports = {
     './containers/**/*.{ts,tsx,mdx}',
   ],
   theme: {
-    fontFamily: {
-      sans: [
-        'var(--font-outfit-sans)',
-        '-apple-system-font',
-        ...defaultTheme.fontFamily.sans,
-      ],
+    extend: {
+      fontFamily: {
+        sans: [
+          'var(--font-outfit-sans)',
+          '-apple-system-font',
+          ...defaultTheme.fontFamily.sans,
+        ],
+      },
+      fontSize: {
+        caption: [
+          defaultTheme.fontSize.xs[0],
+          {
+            lineHeight: defaultTheme.lineHeight[4],
+            fontWeight: defaultTheme.fontWeight.semibold,
+          },
+        ],
+        label: [
+          defaultTheme.fontSize.xs[0],
+          {
+            lineHeight: defaultTheme.lineHeight[4],
+            fontWeight: defaultTheme.fontWeight.semibold,
+          },
+        ],
+      },
     },
   },
   plugins: [],
