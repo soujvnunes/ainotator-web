@@ -6,6 +6,10 @@ import iconButtonStyles from './styles'
 interface IconButtonProps
   extends Omit<ButtonProps, 'aria-label' | 'fullWidth'> {
   'aria-label': string
+  /**
+   * @default md
+   */
+  size?: 'lg' | 'md'
 }
 
 export default function IconButton({

@@ -43,3 +43,31 @@ export const FilledDisabled: Story = {
     ...Filled.args,
   },
 }
+
+export const Large: Story = {
+  args: {
+    size: 'lg',
+  },
+}
+
+export const LargeFilled: Story = {
+  args: {
+    ...Filled.args,
+    ...Large.args,
+  },
+}
+
+export const LargeDisabled: Story = {
+  args: {
+    ...Large.args,
+    ...Disabled.args,
+  },
+}
+
+export const LargeFilledDisabled: Story = {
+  args: {
+    ...Large.args,
+    ...Disabled.args,
+    ...Filled.args,
+  },
+}
