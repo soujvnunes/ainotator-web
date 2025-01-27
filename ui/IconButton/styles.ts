@@ -1,7 +1,7 @@
 import { cva } from 'class-variance-authority'
 
 const iconButtonStyles = {
-  root: cva('px-0', {
+  root: cva('relative px-0', {
     variants: {
       size: {
         lg: 'h-16 w-16',
