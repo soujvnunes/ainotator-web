@@ -9,16 +9,11 @@ export interface ButtonProps extends React.ComponentPropsWithRef<'button'> {
    * @default text
    */
   variant?: 'filled' | 'text'
-  /**
-   * @default md
-   */
-  size?: 'lg' | 'md'
 }
 
 export default function Button({
   className,
   variant,
-  size,
   fullWidth,
   ...props
 }: ButtonProps) {
@@ -27,7 +22,6 @@ export default function Button({
       className={twMerge(
         buttonStyles.root({
           variant,
-          size,
           fullWidth,
           className,
         }),
