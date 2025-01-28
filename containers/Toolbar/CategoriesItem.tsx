@@ -2,11 +2,6 @@
 
 import { useCallback } from 'react'
 
-import useAppDispatch from '@/hooks/useAppDispatch'
-import useAppState from '@/hooks/useAppState'
-import useCanvasRefs from '@/hooks/useCanvasRefs'
-import type { AnnotatorCategory } from '@/lib/annotatorSlice'
-import getDatasetAnnotation from '@/lib/getDatasetAnnotation'
 import { Button } from '@headlessui/react'
 import {
   CubeTransparentIcon,
@@ -14,6 +9,14 @@ import {
   UserGroupIcon,
 } from '@heroicons/react/24/solid'
 import { twMerge } from 'tailwind-merge'
+
+import annotator, { type AnnotatorCategory } from '@/lib/annotator'
+import dataset from '@/lib/dataset'
+import getDatasetAnnotation from '@/lib/getDatasetAnnotation'
+
+import useAppDispatch from '@/hooks/useAppDispatch'
+import useAppState from '@/hooks/useAppState'
+import useCanvasRefs from '@/hooks/useCanvasRefs'
 
 export default function CategoriesItem(props: AnnotatorCategory) {
   const id = Date.now()
@@ -24,13 +27,8 @@ export default function CategoriesItem(props: AnnotatorCategory) {
   const isCurrent = category?.id === props.id
   const isDisabled = category && category.id !== props.id
   const handleCategory = useCallback(() => {
-    if (isCurrent) {
-      dispatch.annotator.setMode('editting')
-      dispatch.annotator.unsetCategory()
-    } else {
-      dispatch.annotator.setMode('annotating')
-      dispatch.annotator.setCategory(props)
-    }
+    dispatch(annotator.actions.setMode(isCurrent ? 'editting' : 'annotating'))
+    dispatch(annotator.actions.setCategory(props))
 
     const canvas = annotatorRefs.canvas.current
 
@@ -45,23 +43,17 @@ export default function CategoriesItem(props: AnnotatorCategory) {
       },
     })
 
-    if (datasetAnnotation) {
-      dispatch.dataset.addAnnotation(datasetAnnotation)
-      dispatch.dataset.addCategory({
+    if (!datasetAnnotation) return
+
+    dispatch(dataset.actions.addAnnotation(datasetAnnotation))
+    dispatch(
+      dataset.actions.addCategory({
         supercategory: props.supercategory,
         id: props.id,
         name: props.name,
-      })
-    }
-  }, [
-    isCurrent,
-    annotatorRefs.canvas,
-    props,
-    images,
-    id,
-    dispatch.annotator,
-    dispatch.dataset,
-  ])
+      }),
+    )
+  }, [isCurrent, annotatorRefs.canvas, props, images, id, dispatch])
 
   return (
     <Button
