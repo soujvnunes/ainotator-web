@@ -1,8 +1,14 @@
 import { cva } from 'class-variance-authority'
 
+import { typographyStyles } from '../Typography'
+
 const buttonStyles = {
   root: cva(
-    'text-label inline-flex h-10 min-w-10 flex-shrink-0 items-center justify-center px-4 text-xs data-[disabled]:cursor-not-allowed data-[focus]:outline-none',
+    typographyStyles.root({
+      variant: 'label',
+      className:
+        'inline-flex h-10 min-w-10 flex-shrink-0 items-center justify-center px-4 data-[disabled]:cursor-not-allowed data-[focus]:outline-none',
+    }),
     {
       variants: {
         variant: {
