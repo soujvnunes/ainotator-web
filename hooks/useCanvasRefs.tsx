@@ -1,3 +1,5 @@
+'use client'
+
 import { createContext, createRef, useContext, useRef, useState } from 'react'
 
 import type { Canvas, FabricImage } from 'fabric'
