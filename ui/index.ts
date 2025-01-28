@@ -1,9 +1,9 @@
 export { default as AnnotationRadio } from './AnnotationRadio'
 export { default as Button } from './Button'
 export { default as Dialog } from './Dialog'
-export { default as FieldRange } from './FieldRange'
-export { default as FieldText } from './FieldText'
 export { default as IconButton } from './IconButton'
+export { default as RadioField } from './RadioField'
+export { default as RangeField } from './RangeField'
+export { default as TextField } from './TextField'
 export { default as Tabs } from './Tabs'
-
 export { typographyStyles } from './Typography'
