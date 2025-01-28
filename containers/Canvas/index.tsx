@@ -2,13 +2,14 @@
 
 import { useEffect, useId } from 'react'
 
+import { Canvas as FabricCanvas } from 'fabric'
+import { twMerge } from 'tailwind-merge'
+
 import useAppState from '@/hooks/useAppState'
 import useBrush from '@/hooks/useBrush'
 import useCanvasRefs from '@/hooks/useCanvasRefs'
 import usePolygon from '@/hooks/usePolygon'
 import useUnselectableCanvas from '@/hooks/useUnselectableCanvas'
-import { Canvas as FabricCanvas } from 'fabric'
-import { twMerge } from 'tailwind-merge'
 
 import Uploader from './Uploader'
 
