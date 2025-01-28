@@ -1,16 +1,13 @@
 'use client'
 
-import useAppState from '@/hooks/useAppState'
-import Dialog from '@/ui/Dialog'
-import IconButton from '@/ui/IconButton'
 import { PlusIcon } from '@heroicons/react/24/solid'
+
+import { Dialog, IconButton } from '@/ui'
 
 import AddedCategories from './AddedCategories'
 import AddForm from './AddForm'
 
 export default function Add() {
-  const mode = useAppState((state) => state.annotator.current.mode)
-
   return (
     <Dialog
       title="Annotation Class"
@@ -19,10 +16,9 @@ export default function Add() {
         <IconButton
           variant="filled"
           size="lg"
-          onClick={open}
-          disabled={!['editting', 'annotating'].includes(mode)}
-          aria-label="Add categories to start annotating the image">
-          <PlusIcon className="m-auto size-6" />
+          aria-label="Add categories to start annotating the image"
+          onClick={open}>
+          <PlusIcon className="size-6" />
         </IconButton>
       )}>
       <AddForm />
