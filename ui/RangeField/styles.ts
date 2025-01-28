@@ -1,6 +1,6 @@
 import { cva } from 'class-variance-authority'
 
-const fieldRangeStyles = {
+const rangeFieldStyles = {
   root: cva(
     'group relative mx-5 inline-flex h-10 w-40 items-center justify-center',
   ),
@@ -17,4 +17,4 @@ const fieldRangeStyles = {
   },
 }
 
-export default fieldRangeStyles
+export default rangeFieldStyles

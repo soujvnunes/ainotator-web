@@ -2,10 +2,10 @@ import { useState } from 'react'
 
 import type { Meta, StoryObj } from '@storybook/react'
 
-import FieldRange from './index'
+import RangeField from './index'
 
 const meta = {
-  component: FieldRange,
+  component: RangeField,
   tags: ['autodocs'],
   args: {
     label: 'Range',
@@ -14,17 +14,17 @@ const meta = {
   parameters: {
     layout: 'centered',
   },
-} satisfies Meta<typeof FieldRange>
+} satisfies Meta<typeof RangeField>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-const MockFieldRange: Story = {
+const MockRangeField: Story = {
   render: function Render({ value, ...args }) {
     const [newValue, setValue] = useState(value)
 
     return (
-      <FieldRange
+      <RangeField
         onChange={(event) => setValue(+event.target.value)}
         value={newValue}
         {...args}
@@ -34,11 +34,11 @@ const MockFieldRange: Story = {
 }
 
 export const Default: Story = {
-  ...MockFieldRange,
+  ...MockRangeField,
 }
 
 export const Disabled: Story = {
-  ...MockFieldRange,
+  ...MockRangeField,
   args: {
     disabled: true,
   },
