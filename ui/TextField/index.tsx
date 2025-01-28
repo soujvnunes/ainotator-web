@@ -5,9 +5,9 @@ import { useId } from 'react'
 import { Field, Input, Label } from '@headlessui/react'
 import { twMerge } from 'tailwind-merge'
 
-import fieldTextStyles from './styles'
+import textFieldStyles from './styles'
 
-export interface FieldTextProps
+export interface TextFieldProps
   extends Omit<React.ComponentPropsWithRef<'input'>, 'type'> {
   label: string
   disabled?: boolean
@@ -17,23 +17,24 @@ export interface FieldTextProps
   }
 }
 
-export default function FieldText({
+export { textFieldStyles }
+export default function TextField({
   label,
   invalid,
   className,
   disabled,
   ...props
-}: FieldTextProps) {
+}: TextFieldProps) {
   const errorMessageId = useId()
 
   return (
     <Field
       disabled={disabled}
-      className={twMerge(fieldTextStyles.root({ className }))}>
-      <Label className={fieldTextStyles.label.root}>
+      className={twMerge(textFieldStyles.root({ className }))}>
+      <Label className={textFieldStyles.label.root}>
         {label}
         {props.required && (
-          <span className={fieldTextStyles.label.required}> *</span>
+          <span className={textFieldStyles.label.required}> *</span>
         )}
       </Label>
       <Input
@@ -41,12 +42,12 @@ export default function FieldText({
         invalid={invalid?.when}
         aria-description={errorMessageId}
         aria-errormessage={errorMessageId}
-        className={fieldTextStyles.input}
+        className={textFieldStyles.input()}
         {...props}
       />
       <p
         aria-live="polite"
-        className={fieldTextStyles.invalid.message()}
+        className={textFieldStyles.invalid.message()}
         id={errorMessageId}>
         {invalid?.when && invalid?.message}
       </p>

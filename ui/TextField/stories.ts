@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import FieldText from './index'
+import TextField from './index'
 
 const meta = {
-  component: FieldText,
+  component: TextField,
   tags: ['autodocs'],
   args: {
     label: 'Field text',
@@ -18,7 +18,7 @@ const meta = {
   parameters: {
     layout: 'centered',
   },
-} satisfies Meta<typeof FieldText>
+} satisfies Meta<typeof TextField>
 
 export default meta
 type Story = StoryObj<typeof meta>
