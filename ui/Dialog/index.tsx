@@ -56,7 +56,7 @@ export default function Dialog({
               className={twMerge(dialogStyles.root({ className }))}>
               <header className={dialogStyles.header.root}>
                 <DialogTitle className={dialogStyles.header.title.root}>
-                  <span className={dialogStyles.header.title.text()}>
+                  <span className={dialogStyles.header.title.text}>
                     {title}
                   </span>
                   <CloseButton
