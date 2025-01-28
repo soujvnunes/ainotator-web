@@ -65,26 +65,13 @@ export default createSlice({
   name: 'annotator',
   initialState,
   reducers: {
-    setMode: (state, action: PayloadAction<AnnotatorCurrentModes>) => {
-      const newMode = action.payload
-
-      return {
-        ...state,
-        current: {
-          ...state.current,
-          category:
-            newMode !== 'annotating' ? undefined : state.current.category,
-          mode: action.payload,
-        },
-      }
-    },
+    setMode: (state, action: PayloadAction<AnnotatorCurrentModes>) => ({
+      ...state,
+      current: { ...state.current, mode: action.payload },
+    }),
     setCategory: (state, action: PayloadAction<AnnotatorCategory>) => ({
       ...state,
       current: { ...state.current, category: action.payload },
-    }),
-    unsetCategory: (state) => ({
-      ...state,
-      current: { ...state.current, category: undefined },
     }),
     setSize: (state, action: PayloadAction<AnnotatorCurrentSize>) => ({
       ...state,
