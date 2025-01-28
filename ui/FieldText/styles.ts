@@ -1,11 +1,14 @@
 import { cva } from 'class-variance-authority'
 
+import { typographyStyles } from '../Typography'
+
 const fieldTextStyles = {
   root: cva('data-[disabled]:opacity-60'),
   label: {
-    root: cva(
-      'text-label cursor-pointer px-4 data-[disabled]:cursor-not-allowed',
-    ),
+    root: typographyStyles.root({
+      variant: 'label',
+      className: 'cursor-pointer px-4 data-[disabled]:cursor-not-allowed',
+    }),
     required: 'text-red-400',
   },
   input:

@@ -30,7 +30,7 @@ export default function FieldText({
     <Field
       disabled={disabled}
       className={twMerge(fieldTextStyles.root({ className }))}>
-      <Label className={fieldTextStyles.label.root()}>
+      <Label className={fieldTextStyles.label.root}>
         {label}
         {props.required && (
           <span className={fieldTextStyles.label.required}> *</span>
