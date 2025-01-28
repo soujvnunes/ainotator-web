@@ -1,7 +1,7 @@
 import { cva } from 'class-variance-authority'
 import { twMerge } from 'tailwind-merge'
 
-import buttonStyles from '../Button/styles'
+import { buttonStyles } from '../Button'
 
 const tabsStyles = {
   root: cva('flex bg-neutral-800'),
