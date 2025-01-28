@@ -1,5 +1,7 @@
 import { cva } from 'class-variance-authority'
 
+import { typographyStyles } from '../Typography'
+
 const annotationRadioStyles = {
   root: cva(
     'group inline-flex h-16 w-24 cursor-pointer flex-col justify-between',
@@ -66,7 +68,10 @@ const annotationRadioStyles = {
       icon: cva('size-4'),
     },
   },
-  label: cva('text-label truncate px-3 pb-1'),
+  label: typographyStyles.root({
+    variant: 'label',
+    className: 'truncate px-3 pb-1',
+  }),
 }
 
 export default annotationRadioStyles

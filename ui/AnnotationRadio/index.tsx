@@ -67,7 +67,7 @@ export default function AnnotationRadio<V extends string>({
           </span>
         )}
       </span>
-      <Label className={annotationRadioStyles.label()}>{children}</Label>
+      <Label className={annotationRadioStyles.label}>{children}</Label>
     </Radio>
   )
 }
