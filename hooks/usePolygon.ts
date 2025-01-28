@@ -12,6 +12,7 @@ import useCanvasRefs from './useCanvasRefs'
 export default function usePolygon() {
   const annotatorRefs = useCanvasRefs()
   const category = useAppState((state) => state.annotator.current.category)
+  const mode = useAppState((state) => state.annotator.current.mode)
   const id = useId()
   const [lines, setLines] = useState<Line[]>([])
   const [isDrawing, setDrawing] = useState(false)
@@ -21,7 +22,8 @@ export default function usePolygon() {
     const canvas = annotatorRefs.canvas.current
     const defaultOptions = { selectable: false, hasControls: false }
 
-    if (canvas == null || category?.type !== 'polygon') return
+    if (canvas == null || mode !== 'annotating' || category?.type !== 'polygon')
+      return
 
     const color = `rgb(${category.color} / 0.4)`
 
@@ -83,5 +85,5 @@ export default function usePolygon() {
       canvas.off('mouse:move', handleMouseMove)
       canvas.off('mouse:dblclick', handleDoubleClick)
     }
-  }, [lines, isDrawing, points, id, category, annotatorRefs])
+  }, [lines, isDrawing, points, id, category, annotatorRefs, mode])
 }
