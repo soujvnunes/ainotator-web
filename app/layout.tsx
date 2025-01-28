@@ -2,9 +2,10 @@ import type { Metadata, Viewport } from 'next'
 import { Outfit } from 'next/font/google'
 import '@/ui/tailwind.css'
 
+import { StoreProvider } from '@/hooks/useAppStore'
+import { CanvasRefsProvider } from '@/hooks/useCanvasRefs'
+
 import Header from '@/containers/Header'
-import AppProvider from '@/providers/AppProvider'
-import CanvasRefsProvider from '@/providers/CanvasRefsProvider'
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -30,12 +31,12 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
       lang="en"
       className={outfit.variable}>
       <body>
-        <AppProvider>
+        <StoreProvider>
           <CanvasRefsProvider>
             <Header />
             {children}
           </CanvasRefsProvider>
-        </AppProvider>
+        </StoreProvider>
       </body>
     </html>
   )
