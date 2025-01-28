@@ -7,7 +7,7 @@ import annotator from '@/lib/annotator'
 import useAppDispatch from '@/hooks/useAppDispatch'
 import useAppState from '@/hooks/useAppState'
 
-import { FieldRange } from '@/ui'
+import { RangeField } from '@/ui'
 
 export default function ControlsResizer() {
   const mode = useAppState((state) => state.annotator.current.mode)
@@ -22,7 +22,7 @@ export default function ControlsResizer() {
   )
 
   return (
-    <FieldRange
+    <RangeField
       label="Brush size"
       value={size}
       onChange={handleSize}
