@@ -1,7 +1,4 @@
-export const tabs = [
-  { name: 'license', label: 'License' },
-  { name: 'info', label: 'Information' },
-] as const
+export const tabs = ['License', 'Information']
 export const licenseFields = [
   {
     label: 'Label',
