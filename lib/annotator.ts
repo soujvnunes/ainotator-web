@@ -7,7 +7,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { type PayloadAction } from '@reduxjs/toolkit'
 
 // prettier-ignore
-export const annotatorCategoryColors = ['red', 'orange', 'yellow', 'green', 'sky', 'indigo', 'purple', 'pink', 'neutral'] as const
+export const annotatorCategoryColors = ['red', 'orange', 'yellow', 'green', 'teal', 'sky', 'indigo', 'purple', 'pink', 'neutral'] as const
 export const annotatorCategoryType = ['brush', 'polygon'] as const
 export const annotatorCategoryCrowds = ['yes', 'no'] as const
 
