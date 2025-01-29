@@ -10,6 +10,8 @@ import {
 
 import annotator, {
   annotatorCategoryColors,
+  annotatorCategoryCrowds,
+  annotatorCategoryTypes,
   type AnnotatorCategory,
 } from '@/lib/annotator'
 
@@ -115,10 +117,22 @@ export default function AddForm() {
 }
 
 const isCrowdValues = [
-  { children: <UserGroupIcon className="size-4" />, value: 'yes' },
-  { children: <UserIcon className="size-4" />, value: 'no' },
+  {
+    children: <UserGroupIcon className="size-4" />,
+    value: annotatorCategoryCrowds[0],
+  },
+  {
+    children: <UserIcon className="size-4" />,
+    value: annotatorCategoryCrowds[1],
+  },
 ]
 const typeValues = [
-  { children: <StarIcon className="size-4" />, value: 'polygon' },
-  { children: <PaintBrushIcon className="size-4" />, value: 'brush' },
+  {
+    children: <StarIcon className="size-4" />,
+    value: annotatorCategoryTypes[1],
+  },
+  {
+    children: <PaintBrushIcon className="size-4" />,
+    value: annotatorCategoryTypes[0],
+  },
 ]
