@@ -47,7 +47,7 @@ export default function TextField({
       />
       <p
         aria-live="polite"
-        className={textFieldStyles.invalid.message()}
+        className={textFieldStyles.invalid.message}
         id={errorMessageId}>
         {invalid?.when && invalid?.message}
       </p>
