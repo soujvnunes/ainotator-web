@@ -4,7 +4,6 @@ import { PlusIcon } from '@heroicons/react/24/solid'
 
 import { Dialog, IconButton } from '@/ui'
 
-import AddedCategories from './AddedCategories'
 import AddForm from './AddForm'
 
 export default function Add() {
@@ -22,7 +21,6 @@ export default function Add() {
         </IconButton>
       )}>
       <AddForm />
-      <AddedCategories />
     </Dialog>
   )
 }
