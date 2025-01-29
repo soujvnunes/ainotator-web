@@ -1,5 +1,7 @@
 import { cva } from 'class-variance-authority'
 
+import { annotatorColors } from '@/lib/annotator'
+
 import { typographyStyles } from '../Typography'
 
 const annotationRadioStyles = {
@@ -7,26 +9,7 @@ const annotationRadioStyles = {
     'group inline-flex cursor-pointer text-white data-[disabled]:cursor-not-allowed data-[disabled]:text-white/60',
     {
       variants: {
-        color: {
-          red: 'bg-red-500',
-          orange: 'bg-orange-500',
-          amber: 'bg-amber-500',
-          yellow: 'bg-yellow-500',
-          lime: 'bg-lime-500',
-          green: 'bg-green-500',
-          emerald: 'bg-emerald-500',
-          teal: 'bg-teal-500',
-          cyan: 'bg-cyan-500',
-          sky: 'bg-sky-500',
-          blue: 'bg-blue-500',
-          indigo: 'bg-indigo-500',
-          violet: 'bg-violet-500',
-          purple: 'bg-purple-500',
-          fuchsia: 'bg-fuchsia-500',
-          pink: 'bg-pink-500',
-          rose: 'bg-rose-500',
-          neutral: 'bg-neutral-500',
-        },
+        color: { ...annotatorColors.bg },
         compact: {
           true: 'aspect-square w-full min-w-10 data-[disabled]:bg-opacity-40 data-[hover]:bg-opacity-60',
           false:
@@ -58,26 +41,7 @@ const annotationRadioStyles = {
             true: 'ml-auto',
             false: '',
           },
-          color: {
-            red: 'group-data-[checked]:text-red-500',
-            orange: 'group-data-[checked]:text-orange-500',
-            amber: 'group-data-[checked]:text-amber-500',
-            yellow: 'group-data-[checked]:text-yellow-500',
-            lime: 'group-data-[checked]:text-lime-500',
-            green: 'group-data-[checked]:text-green-500',
-            emerald: 'group-data-[checked]:text-emerald-500',
-            teal: 'group-data-[checked]:text-teal-500',
-            cyan: 'group-data-[checked]:text-cyan-500',
-            sky: 'group-data-[checked]:text-sky-500',
-            blue: 'group-data-[checked]:text-blue-500',
-            indigo: 'group-data-[checked]:text-indigo-500',
-            violet: 'group-data-[checked]:text-violet-500',
-            purple: 'group-data-[checked]:text-purple-500',
-            fuchsia: 'group-data-[checked]:text-fuchsia-500',
-            pink: 'group-data-[checked]:text-pink-500',
-            rose: 'group-data-[checked]:text-rose-500',
-            neutral: 'group-data-[checked]:text-neutral-500',
-          },
+          color: { ...annotatorColors.text },
         },
       }),
       icon: cva('size-4'),
