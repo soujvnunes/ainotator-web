@@ -6,25 +6,23 @@ import type {
 import { createSlice } from '@reduxjs/toolkit'
 import { type PayloadAction } from '@reduxjs/toolkit'
 
+// prettier-ignore
+export const annotatorCategoryColors = ['red', 'orange', 'yellow', 'green', 'sky', 'indigo', 'purple', 'pink', 'neutral'] as const
 export const annotatorCategoryType = ['brush', 'polygon'] as const
 export const annotatorCategoryCrowds = ['yes', 'no'] as const
 
-export type AnnotatorCategoryType = (typeof annotatorCategoryType)[number]
-
+export type AnnotatorCategoryTypes = (typeof annotatorCategoryType)[number]
 export type AnnotatorCategoryCrowds = (typeof annotatorCategoryCrowds)[number]
+export type AnnotatorCategoryColors = (typeof annotatorCategoryColors)[number]
 
 export interface AnnotatorCategory extends DatasetCategory {
   isCrowd: AnnotatorCategoryCrowds
-  type: AnnotatorCategoryType
-  color: string
+  type: AnnotatorCategoryTypes
+  color: AnnotatorCategoryColors
 }
 
-export type AnnotatorCurrentModes =
-  | 'waiting'
-  | 'editting'
-  | 'annotating'
-  | 'erasing'
-  | 'exporting'
+// prettier-ignore
+export type AnnotatorCurrentModes = 'waiting' | 'editting' | 'annotating' | 'erasing' | 'exporting'
 
 export type AnnotatorCurrentSize = {
   brush: number
@@ -33,7 +31,7 @@ export type AnnotatorCurrentSize = {
 interface AnnotatorState {
   current: {
     mode: AnnotatorCurrentModes
-    category?: AnnotatorCategory
+    category: Pick<AnnotatorCategory, 'id'>
     size: AnnotatorCurrentSize
   }
   added: {
@@ -48,9 +46,8 @@ interface AnnotatorState {
 const initialState: AnnotatorState = {
   current: {
     mode: 'waiting',
-    size: {
-      brush: 25,
-    },
+    category: { id: 0 },
+    size: { brush: 25 },
   },
   added: {
     categories: [],
@@ -69,7 +66,10 @@ export default createSlice({
       ...state,
       current: { ...state.current, mode: action.payload },
     }),
-    setCategory: (state, action: PayloadAction<AnnotatorCategory>) => ({
+    setCategory: (
+      state,
+      action: PayloadAction<Pick<AnnotatorCategory, 'id'>>,
+    ) => ({
       ...state,
       current: { ...state.current, category: action.payload },
     }),
