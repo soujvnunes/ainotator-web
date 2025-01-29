@@ -10,23 +10,23 @@ import {
 import { twMerge } from 'tailwind-merge'
 
 import type {
-  AnnotatorCategoryColor,
-  AnnotatorCategoryCrowd,
-  AnnotatorCategoryType,
+  AnnotatorCategoryColors,
+  AnnotatorCategoryCrowds,
+  AnnotatorCategoryTypes,
 } from '@/lib/annotator'
 
 import annotationRadioStyles from './styles'
 
-export interface AnnotationRadioProps<V extends string>
+export interface AnnotationRadioProps<V extends string | number>
   extends React.ComponentPropsWithRef<'input'> {
   value: V
-  color: AnnotatorCategoryColor
+  color: AnnotatorCategoryColors
   compact?: boolean
-  isCrowd?: AnnotatorCategoryCrowd
-  type?: AnnotatorCategoryType
+  isCrowd?: AnnotatorCategoryCrowds
+  type?: AnnotatorCategoryTypes
 }
 
-export default function AnnotationRadio<V extends string>({
+export default function AnnotationRadio<V extends string | number>({
   className,
   type,
   color,
