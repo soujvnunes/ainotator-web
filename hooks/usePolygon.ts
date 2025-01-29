@@ -7,11 +7,12 @@ import type { TPointerEvent, TPointerEventInfo } from 'fabric'
 
 import useAppState from './useAppState'
 import useCanvasRefs from './useCanvasRefs'
+import useCurrentCategory from './useCurrentCategory'
 
 // TODO: not finishing when closes
 export default function usePolygon() {
   const annotatorRefs = useCanvasRefs()
-  const category = useAppState((state) => state.annotator.current.category)
+  const category = useCurrentCategory()
   const mode = useAppState((state) => state.annotator.current.mode)
   const id = useId()
   const [lines, setLines] = useState<Line[]>([])
