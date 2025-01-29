@@ -2,13 +2,15 @@
 
 import { useEffect, useId } from 'react'
 
+import { Canvas as FabricCanvas } from 'fabric'
+import { twMerge } from 'tailwind-merge'
+
 import useAppState from '@/hooks/useAppState'
 import useBrush from '@/hooks/useBrush'
 import useCanvasRefs from '@/hooks/useCanvasRefs'
+import useGenerateAnnotation from '@/hooks/useGenerateAnnotation'
 import usePolygon from '@/hooks/usePolygon'
 import useUnselectableCanvas from '@/hooks/useUnselectableCanvas'
-import { Canvas as FabricCanvas } from 'fabric'
-import { twMerge } from 'tailwind-merge'
 
 import Uploader from './Uploader'
 
@@ -34,6 +36,7 @@ export default function Canvas() {
   useUnselectableCanvas()
   useBrush()
   usePolygon()
+  useGenerateAnnotation()
 
   return (
     <div

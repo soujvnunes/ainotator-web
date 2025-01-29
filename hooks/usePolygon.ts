@@ -7,11 +7,13 @@ import type { TPointerEvent, TPointerEventInfo } from 'fabric'
 
 import useAppState from './useAppState'
 import useCanvasRefs from './useCanvasRefs'
+import useCurrentCategory from './useCurrentCategory'
 
 // TODO: not finishing when closes
 export default function usePolygon() {
   const annotatorRefs = useCanvasRefs()
-  const category = useAppState((state) => state.annotator.current.category)
+  const category = useCurrentCategory()
+  const mode = useAppState((state) => state.annotator.current.mode)
   const id = useId()
   const [lines, setLines] = useState<Line[]>([])
   const [isDrawing, setDrawing] = useState(false)
@@ -21,9 +23,8 @@ export default function usePolygon() {
     const canvas = annotatorRefs.canvas.current
     const defaultOptions = { selectable: false, hasControls: false }
 
-    if (canvas == null || category?.type !== 'polygon') return
-
-    const color = `rgb(${category.color} / 0.4)`
+    if (canvas == null || mode !== 'annotating' || category?.type !== 'polygon')
+      return
 
     function handleMouseDown(event: TPointerEventInfo<TPointerEvent>) {
       if (!canvas) return
@@ -43,7 +44,7 @@ export default function usePolygon() {
             pointer.x,
             pointer.y,
           ],
-          { stroke: color, strokeWidth: 2, ...defaultOptions },
+          { stroke: category?.color, strokeWidth: 2, ...defaultOptions },
         )
 
         canvas.add(line)
@@ -64,7 +65,10 @@ export default function usePolygon() {
     function handleDoubleClick() {
       if (points.length <= 2 || !canvas) return
 
-      const polygon = new Polygon(points, { fill: color, ...defaultOptions })
+      const polygon = new Polygon(points, {
+        fill: category?.color,
+        ...defaultOptions,
+      })
 
       polygon.set({ id })
       canvas.add(polygon)
@@ -83,5 +87,5 @@ export default function usePolygon() {
       canvas.off('mouse:move', handleMouseMove)
       canvas.off('mouse:dblclick', handleDoubleClick)
     }
-  }, [lines, isDrawing, points, id, category, annotatorRefs])
+  }, [lines, isDrawing, points, id, category, annotatorRefs, mode])
 }

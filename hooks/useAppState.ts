@@ -1,7 +1,5 @@
 import { useSelector } from 'react-redux'
 
-import type { RootState } from '@/lib/getConfigureStore'
+import type { RootState } from './useAppStore'
 
-const useAppState = useSelector.withTypes<RootState>()
-
-export default useAppState
+export default useSelector.withTypes<RootState>()

@@ -25,7 +25,8 @@
     ".eslintrc.js",
     "postcss.config.js",
     "prettier.config.js",
-    "tailwind.config.js"
+    "tailwind.config.js",
+    ".storybook/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }

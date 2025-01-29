@@ -1,15 +1,12 @@
 import type { StorybookConfig } from '@storybook/nextjs'
 
 const config: StorybookConfig = {
-  stories: [
-    '../stories/**/*.mdx',
-    '../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)',
-  ],
+  stories: ['../**/*.mdx', '../**/stories.@(ts|tsx)'],
   addons: [
-    '@storybook/addon-onboarding',
     '@storybook/addon-essentials',
     '@chromatic-com/storybook',
     '@storybook/addon-interactions',
+    '@storybook/addon-a11y',
   ],
   framework: {
     name: '@storybook/nextjs',
@@ -17,4 +14,5 @@ const config: StorybookConfig = {
   },
   staticDirs: ['../public'],
 }
+
 export default config

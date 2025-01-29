@@ -2,18 +2,18 @@
 
 import { useCallback } from 'react'
 
+import { FabricImage } from 'fabric'
+import { twMerge } from 'tailwind-merge'
+
+import annotator from '@/lib/annotator'
+import dataset from '@/lib/dataset'
+import getDatasetImage from '@/lib/getDatasetImage'
+
 import useAppDispatch from '@/hooks/useAppDispatch'
 import useAppState from '@/hooks/useAppState'
 import useCanvasRefs from '@/hooks/useCanvasRefs'
-import getDatasetImage from '@/lib/getDatasetImage'
-import {
-  DocumentArrowDownIcon,
-  DocumentArrowUpIcon,
-  PaintBrushIcon,
-  PlusIcon,
-} from '@heroicons/react/24/solid'
-import { FabricImage } from 'fabric'
-import { twMerge } from 'tailwind-merge'
+
+import UploaderOnboarding from './UploaderOnboarding'
 
 export default function Uploader() {
   const mode = useAppState((state) => state.annotator.current.mode)
@@ -57,17 +57,12 @@ export default function Uploader() {
         annotatorRefs.image.current = image
         canvas.add(image)
         canvas.renderAll()
-        dispatch.annotator.setMode('editting')
-        dispatch.dataset.addImage(datasetImage)
+        dispatch(annotator.actions.setMode('editting'))
+        dispatch(dataset.actions.addImage(datasetImage))
       }
       reader.readAsDataURL(file)
     },
-    [
-      annotatorRefs.canvas,
-      annotatorRefs.image,
-      dispatch.annotator,
-      dispatch.dataset,
-    ],
+    [annotatorRefs.canvas, annotatorRefs.image, dispatch],
   )
 
   return (
@@ -76,38 +71,7 @@ export default function Uploader() {
         'absolute flex h-full w-full cursor-pointer opacity-0',
         mode === 'waiting' && 'z-10 opacity-100',
       )}>
-      <h2 className="m-auto flex flex-col items-center text-center text-4xl lg:text-6xl">
-        <p className="text-xs font-medium uppercase tracking-wide text-white/60">
-          AINotator WEB
-        </p>
-        Start by adding <br /> an image
-        <ul className="mt-4 inline-flex flex-col items-center text-white/60">
-          <li className="flex items-center text-base">
-            <span className="mr-2 flex h-8 w-8 bg-white">
-              <DocumentArrowUpIcon className="m-auto h-6 w-6 fill-black" />
-            </span>
-            Pick a image
-          </li>
-          <li className="flex items-center text-base">
-            <span className="mr-2 flex h-8 w-8 bg-white">
-              <PlusIcon className="m-auto h-6 w-6 fill-black" />
-            </span>
-            Add class names
-          </li>
-          <li className="flex items-center text-base">
-            <span className="mr-2 flex h-8 w-8 bg-white">
-              <PaintBrushIcon className="m-auto h-6 w-6 fill-black" />
-            </span>
-            Annotate your image
-          </li>
-          <li className="flex items-center text-base">
-            <span className="mr-2 flex h-8 w-8 bg-white">
-              <DocumentArrowDownIcon className="m-auto h-6 w-6 fill-black" />
-            </span>
-            Export in the COCO format
-          </li>
-        </ul>
-      </h2>
+      <UploaderOnboarding />
       <input
         type="file"
         accept="image/*"

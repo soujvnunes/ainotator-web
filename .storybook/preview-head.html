@@ -1,0 +1,27 @@
+<!-- preview-head.html: Overrides content of preview IFRAME HTML page's <head> tag, affecting rendered component(s) below Canvas and Docs tabs. -->
+<!-- Link tag that points to Roboto font resolves to src/assets/fonts/ folder based on start command defined with '-s src/assets' parameter in package.json. -->
+<link
+  rel="preconnect"
+  href="https://fonts.googleapis.com" />
+<link
+  rel="preconnect"
+  href="https://fonts.gstatic.com"
+  crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap"
+  rel="stylesheet" />
+<style>
+  html,
+  body {
+    height: 100%;
+  }
+  html {
+    --font-outfit-sans: 'Outfit';
+  }
+  body {
+    font-optical-sizing: auto;
+    font-style: normal;
+    background-color: #000000;
+    color: #ffffff;
+  }
+</style>
