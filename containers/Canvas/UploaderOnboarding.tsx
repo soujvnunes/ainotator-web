@@ -7,11 +7,11 @@ import {
   PlusIcon,
 } from '@heroicons/react/24/solid'
 
-import { IconButton, typographyStyles } from '@/ui'
+import { typographyStyles } from '@/ui'
 
 export default function UploaderOnboarding() {
   return (
-    <section className="m-auto flex flex-col items-center">
+    <span className="m-auto flex flex-col items-center">
       <p
         className={typographyStyles.root({
           variant: 'label',
@@ -27,17 +27,16 @@ export default function UploaderOnboarding() {
           <li
             key={label}
             className="flex items-center">
-            <IconButton
-              variant="filled"
-              className="mr-2"
+            <span
+              className="mr-2 flex h-10 w-10 bg-white text-black"
               aria-label={label}>
-              <Icon className="size-6" />
-            </IconButton>
+              <Icon className="m-auto size-6" />
+            </span>
             {label}
           </li>
         ))}
       </ul>
-    </section>
+    </span>
   )
 }
 
