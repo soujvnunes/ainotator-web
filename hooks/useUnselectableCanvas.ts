@@ -5,7 +5,7 @@ import useCanvasRefs from './useCanvasRefs'
 
 export default function useUnselectableCanvas() {
   const annotatorRefs = useCanvasRefs()
-  const category = useAppState((state) => state.annotator.current.category)
+  const id = useAppState((state) => state.annotator.current.category.id)
 
   useEffect(() => {
     const canvas = annotatorRefs.canvas.current
@@ -19,5 +19,5 @@ export default function useUnselectableCanvas() {
       obj.hasControls = false
     })
     canvas.renderAll()
-  }, [annotatorRefs, category])
+  }, [annotatorRefs, id])
 }
