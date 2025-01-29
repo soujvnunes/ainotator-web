@@ -7,8 +7,7 @@ import { twMerge } from 'tailwind-merge'
 
 import textFieldStyles from './styles'
 
-export interface TextFieldProps
-  extends Omit<React.ComponentPropsWithRef<'input'>, 'type'> {
+export interface TextFieldProps extends React.ComponentPropsWithRef<'input'> {
   label: string
   disabled?: boolean
   invalid?: {
@@ -22,6 +21,7 @@ export default function TextField({
   label,
   invalid,
   className,
+  type = 'text',
   disabled,
   ...props
 }: TextFieldProps) {
@@ -38,7 +38,7 @@ export default function TextField({
         )}
       </Label>
       <Input
-        type="text"
+        type={type}
         invalid={invalid?.when}
         aria-description={errorMessageId}
         aria-errormessage={errorMessageId}
