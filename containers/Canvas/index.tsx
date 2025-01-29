@@ -8,6 +8,7 @@ import { twMerge } from 'tailwind-merge'
 import useAppState from '@/hooks/useAppState'
 import useBrush from '@/hooks/useBrush'
 import useCanvasRefs from '@/hooks/useCanvasRefs'
+import useGenerateAnnotation from '@/hooks/useGenerateAnnotation'
 import usePolygon from '@/hooks/usePolygon'
 import useUnselectableCanvas from '@/hooks/useUnselectableCanvas'
 
@@ -35,6 +36,7 @@ export default function Canvas() {
   useUnselectableCanvas()
   useBrush()
   usePolygon()
+  useGenerateAnnotation()
 
   return (
     <div
