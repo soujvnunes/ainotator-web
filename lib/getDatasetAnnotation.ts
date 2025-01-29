@@ -1,10 +1,9 @@
 import { Canvas } from 'fabric'
 import type { Path, Polygon } from 'fabric'
 
-import { AnnotatorCategoryCrowds } from '@/lib/annotator'
+import { type AnnotatorCategory } from '@/lib/annotator'
 
-interface DatasetAnnotationOptions {
-  isCrowd?: AnnotatorCategoryCrowds
+interface DatasetAnnotationOptions extends Pick<AnnotatorCategory, 'isCrowd'> {
   id: Record<'category' | 'image' | 'annotation', number>
 }
 
