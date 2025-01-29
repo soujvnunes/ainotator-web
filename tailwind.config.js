@@ -6,6 +6,7 @@ module.exports = {
     './app/**/*.{ts,tsx,mdx}',
     './ui/**/*.{ts,tsx,mdx}',
     './containers/**/*.{ts,tsx,mdx}',
+    './lib/**/*.{ts,tsx,mdx}',
   ],
   theme: {
     fontFamily: {
