@@ -41,6 +41,16 @@ export const Checked: Story = {
   ],
 }
 
+export const Disabled: Story = {
+  decorators: [
+    (Story) => (
+      <RadioGroup disabled>
+        <Story />
+      </RadioGroup>
+    ),
+  ],
+}
+
 export const Compact: Story = {
   args: {
     compact: true,
@@ -50,4 +60,9 @@ export const Compact: Story = {
 export const CompactChecked: Story = {
   ...Compact,
   ...Checked,
+}
+
+export const CompactDisabled: Story = {
+  ...Compact,
+  ...Disabled,
 }
