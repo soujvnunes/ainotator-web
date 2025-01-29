@@ -26,8 +26,6 @@ export default function usePolygon() {
     if (canvas == null || mode !== 'annotating' || category?.type !== 'polygon')
       return
 
-    const color = `rgb(${category.color} / 0.4)`
-
     function handleMouseDown(event: TPointerEventInfo<TPointerEvent>) {
       if (!canvas) return
 
@@ -46,7 +44,7 @@ export default function usePolygon() {
             pointer.x,
             pointer.y,
           ],
-          { stroke: color, strokeWidth: 2, ...defaultOptions },
+          { stroke: category?.color, strokeWidth: 2, ...defaultOptions },
         )
 
         canvas.add(line)
@@ -67,7 +65,10 @@ export default function usePolygon() {
     function handleDoubleClick() {
       if (points.length <= 2 || !canvas) return
 
-      const polygon = new Polygon(points, { fill: color, ...defaultOptions })
+      const polygon = new Polygon(points, {
+        fill: category?.color,
+        ...defaultOptions,
+      })
 
       polygon.set({ id })
       canvas.add(polygon)
