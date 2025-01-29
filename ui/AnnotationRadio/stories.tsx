@@ -9,7 +9,7 @@ const meta = {
   args: {
     type: 'brush',
     isCrowd: 'yes',
-    value: 'Radio',
+    value: 'cat',
     color: 'red',
     children: 'Cat',
   },
@@ -34,9 +34,20 @@ export const Default: Story = {}
 export const Checked: Story = {
   decorators: [
     (Story) => (
-      <RadioGroup value="Radio">
+      <RadioGroup value="cat">
         <Story />
       </RadioGroup>
     ),
   ],
+}
+
+export const Compact: Story = {
+  args: {
+    compact: true,
+  },
+}
+
+export const CompactChecked: Story = {
+  ...Compact,
+  ...Checked,
 }
