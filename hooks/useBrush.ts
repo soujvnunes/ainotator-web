@@ -20,7 +20,7 @@ export default function useBrush() {
 
     canvas.isDrawingMode = true
     canvas.freeDrawingBrush = new PencilBrush(canvas)
-    canvas.freeDrawingBrush.color = `rgb(${category.color} / 0.4)`
+    canvas.freeDrawingBrush.color = category.color
     canvas.freeDrawingBrush.width = size
   }, [annotatorRefs, category, mode, size])
 }
