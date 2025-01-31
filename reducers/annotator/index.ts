@@ -14,7 +14,7 @@ export interface AnnotatorCategory extends DatasetCategory {
 export type AnnotatorModes =
   // Onboarding screen on first-time access/after exporting previous annotations
   | 'waiting'
-  // User uploaded an currentImageId, but didn't select a class name yet
+  // User uploaded an image, but didn't select a class name yet/toggled-off to move/zoom the image
   | 'editting'
   // User selected a class name
   | 'annotating'

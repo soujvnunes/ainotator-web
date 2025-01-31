@@ -1,6 +1,6 @@
 export {
-  default as annotatorReducer,
+  default as annotator,
   type AnnotatorModes,
   type AnnotatorCategory,
 } from './annotator'
-export { default as datasetReducer } from './dataset'
+export { default as dataset } from './dataset'
