@@ -1,5 +1,4 @@
-import Canvas from '@/containers/Canvas'
-import Toolbar from '@/containers/Toolbar'
+import { Canvas, Toolbar } from '@/containers'
 
 export default function Home() {
   return (

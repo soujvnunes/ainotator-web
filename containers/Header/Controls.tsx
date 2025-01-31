@@ -1,5 +1,5 @@
-import ControlsEraser from './ControlsEraser'
-import ControlsResizer from './ControlsResizer'
+import ControlsEraser from './controls-eraser'
+import ControlsResizer from './controls-resizer'
 
 export default function Controls() {
   return (

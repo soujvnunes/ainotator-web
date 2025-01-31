@@ -1,7 +1,7 @@
 import Image from 'next/image'
 
-import HeaderControls from './Controls'
-import HeaderExport from './Export'
+import Actions from './actions'
+import Controls from './controls'
 
 export default function Header() {
   return (
@@ -15,8 +15,8 @@ export default function Header() {
           src="/ainotator.svg"
         />
       </h1>
-      <HeaderControls />
-      <HeaderExport />
+      <Controls />
+      <Actions />
     </header>
   )
 }
