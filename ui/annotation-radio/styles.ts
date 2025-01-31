@@ -1,6 +1,6 @@
 import { cva } from 'class-variance-authority'
 
-import { annotatorColorsClasses } from '@/lib'
+import { annotatorColors } from '@/lib'
 
 import { typographyStyles } from '../typography'
 
@@ -9,7 +9,7 @@ const annotationRadioStyles = {
     'group inline-flex cursor-pointer text-white data-[disabled]:cursor-not-allowed data-[disabled]:text-white/60',
     {
       variants: {
-        color: { ...annotatorColorsClasses.background },
+        color: { ...annotatorColors.classes.background },
         compact: {
           true: 'aspect-square w-full min-w-10 data-[disabled]:bg-opacity-40 data-[hover]:bg-opacity-60',
           false:
@@ -41,7 +41,7 @@ const annotationRadioStyles = {
             true: 'ml-auto',
             false: '',
           },
-          color: { ...annotatorColorsClasses.color },
+          color: { ...annotatorColors.classes.color },
         },
       }),
       icon: cva('size-4'),
