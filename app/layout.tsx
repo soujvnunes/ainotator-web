@@ -3,10 +3,9 @@ import '@/ui/tailwind.css'
 import type { Metadata, Viewport } from 'next'
 import { Outfit } from 'next/font/google'
 
-import { Header } from '@/containers'
+import { RefsProvider, StoreProvider } from '@/providers'
 
-import RefsProvider from './refs-provider'
-import StoreProvider from './store-provider'
+import { Header } from '@/containers'
 
 const outfit = Outfit({
   subsets: ['latin'],
