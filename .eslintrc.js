@@ -21,7 +21,7 @@ module.exports = {
           '/^next/',
           'module',
           '/@/lib/',
-          '/@/providers/',
+          '/@/helpers/',
           '/@/hooks/',
           '/@/ui/',
           '/@/containers/',
