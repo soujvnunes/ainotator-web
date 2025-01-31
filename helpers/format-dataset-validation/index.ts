@@ -1,11 +1,11 @@
-import { type DatasetValidation } from './validate-dataset'
+import { DatasetValidation } from '@/actions'
 
 interface FormarttedValidation {
   field: string
   message: string
 }
 
-export default function formatValidation(validation: DatasetValidation) {
+export default function formatDatasetValidation(validation: DatasetValidation) {
   if (validation.details) {
     return validation.details.reduce((acc, { loc, ...cur }) => {
       const [firstLetter, ...msg] = cur.msg
