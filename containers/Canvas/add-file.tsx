@@ -6,7 +6,7 @@ import { FabricImage } from 'fabric'
 
 import { annotator, dataset } from '@/reducers'
 
-import { cx, getDateTime } from '@/helpers'
+import { classNames, getDateTime } from '@/helpers'
 
 import {
   useEnhancedId,
@@ -15,13 +15,11 @@ import {
   useStoreState,
 } from '@/hooks'
 
-import UploaderOnboarding from './uploader-onboarding'
-
-const rootXs = cx(
+const rootProps = classNames(
   'absolute flex h-full w-full cursor-pointer opacity-0 data-[waiting]:z-10 data-[waiting]:opacity-100',
 )
 
-export default function Uploader() {
+export default function AddFile() {
   const dispatch = useStoreDispatch()
   const annotatorRefs = useRefs()
   const [id, nextId] = useEnhancedId()
@@ -81,8 +79,7 @@ export default function Uploader() {
   )
 
   return (
-    <label {...rootXs({ waiting: mode === 'waiting' })}>
-      <UploaderOnboarding />
+    <label {...rootProps({ data: { waiting: mode === 'waiting' } })}>
       <input
         type="file"
         accept="image/*"
