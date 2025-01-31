@@ -1,9 +1,9 @@
 'use client'
 
 import { Fieldset, Legend } from '@headlessui/react'
-import { DocumentArrowDownIcon } from '@heroicons/react/24/solid'
+import { CheckBadgeIcon } from '@heroicons/react/24/solid'
 
-import { annotatorReducer, datasetReducer } from '@/reducers'
+import { annotator, dataset } from '@/reducers'
 
 import {
   useEnhancedId,
@@ -14,38 +14,37 @@ import {
 
 import { Button, Dialog, IconButton, TextField } from '@/ui'
 
-import uploaderAddLicenseFields, {
-  type UploaderAddLicenseFields,
-} from './uploader-add-license-fields'
+import actionsSelectLicenseFields, {
+  type ActionsSelectLicenseFields,
+} from './actions-select-license-fields'
 
-export default function UploaderAddLicense() {
+export default function ActionsSelectLicense() {
   const dispatch = useStoreDispatch()
   const licenseId = useStoreState((state) => state.annotator.current.id.license)
   const licenses = useStoreState((state) => state.dataset.licenses)
   const [id, nextId] = useEnhancedId()
   const currentLicense = licenses.find((license) => license.id === licenseId)
-  const formSubmit = useFormSubmit<UploaderAddLicenseFields>((fields) => {
-    dispatch(annotatorReducer.actions.setLicense(id))
-    dispatch(datasetReducer.actions.addLicense({ id, ...fields }))
+  const formSubmit = useFormSubmit<ActionsSelectLicenseFields>((fields) => {
+    dispatch(annotator.actions.setLicense(id))
+    dispatch(dataset.actions.addLicense({ id, ...fields }))
     nextId()
-    // TODO: next tab
   })
 
   return (
     <Dialog
-      title="License Details"
-      description="Fill in the license image details before exporting."
+      title="Select the image license"
+      description="Fill in the license image details or select a previous one."
       renderController={(open) => (
         <IconButton
           onClick={open}
-          aria-label="Add the image license">
-          <DocumentArrowDownIcon className="m-auto size-6" />
+          aria-label="Select or add an image license">
+          <CheckBadgeIcon className="m-auto size-6" />
         </IconButton>
       )}>
       <form onSubmit={formSubmit.onSubmit}>
         <Fieldset>
           <Legend className="sr-only">License details.</Legend>
-          {uploaderAddLicenseFields.map((field) => (
+          {actionsSelectLicenseFields.map((field) => (
             <TextField
               className="mt-4"
               key={field.name}

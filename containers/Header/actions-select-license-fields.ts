@@ -1,9 +1,9 @@
-export interface UploaderAddLicenseFields {
+export interface ActionsSelectLicenseFields {
   name: string
   url: string
 }
 
-const uploaderAddLicenseFields = [
+const actionsSelectLicenseFields = [
   {
     label: 'Label',
     name: 'name',
@@ -16,4 +16,4 @@ const uploaderAddLicenseFields = [
   },
 ] as const
 
-export default uploaderAddLicenseFields
+export default actionsSelectLicenseFields
