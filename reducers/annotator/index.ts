@@ -1,14 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { type PayloadAction } from '@reduxjs/toolkit'
 
-import {
-  type DatasetCategory,
-  type DatasetImage,
-  type DatasetLicense,
-} from '../dataset'
-import { type AnnotatorColors } from './annotator-colors'
-import { type AnnotatorCrowds } from './annotator-crowds'
-import { type AnnotatorTypes } from './annotator-types'
+import type { DatasetCategory, DatasetImage, DatasetLicense } from '@/actions'
+
+import type { AnnotatorColors, AnnotatorCrowds, AnnotatorTypes } from '@/lib'
 
 export interface AnnotatorCategory extends DatasetCategory {
   isCrowd: AnnotatorCrowds
