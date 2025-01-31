@@ -18,7 +18,7 @@ export default function RadioField<V extends string>({
       className={radioFieldStyles.root({ className })}
       {...props}>
       {values.map((radioProps) => {
-        const resolveLabel = radioProps.label ?? radioProps.label
+        const resolveLabel = radioProps.label ?? radioProps.value
 
         return (
           <Radio
