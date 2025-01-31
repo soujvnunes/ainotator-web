@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { annotatorColorsClasses } from '@/lib'
+import { annotatorColors } from '@/lib'
 
 import useStoreState from '../use-store-state'
 
@@ -17,7 +17,7 @@ export default function useCurrentCategory() {
 
     return {
       ...currentCategory,
-      color: `rgb(${annotatorColorsClasses.channel[currentCategory.color]} / 0.4)`,
+      color: `rgb(${annotatorColors.rgb[currentCategory.color]} / 0.4)`,
     }
   }, [categories, category])
 }
