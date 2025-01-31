@@ -2,22 +2,20 @@
 
 import { useCallback } from 'react'
 
-import annotator from '@/lib/annotator'
+import { annotator } from '@/lib'
 
-import useAppDispatch from '@/hooks/useAppDispatch'
-import useAppState from '@/hooks/useAppState'
-import useCurrentCategory from '@/hooks/useCurrentCategory'
+import { useCurrentCategory, useStoreDispatch, useStoreState } from '@/hooks'
 
 import { RangeField } from '@/ui'
 
 export default function ControlsResizer() {
   const category = useCurrentCategory()
-  const mode = useAppState((state) => state.annotator.current.mode)
-  const size = useAppState((state) => state.annotator.current.size.brush)
-  const dispatch = useAppDispatch()
+  const mode = useStoreState((state) => state.annotator.mode)
+  const size = useStoreState((state) => state.annotator.size.brush)
+  const dispatch = useStoreDispatch()
   const handleSize = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      dispatch(annotator.actions.setSize({ brush: +event.target.value }))
+      dispatch(annotator.actions.setBrushSize(+event.target.value))
     },
     [dispatch],
   )

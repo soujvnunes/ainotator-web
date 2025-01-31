@@ -1,23 +1,16 @@
 'use client'
 
 import { Fieldset, Legend, RadioGroup } from '@headlessui/react'
-import { StarIcon } from '@heroicons/react/24/outline'
+
 import {
-  PaintBrushIcon,
-  UserGroupIcon,
-  UserIcon,
-} from '@heroicons/react/24/solid'
-
-import annotator, {
-  annotatorCategoryColors,
-  annotatorCategoryCrowds,
-  annotatorCategoryTypes,
+  annotator,
+  annotatorColors,
+  annotatorCrowds,
+  annotatorTypes,
   type AnnotatorCategory,
-} from '@/lib/annotator'
+} from '@/lib'
 
-import useAppDispatch from '@/hooks/useAppDispatch'
-import useFormSubmit from '@/hooks/useFormSubmit'
-import useNextId from '@/hooks/useNextId'
+import { useEnhancedId, useFormSubmit, useStoreDispatch } from '@/hooks'
 
 import {
   AnnotationRadio,
@@ -27,9 +20,9 @@ import {
   textFieldStyles,
 } from '@/ui'
 
-export default function AddForm() {
-  const dispatch = useAppDispatch()
-  const [id, nextId] = useNextId()
+export default function AddCategoryForm() {
+  const dispatch = useStoreDispatch()
+  const [id, nextId] = useEnhancedId()
   const formSubmit = useFormSubmit<Omit<AnnotatorCategory, 'id'>>((fields) => {
     // TODO: implement fields.already to implement error feedback for an existent category
     dispatch(annotator.actions.addCategory({ id, ...fields }))
@@ -72,8 +65,8 @@ export default function AddForm() {
             aria-label="Is crowd?"
             className="flex mt-2"
             name="isCrowd"
-            defaultValue={isCrowdValues[0].value}
-            values={isCrowdValues}
+            defaultValue={annotatorCrowds[0].value}
+            values={annotatorCrowds}
           />
         </div>
         <div>
@@ -88,14 +81,14 @@ export default function AddForm() {
             aria-label="Type"
             className="flex mt-2"
             name="type"
-            defaultValue={typeValues[0].value}
-            values={typeValues}
+            defaultValue={annotatorTypes[0].value}
+            values={annotatorTypes}
           />
           <RadioGroup
             className="flex"
             name="color"
-            defaultValue={annotatorCategoryColors[0]}>
-            {annotatorCategoryColors.map((color) => (
+            defaultValue={annotatorColors[0]}>
+            {annotatorColors.map((color) => (
               <AnnotationRadio
                 compact
                 key={color}
@@ -115,24 +108,3 @@ export default function AddForm() {
     </form>
   )
 }
-
-const isCrowdValues = [
-  {
-    children: <UserGroupIcon className="size-4" />,
-    value: annotatorCategoryCrowds[0],
-  },
-  {
-    children: <UserIcon className="size-4" />,
-    value: annotatorCategoryCrowds[1],
-  },
-]
-const typeValues = [
-  {
-    children: <StarIcon className="size-4" />,
-    value: annotatorCategoryTypes[1],
-  },
-  {
-    children: <PaintBrushIcon className="size-4" />,
-    value: annotatorCategoryTypes[0],
-  },
-]

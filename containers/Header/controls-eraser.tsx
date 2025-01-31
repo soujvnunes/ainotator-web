@@ -4,7 +4,7 @@ import { PaintBrushIcon, XMarkIcon } from '@heroicons/react/24/solid'
 
 import { IconButton } from '@/ui'
 
-export default function HeaderControlsEraser() {
+export default function ControlsEraser() {
   return (
     <IconButton
       disabled={true /* TODO */}

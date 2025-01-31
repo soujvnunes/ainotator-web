@@ -3,22 +3,29 @@
 import { useCallback } from 'react'
 
 import { FabricImage } from 'fabric'
-import { twMerge } from 'tailwind-merge'
 
-import annotator from '@/lib/annotator'
-import dataset from '@/lib/dataset'
-import getDatasetImage from '@/lib/getDatasetImage'
+import { annotator, dataset } from '@/lib'
 
-import useAppDispatch from '@/hooks/useAppDispatch'
-import useAppState from '@/hooks/useAppState'
-import useCanvasRefs from '@/hooks/useCanvasRefs'
+import { cx, getDateTime } from '@/helpers'
 
-import UploaderOnboarding from './UploaderOnboarding'
+import {
+  useEnhancedId,
+  useRefs,
+  useStoreDispatch,
+  useStoreState,
+} from '@/hooks'
+
+import UploaderOnboarding from './uploader-onboarding'
+
+const rootXs = cx(
+  'absolute flex h-full w-full cursor-pointer opacity-0 data-[waiting]:z-10 data-[waiting]:opacity-100',
+)
 
 export default function Uploader() {
-  const mode = useAppState((state) => state.annotator.current.mode)
-  const dispatch = useAppDispatch()
-  const annotatorRefs = useCanvasRefs()
+  const dispatch = useStoreDispatch()
+  const annotatorRefs = useRefs()
+  const [id, nextId] = useEnhancedId()
+  const mode = useStoreState((state) => state.annotator.mode)
   const handleFileChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.item(0)
@@ -30,20 +37,27 @@ export default function Uploader() {
         const result = event.target?.result
         const canvas = annotatorRefs.canvas.current
 
-        if (typeof result !== 'string' || canvas == null) return
+        if (typeof result !== 'string' || !canvas) return
 
+        /**
+         * TODO: implement /canvas page as router and pass image as query
+         *
+         * router.replace({ pathname: '/canvas', query: { image }})
+         *
+         * this will remove the need for annotatorRefs.image.current
+         */
         const image = await FabricImage.fromURL(result)
-        const imageId = file.lastModified
-        const datasetImage = getDatasetImage({
-          name: file.name,
-          lastModified: imageId,
+        const imageDataset = {
+          // TODO: fill in the license form right after editting mode
+          license: 0,
+          file_name: file.name,
           height: image.height,
           width: image.width,
-          id: {
-            image: imageId,
-            license: 0,
-          },
-        })
+          date_captured: getDateTime(file.lastModified),
+          coco_url: '',
+          flickr_url: '',
+          id,
+        }
         const ratio = {
           x: canvas.width / image.width,
           y: canvas.height / image.height,
@@ -58,19 +72,16 @@ export default function Uploader() {
         canvas.add(image)
         canvas.renderAll()
         dispatch(annotator.actions.setMode('editting'))
-        dispatch(dataset.actions.addImage(datasetImage))
+        dispatch(dataset.actions.addImage(imageDataset))
+        nextId()
       }
       reader.readAsDataURL(file)
     },
-    [annotatorRefs.canvas, annotatorRefs.image, dispatch],
+    [annotatorRefs.canvas, annotatorRefs.image, dispatch, id, nextId],
   )
 
   return (
-    <label
-      className={twMerge(
-        'absolute flex h-full w-full cursor-pointer opacity-0',
-        mode === 'waiting' && 'z-10 opacity-100',
-      )}>
+    <label {...rootXs({ waiting: mode === 'waiting' })}>
       <UploaderOnboarding />
       <input
         type="file"

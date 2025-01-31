@@ -1,5 +1,3 @@
-'use client'
-
 import {
   DocumentArrowDownIcon,
   DocumentArrowUpIcon,

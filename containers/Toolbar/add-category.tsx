@@ -4,9 +4,9 @@ import { PlusIcon } from '@heroicons/react/24/solid'
 
 import { Dialog, IconButton } from '@/ui'
 
-import AddForm from './AddForm'
+import AddForm from './add-category-form'
 
-export default function Add() {
+export default function AddCategory() {
   return (
     <Dialog
       title="Annotation Class"
