@@ -1,16 +1,7 @@
 import { Canvas } from 'fabric'
 import type { Path, Polygon } from 'fabric'
 
-import { AnnotatorCategory } from '@/reducers'
-
-interface DatasetAnnotationOptions extends Pick<AnnotatorCategory, 'isCrowd'> {
-  id: Record<'category' | 'image' | 'annotation', number>
-}
-
-export default function getAnnotation(
-  canvas: Canvas,
-  options: DatasetAnnotationOptions,
-) {
+export default function getAnnotation(canvas: Canvas) {
   const objects = canvas.getObjects()
   const brush = objects.find((object): object is Path => {
     return object.isType('path')
@@ -25,11 +16,7 @@ export default function getAnnotation(
     return {
       segmentation: brush.path.map(([, ...points]) => points),
       area: width * height,
-      iscrowd: options.isCrowd,
-      image_id: options.id.image,
       bbox: [brush.left, brush.top, width, height],
-      category_id: options.id.category,
-      id: options.id.annotation,
     }
   }
 
@@ -37,11 +24,7 @@ export default function getAnnotation(
     return {
       segmentation: [polygon.points.map((point) => [point.x, point.y]).flat()],
       area: polygon.width * polygon.height,
-      iscrowd: options.isCrowd,
-      image_id: options.id.image,
       bbox: [polygon.left, polygon.top, polygon.width, polygon.height],
-      category_id: options.id.category,
-      id: options.id.annotation,
     }
   }
 }
