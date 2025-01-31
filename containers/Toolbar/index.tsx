@@ -1,11 +1,11 @@
-import Add from './add-category'
-import Categories from './categories'
+import CategoriesAdd from './categories-add'
+import CategoriesList from './categories-list'
 
 export default function Toolbar() {
   return (
     <div className="flex items-center h-16">
-      <Add />
-      <Categories />
+      <CategoriesAdd />
+      <CategoriesList />
     </div>
   )
 }
