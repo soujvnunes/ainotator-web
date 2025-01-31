@@ -2,7 +2,7 @@
 
 import { useCallback } from 'react'
 
-import { annotatorReducer } from '@/reducers'
+import { annotator } from '@/reducers'
 
 import { useCurrentCategory, useStoreDispatch, useStoreState } from '@/hooks'
 
@@ -15,7 +15,7 @@ export default function ControlsResizer() {
   const dispatch = useStoreDispatch()
   const handleSize = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      dispatch(annotatorReducer.actions.setBrushSize(+event.target.value))
+      dispatch(annotator.actions.setBrushSize(+event.target.value))
     },
     [dispatch],
   )

@@ -4,7 +4,7 @@ import { useCallback } from 'react'
 
 import { FabricImage } from 'fabric'
 
-import { annotatorReducer, datasetReducer } from '@/reducers'
+import { annotator, dataset } from '@/reducers'
 
 import { cx, getDateTime } from '@/helpers'
 
@@ -71,8 +71,8 @@ export default function Uploader() {
         annotatorRefs.image.current = image
         canvas.add(image)
         canvas.renderAll()
-        dispatch(annotatorReducer.actions.setMode('editting'))
-        dispatch(datasetReducer.actions.addImage(imageDataset))
+        dispatch(annotator.actions.setMode('editting'))
+        dispatch(dataset.actions.addImage(imageDataset))
         nextId()
       }
       reader.readAsDataURL(file)

@@ -6,7 +6,7 @@ import { DocumentArrowDownIcon } from '@heroicons/react/24/solid'
 
 import { validateDataset } from '@/actions'
 
-import { annotatorReducer } from '@/reducers'
+import { annotator } from '@/reducers'
 
 import { generateLink, isDatasetValid } from '@/helpers'
 
@@ -21,7 +21,7 @@ export default function ActionsExport() {
   const image = useStoreState((state) => state.annotator.current.id.image)
   const [isPending, startTransition] = useTransition()
   const handleValidation = useCallback(() => {
-    dispatch(annotatorReducer.actions.setMode('exporting'))
+    dispatch(annotator.actions.setMode('exporting'))
 
     startTransition(async () => {
       const validation = await validateDataset(dataset)
@@ -41,8 +41,8 @@ export default function ActionsExport() {
         })
         // CLEAN DATASET?
         // RESET ANNOTATOR STATE
-        dispatch(annotatorReducer.actions.setMode('waiting'))
-        dispatch(annotatorReducer.actions.setCategory(0))
+        dispatch(annotator.actions.setMode('waiting'))
+        dispatch(annotator.actions.setCategory(0))
         // CLEAN REFS
         refs.file.current = null
         refs.image.current = null
