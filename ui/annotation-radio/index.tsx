@@ -9,21 +9,17 @@ import {
 } from '@heroicons/react/24/solid'
 import { twMerge } from 'tailwind-merge'
 
-import type {
-  AnnotatorCategoryColors,
-  AnnotatorCategoryCrowds,
-  AnnotatorCategoryTypes,
-} from '@/lib/annotator'
+import type { AnnotatorColors, AnnotatorCrowds, AnnotatorTypes } from '@/lib'
 
 import annotationRadioStyles from './styles'
 
 export interface AnnotationRadioProps<V extends string | number>
   extends React.ComponentPropsWithRef<'input'> {
   value: V
-  color: AnnotatorCategoryColors
+  color: AnnotatorColors
   compact?: boolean
-  isCrowd?: AnnotatorCategoryCrowds
-  type?: AnnotatorCategoryTypes
+  isCrowd?: AnnotatorCrowds
+  type?: AnnotatorTypes
 }
 
 export default function AnnotationRadio<V extends string | number>({

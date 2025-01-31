@@ -13,7 +13,7 @@ import {
 import { XMarkIcon } from '@heroicons/react/24/solid'
 import { twMerge } from 'tailwind-merge'
 
-import IconButton from '../IconButton'
+import IconButton from '../icon-button'
 import dialogStyles from './styles'
 
 export interface DialogProps {

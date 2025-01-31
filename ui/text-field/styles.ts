@@ -1,7 +1,7 @@
 import { cva } from 'class-variance-authority'
 import { twMerge } from 'tailwind-merge'
 
-import { typographyStyles } from '../Typography'
+import { typographyStyles } from '../typography'
 
 const textFieldStyles = {
   root: cva('data-[disabled]:opacity-60'),

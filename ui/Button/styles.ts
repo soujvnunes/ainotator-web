@@ -1,6 +1,6 @@
 import { cva } from 'class-variance-authority'
 
-import { typographyStyles } from '../Typography'
+import { typographyStyles } from '../typography'
 
 const buttonStyles = {
   root: cva(

@@ -1,9 +1,10 @@
 'use client'
 
-import { useCallback } from 'react'
+import { useMemo } from 'react'
 
 import { Field, Input, Label } from '@headlessui/react'
 
+import { getLeftPosition, getTopPosition, max, min } from './lib'
 import rangeFieldStyles from './styles'
 
 interface RangeFieldProps
@@ -22,26 +23,8 @@ export default function RangeField({
   label,
   ...props
 }: RangeFieldProps) {
-  const max = 40
-  const min = 8
-  const handleXPosition = useCallback(
-    (input?: RangeFieldProps['value']) => {
-      if (typeof input === 'undefined') return 0
-
-      return ((160 - 0) / (+max - +min)) * (+input - +min) - +input / 2
-    },
-    [max, min],
-  )
-  const handleYPosition = useCallback(
-    (input?: RangeFieldProps['value']) => {
-      if (typeof input === 'undefined') return 0
-
-      return -0.5 * +input + +max / 2
-    },
-    [max],
-  )
-  const yPos = handleYPosition(value)
-  const xPos = handleXPosition(value)
+  const xPos = useMemo(() => getTopPosition(value), [value])
+  const yPos = useMemo(() => getLeftPosition(value), [value])
 
   return (
     <Field

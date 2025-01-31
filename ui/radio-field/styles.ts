@@ -1,6 +1,6 @@
 import { cva } from 'class-variance-authority'
 
-import { buttonStyles } from '../Button'
+import { buttonStyles } from '../button'
 
 const radioFieldStyles = {
   root: cva('group flex'),
