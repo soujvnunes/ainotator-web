@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { dataset } from '@/lib'
+import { dataset } from '@/reducers'
 
 import useCurrentCategory from '../use-current-category'
 import useEnhancedId from '../use-enhanced-id'
@@ -27,14 +27,19 @@ export default function useGenerateAnnotation() {
         return
       }
 
-      const datasetAnnotation = getAnnotation(canvas, {
-        isCrowd: category.isCrowd,
-        id: { image, category: category.id, annotation: id },
-      })
+      const datasetAnnotation = getAnnotation(canvas)
 
       if (!datasetAnnotation) return
 
-      dispatch(dataset.actions.addAnnotation(datasetAnnotation))
+      dispatch(
+        dataset.actions.addAnnotation({
+          id,
+          image_id: image,
+          category_id: category.id,
+          iscrowd: category.isCrowd === 'yes' ? 1 : 0,
+          ...datasetAnnotation,
+        }),
+      )
       dispatch(
         dataset.actions.addCategory({
           supercategory: category.supercategory,
