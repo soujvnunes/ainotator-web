@@ -5,7 +5,7 @@ export interface ActionsSelectLicenseFields {
 
 const actionsSelectLicenseFields = [
   {
-    label: 'Label',
+    label: 'Name',
     name: 'name',
     placeholder: 'Attribution-NonCommercial-ShareAlike License',
   },

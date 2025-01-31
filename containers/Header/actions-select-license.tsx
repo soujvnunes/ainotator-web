@@ -32,7 +32,7 @@ export default function ActionsSelectLicense() {
 
   return (
     <Dialog
-      title="Select the image license"
+      title="License details"
       description="Fill in the license image details or select a previous one."
       renderController={(open) => (
         <IconButton
