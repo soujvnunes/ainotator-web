@@ -17,15 +17,10 @@ export default function CategoriesList() {
   const category = useStoreState((state) => state.annotator.current.id.category)
   const handleCategory = useCallback(
     (id: number) => {
-      if (id === category) {
-        dispatch(annotator.actions.setCategory(0))
-        dispatch(annotator.actions.setMode('editting'))
-      } else {
-        dispatch(annotator.actions.setCategory(id))
-        dispatch(annotator.actions.setMode('annotating'))
-      }
+      dispatch(annotator.actions.setCategory(id))
+      dispatch(annotator.actions.setMode('annotating'))
     },
-    [category, dispatch],
+    [dispatch],
   )
 
   return (
