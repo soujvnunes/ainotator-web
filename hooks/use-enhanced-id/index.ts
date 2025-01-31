@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from 'react'
 
-export default function useNextId() {
+export default function useEnhancedId() {
   const [id, setId] = useState(() => Date.now())
   const nextId = useCallback(() => setId(() => Date.now()), [])
 

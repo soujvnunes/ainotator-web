@@ -1,30 +1,35 @@
 'use client'
 
-import { useEffect, useId, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import { Line, Point, Polygon, util } from 'fabric'
-import type { TPointerEvent, TPointerEventInfo } from 'fabric'
+import {
+  Line,
+  Point,
+  Polygon,
+  util,
+  type TPointerEvent,
+  type TPointerEventInfo,
+} from 'fabric'
 
-import useAppState from './useAppState'
-import useCanvasRefs from './useCanvasRefs'
-import useCurrentCategory from './useCurrentCategory'
+import useCurrentCategory from '../use-current-category'
+import useEnhancedId from '../use-enhanced-id'
+import useRefs from '../use-refs'
+import useStoreState from '../use-store-state'
 
-// TODO: not finishing when closes
 export default function usePolygon() {
-  const annotatorRefs = useCanvasRefs()
+  const refs = useRefs()
   const category = useCurrentCategory()
-  const mode = useAppState((state) => state.annotator.current.mode)
-  const id = useId()
+  const mode = useStoreState((state) => state.annotator.mode)
+  const [id, nextId] = useEnhancedId()
   const [lines, setLines] = useState<Line[]>([])
   const [isDrawing, setDrawing] = useState(false)
   const [points, setPoints] = useState<Record<'x' | 'y', number>[]>([])
 
   useEffect(() => {
-    const canvas = annotatorRefs.canvas.current
+    const canvas = refs.canvas.current
     const defaultOptions = { selectable: false, hasControls: false }
 
-    if (canvas == null || mode !== 'annotating' || category?.type !== 'polygon')
-      return
+    if (!canvas || mode !== 'annotating' || category?.type !== 'polygon') return
 
     function handleMouseDown(event: TPointerEventInfo<TPointerEvent>) {
       if (!canvas) return
@@ -37,15 +42,12 @@ export default function usePolygon() {
       setPoints((prevPoints) => [...prevPoints, { x: pointer.x, y: pointer.y }])
 
       if (!!points.length) {
-        const line = new Line(
-          [
-            points[points.length - 1].x,
-            points[points.length - 1].y,
-            pointer.x,
-            pointer.y,
-          ],
-          { stroke: category?.color, strokeWidth: 2, ...defaultOptions },
-        )
+        const point = points[points.length - 1]
+        const line = new Line([point.x, point.y, pointer.x, pointer.y], {
+          stroke: category?.color,
+          strokeWidth: 2,
+          ...defaultOptions,
+        })
 
         canvas.add(line)
         setLines((prevLines) => [...prevLines, line])
@@ -72,6 +74,7 @@ export default function usePolygon() {
 
       polygon.set({ id })
       canvas.add(polygon)
+      nextId()
 
       setPoints([])
       setLines([])
@@ -87,5 +90,5 @@ export default function usePolygon() {
       canvas.off('mouse:move', handleMouseMove)
       canvas.off('mouse:dblclick', handleDoubleClick)
     }
-  }, [lines, isDrawing, points, id, category, annotatorRefs, mode])
+  }, [lines, isDrawing, points, id, category, refs, mode, nextId])
 }
