@@ -1,5 +1,3 @@
-'use client'
-
 import { PaintBrushIcon, XMarkIcon } from '@heroicons/react/24/solid'
 
 import { IconButton } from '@/ui'
