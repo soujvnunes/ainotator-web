@@ -3,7 +3,7 @@
 import { Fieldset, Legend } from '@headlessui/react'
 import { DocumentArrowDownIcon } from '@heroicons/react/24/solid'
 
-import { annotator, dataset } from '@/lib'
+import { annotatorReducer, datasetReducer } from '@/reducers'
 
 import {
   useEnhancedId,
@@ -25,8 +25,8 @@ export default function UploaderAddLicense() {
   const [id, nextId] = useEnhancedId()
   const currentLicense = licenses.find((license) => license.id === licenseId)
   const formSubmit = useFormSubmit<UploaderAddLicenseFields>((fields) => {
-    dispatch(annotator.actions.setLicense(id))
-    dispatch(dataset.actions.addLicense({ id, ...fields }))
+    dispatch(annotatorReducer.actions.setLicense(id))
+    dispatch(datasetReducer.actions.addLicense({ id, ...fields }))
     nextId()
     // TODO: next tab
   })

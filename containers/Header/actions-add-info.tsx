@@ -3,7 +3,7 @@
 import { Fieldset, Legend } from '@headlessui/react'
 import { InformationCircleIcon } from '@heroicons/react/24/solid'
 
-import { dataset } from '@/lib'
+import { datasetReducer } from '@/reducers'
 
 import { useFormSubmit, useStoreDispatch, useStoreState } from '@/hooks'
 
@@ -17,7 +17,7 @@ export default function ActionsAddInfo() {
   const dispatch = useStoreDispatch()
   const info = useStoreState((state) => state.dataset.info)
   const formSubmit = useFormSubmit<ActionsAddInfoFields>((fields) => {
-    dispatch(dataset.actions.setInfo({ ...fields, year: +fields.year }))
+    dispatch(datasetReducer.actions.setInfo({ ...fields, year: +fields.year }))
   })
 
   return (
