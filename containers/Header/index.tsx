@@ -1,12 +1,12 @@
 import Image from 'next/image'
 
 import Actions from './actions'
-import Controls from './controls'
+import FileDetails from './file-details'
 
 export default function Header() {
   return (
-    <header className="flex items-center justify-between h-10">
-      <h1>
+    <header className="flex h-10 items-center justify-between">
+      <h1 className="w-[120px]">
         <Image
           priority
           width={40}
@@ -15,7 +15,7 @@ export default function Header() {
           src="/ainotator.svg"
         />
       </h1>
-      <Controls />
+      <FileDetails />
       <Actions />
     </header>
   )
