@@ -47,7 +47,7 @@ export default function Dialog({
       <HeadlessDialog
         open={open}
         onClose={handleClose}
-        className="relative z-10 focus:outline-none">
+        className="relative z-10 focus:outline-hidden">
         <DialogBackdrop className="fixed inset-0 bg-black/80 backdrop-blur-lg" />
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4">

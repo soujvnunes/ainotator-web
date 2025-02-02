@@ -23,7 +23,7 @@ const radioFieldStyles = {
           vertical: {
             true: 'group pl-0 justify-start',
             false:
-              'data-[checked]:data-[hover]:bg-white/60 data-[checked]:data-[disabled]:bg-white/40 data-[checked]:bg-white data-[checked]:text-black data-[checked]:data-[disabled]:text-black/80',
+              'data-checked:data-hover:bg-white/60 data-checked:data-disabled:bg-white/40 data-checked:bg-white data-checked:text-black data-checked:data-disabled:text-black/80',
           },
         },
         defaultVariants: {
@@ -34,9 +34,9 @@ const radioFieldStyles = {
     button: {
       root: iconButtonStyles.root({
         className:
-          'inline-flex mr-4 group-data-[checked]:group-data-[hover]:bg-white/60 group-data-[checked]:group-data-[disabled]:bg-white/40 group-data-[checked]:bg-white group-data-[checked]:text-black group-data-[checked]:group-data-[disabled]:text-black/60',
+          'inline-flex mr-4 group-data-hover:group-data-checked:bg-white/60 group-data-disabled:group-data-checked:bg-white/40 group-data-checked:bg-white group-data-checked:text-black group-data-disabled:group-data-checked:text-black/60',
       }),
-      icon: 'invisible m-auto group-data-[checked]:visible size-6',
+      icon: 'invisible m-auto group-data-checked:visible size-6',
     },
   },
 }
