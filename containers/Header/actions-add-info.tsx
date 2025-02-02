@@ -5,6 +5,8 @@ import { InformationCircleIcon } from '@heroicons/react/24/solid'
 
 import { dataset } from '@/reducers'
 
+import { classes } from '@/helpers'
+
 import { useFormSubmit, useStoreDispatch, useStoreState } from '@/hooks'
 
 import { Button, Dialog, IconButton, TextField } from '@/ui'
@@ -12,6 +14,8 @@ import { Button, Dialog, IconButton, TextField } from '@/ui'
 import actionsAddInfoFields, {
   type ActionsAddInfoFields,
 } from './actions-add-info-fields'
+
+const buttonClasses = classes('data-[unknown]:text-red-400')
 
 export default function ActionsAddInfo() {
   const dispatch = useStoreDispatch()
@@ -22,12 +26,19 @@ export default function ActionsAddInfo() {
 
   return (
     <Dialog
-      title="Info Details"
+      title="Info details"
       description="Fill in the information dataset details before exporting."
       renderController={(open) => (
         <IconButton
           onClick={open}
-          aria-label="Add the dataset information">
+          aria-label="Add the dataset information"
+          {...buttonClasses({
+            data: {
+              unknown: Object.values(info).some(
+                (value) => !!value || value === 0,
+              ),
+            },
+          })}>
           <InformationCircleIcon className="m-auto size-6" />
         </IconButton>
       )}>
@@ -47,7 +58,7 @@ export default function ActionsAddInfo() {
                 name={field.name}
                 label={field.label}
                 placeholder={field.placeholder}
-                defaultValue={info?.[field.name] || undefined}
+                defaultValue={info[field.name] || undefined}
                 invalid={{
                   when: formSubmit.fields.empty.includes(field.name),
                   message: 'Empty',

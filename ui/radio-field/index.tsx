@@ -1,39 +1,40 @@
-import { Radio, RadioGroup } from '@headlessui/react'
+import { Radio, RadioGroup, RadioGroupProps } from '@headlessui/react'
+import { CheckIcon } from '@heroicons/react/24/solid'
+import { twMerge } from 'tailwind-merge'
 
 import radioFieldStyles from './styles'
 
-interface RadioFieldProps<V extends string>
-  extends Omit<React.ComponentPropsWithRef<'input'>, 'onChange'> {
-  values: { value: V; children?: React.ReactNode; label?: string }[]
-  defaultValue?: V
+interface RadioFieldProps<V extends string | number>
+  extends RadioGroupProps<'div', V> {
+  values: { value: V; children: React.ReactNode; label?: string }[]
+  vertical?: boolean
 }
 
-export default function RadioField<V extends string>({
+export default function RadioField<V extends string | number>({
   className,
   values,
+  vertical,
   ...props
 }: RadioFieldProps<V>) {
   return (
     <RadioGroup
-      className={radioFieldStyles.root({ className })}
+      className={radioFieldStyles.root({ className, vertical })}
       {...props}>
-      {values.map((radioProps) => {
-        const resolveLabel = radioProps.label ?? radioProps.value
-
-        return (
-          <Radio
-            key={radioProps.value}
-            value={radioProps.value}
-            aria-label={
-              typeof radioProps.children === 'undefined'
-                ? undefined
-                : resolveLabel
-            }
-            className={radioFieldStyles.radio}>
-            {radioProps.children ?? resolveLabel}
-          </Radio>
-        )
-      })}
+      {values.map(({ label, children, ...radioProps }) => (
+        <Radio
+          key={radioProps.value}
+          defaultChecked={props.defaultValue === radioProps.value}
+          className={twMerge(radioFieldStyles.radio.root({ vertical }))}
+          aria-label={vertical ? undefined : label}
+          {...radioProps}>
+          {vertical && (
+            <div className={radioFieldStyles.radio.button.root}>
+              <CheckIcon className={radioFieldStyles.radio.button.icon} />
+            </div>
+          )}
+          {children}
+        </Radio>
+      ))}
     </RadioGroup>
   )
 }

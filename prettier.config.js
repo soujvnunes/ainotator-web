@@ -1,6 +1,6 @@
 module.exports = {
   plugins: ['prettier-plugin-tailwindcss'],
-  tailwindFunctions: ['classNames'],
+  tailwindFunctions: ['classes'],
   jsxSingleQuote: false,
   bracketSameLine: true,
   singleAttributePerLine: true,

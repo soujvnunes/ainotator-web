@@ -1,9 +1,4 @@
-export interface ActionsSelectLicenseFields {
-  name: string
-  url: string
-}
-
-const actionsSelectLicenseFields = [
+const actionsLicensesAddFields = [
   {
     label: 'Name',
     name: 'name',
@@ -16,4 +11,4 @@ const actionsSelectLicenseFields = [
   },
 ] as const
 
-export default actionsSelectLicenseFields
+export default actionsLicensesAddFields

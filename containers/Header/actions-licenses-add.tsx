@@ -1,0 +1,61 @@
+'use client'
+
+import { Fieldset, Legend } from '@headlessui/react'
+
+import type { DatasetLicense } from '@/actions'
+
+import { annotator, dataset } from '@/reducers'
+
+import {
+  useEnhancedId,
+  useFormSubmit,
+  useStoreDispatch,
+  useStoreState,
+} from '@/hooks'
+
+import { Button, TextField } from '@/ui'
+
+import actionsLicensesAddFields from './actions-licenses-add-fields'
+
+export default function ActionsLicensesAdd() {
+  const dispatch = useStoreDispatch()
+  const [id, nextId] = useEnhancedId()
+  const licenses = useStoreState((state) => state.dataset.licenses)
+  const imageId = useStoreState((state) => state.annotator.current.id.image)
+  const formSubmit = useFormSubmit<Omit<DatasetLicense, 'id'>>((fields) => {
+    dispatch(annotator.actions.setLicense(id))
+    dispatch(dataset.actions.addLicense({ id, ...fields }))
+
+    if (!!imageId && licenses.length < 1) {
+      dispatch(dataset.actions.setImage({ id: imageId, license: id }))
+    }
+
+    nextId()
+  })
+
+  return (
+    <form onSubmit={formSubmit.onSubmit}>
+      <Fieldset>
+        <Legend className="sr-only">License details.</Legend>
+        {actionsLicensesAddFields.map((field) => (
+          <TextField
+            className="mt-4"
+            key={field.name}
+            name={field.name}
+            label={field.label}
+            placeholder={field.placeholder}
+            invalid={{
+              when: formSubmit.fields.empty.includes(field.name),
+              message: 'Empty',
+            }}
+          />
+        ))}
+        <Button
+          type="submit"
+          fullWidth>
+          Add
+        </Button>
+      </Fieldset>
+    </form>
+  )
+}

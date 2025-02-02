@@ -1,4 +1,4 @@
-export { default as classNames } from './classNames'
+export { default as classes } from './classes-variants'
 export { default as formatDatasetValidation } from './format-dataset-validation'
 export { default as generateLink } from './generate-link'
 export { default as getDateTime } from './get-date-time'

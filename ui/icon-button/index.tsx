@@ -12,6 +12,7 @@ interface IconButtonProps
   size?: 'lg' | 'md'
 }
 
+export { iconButtonStyles }
 export default function IconButton({
   className,
   size,

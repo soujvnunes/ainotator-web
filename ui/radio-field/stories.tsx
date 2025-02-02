@@ -4,8 +4,8 @@ import type { Meta, StoryObj } from '@storybook/react'
 import RadioField from './index'
 
 const values = [
-  { value: 'radio_one', label: 'Radio Two' },
-  { value: 'radio_two', label: 'Radio Two' },
+  { value: 'radio_one', children: 'Radio One' },
+  { value: 'radio_two', children: 'Radio Two' },
 ]
 const meta = {
   component: RadioField,
@@ -26,6 +26,12 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
 
+export const Vertical: Story = {
+  args: {
+    vertical: true,
+  },
+}
+
 export const Disabled: Story = {
   args: {
     disabled: true,
@@ -35,8 +41,16 @@ export const Disabled: Story = {
 export const Children: Story = {
   args: {
     values: [
-      { ...values[0], children: <UserCircleIcon className="size-4" /> },
-      { ...values[1], children: <UserGroupIcon className="size-4" /> },
+      {
+        ...values[0],
+        label: 'Radio One',
+        children: <UserCircleIcon className="size-4" />,
+      },
+      {
+        ...values[1],
+        label: 'Radio Two',
+        children: <UserGroupIcon className="size-4" />,
+      },
     ],
   },
 }

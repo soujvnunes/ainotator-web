@@ -42,6 +42,19 @@ export default createSlice({
       ...state,
       images: [...state.images, action.payload],
     }),
+    setImage: (
+      state,
+      action: PayloadAction<
+        Pick<DatasetImage, 'id'> & Partial<Omit<DatasetImage, 'id'>>
+      >,
+    ) => ({
+      ...state,
+      images: state.images.map((image) => {
+        if (image.id !== action.payload.id) return image
+
+        return { ...image, ...action.payload }
+      }),
+    }),
     addAnnotation: (state, action: PayloadAction<DatasetAnnotation>) => ({
       ...state,
       annotations: [...state.annotations, action.payload],
