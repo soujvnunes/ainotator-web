@@ -12,8 +12,6 @@ import { Dialog, IconButton, Tabs } from '@/ui'
 import ActionsLicensesAdd from './actions-licenses-add'
 import ActionsLicensesSelect from './actions-licenses-select'
 
-const buttonClasses = classes('data-[unlicensed]:text-red-400')
-
 export default function ActionsLicenses() {
   const image = useStoreState((state) => state.annotator.current.id.image)
   const images = useStoreState((state) => state.dataset.images)
@@ -27,20 +25,15 @@ export default function ActionsLicenses() {
         <IconButton
           onClick={open}
           aria-label="Select or add an image license"
-          {...buttonClasses({
-            data: {
-              unlicensed: !images.find(({ id }) => id === image)?.license,
-            },
+          {...iconButtonVariants({
+            unlicensed: !images.find(({ id }) => id === image)?.license,
           })}>
           <CheckBadgeIcon className="m-auto size-6" />
         </IconButton>
       )}>
       <TabGroup>
         <Tabs
-          value={[
-            { children: 'Add' },
-            { children: 'Select', disabled: !licenses.length },
-          ]}
+          value={['Add', { children: 'Select', disabled: !licenses.length }]}
         />
         <TabPanels>
           <TabPanel>
@@ -54,3 +47,5 @@ export default function ActionsLicenses() {
     </Dialog>
   )
 }
+
+const iconButtonVariants = classes('data-[unlicensed]:text-red-400')

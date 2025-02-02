@@ -1,3 +1,5 @@
+'use client'
+
 import { MagnifyingGlassMinusIcon } from '@heroicons/react/24/solid'
 
 import { IconButton } from '@/ui'

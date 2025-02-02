@@ -1,3 +1,5 @@
+'use client'
+
 import { ArrowsPointingOutIcon } from '@heroicons/react/24/solid'
 
 import { IconButton } from '@/ui'

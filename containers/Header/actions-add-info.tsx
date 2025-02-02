@@ -15,8 +15,6 @@ import actionsAddInfoFields, {
   type ActionsAddInfoFields,
 } from './actions-add-info-fields'
 
-const buttonClasses = classes('data-[unknown]:text-red-400')
-
 export default function ActionsAddInfo() {
   const dispatch = useStoreDispatch()
   const info = useStoreState((state) => state.dataset.info)
@@ -32,12 +30,10 @@ export default function ActionsAddInfo() {
         <IconButton
           onClick={open}
           aria-label="Add the dataset information"
-          {...buttonClasses({
-            data: {
-              unknown: Object.values(info).some(
-                (value) => !!value || value === 0,
-              ),
-            },
+          {...iconButtonVariants({
+            unknown: Object.values(info).some(
+              (value) => !!value || value === 0,
+            ),
           })}>
           <InformationCircleIcon className="m-auto size-6" />
         </IconButton>
@@ -76,3 +72,5 @@ export default function ActionsAddInfo() {
     </Dialog>
   )
 }
+
+const iconButtonVariants = classes('data-[unknown]:text-red-400')
