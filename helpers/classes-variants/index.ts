@@ -1,9 +1,8 @@
-import { twMerge } from 'tailwind-merge'
-
+import extendedTailwindMerge from './extended-tailwind-merge'
 import getVariants, { type Variant } from './get-variants'
 
 export default function classes(...classNames: string[]) {
-  const className = twMerge(classNames)
+  const className = extendedTailwindMerge(classNames)
 
   return function variants<K extends string>(variant: Variant<K>) {
     return {
