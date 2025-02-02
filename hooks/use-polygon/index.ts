@@ -11,13 +11,13 @@ import {
   type TPointerEventInfo,
 } from 'fabric'
 
+import useCanvas from '../use-canvas'
 import useCurrentCategory from '../use-current-category'
 import useEnhancedId from '../use-enhanced-id'
-import useRefs from '../use-refs'
 import useStoreState from '../use-store-state'
 
 export default function usePolygon() {
-  const refs = useRefs()
+  const canvas = useCanvas()
   const category = useCurrentCategory()
   const mode = useStoreState((state) => state.annotator.mode)
   const [id, nextId] = useEnhancedId()
@@ -26,17 +26,19 @@ export default function usePolygon() {
   const [points, setPoints] = useState<Record<'x' | 'y', number>[]>([])
 
   useEffect(() => {
-    const canvas = refs.canvas.current
+    const _canvas = canvas.current
     const defaultOptions = { selectable: false, hasControls: false }
 
-    if (!canvas || mode !== 'annotating' || category?.type !== 'polygon') return
+    if (!_canvas || mode !== 'annotating' || category?.type !== 'polygon') {
+      return
+    }
 
     function handleMouseDown(event: TPointerEventInfo<TPointerEvent>) {
-      if (!canvas) return
+      if (!_canvas) return
 
-      const viewportPoint = canvas.getViewportPoint(event.e)
+      const viewportPoint = _canvas.getViewportPoint(event.e)
       const pointer = new Point(viewportPoint.x, viewportPoint.y).transform(
-        util.invertTransform(canvas.viewportTransform),
+        util.invertTransform(_canvas.viewportTransform),
       )
 
       setPoints((prevPoints) => [...prevPoints, { x: pointer.x, y: pointer.y }])
@@ -49,23 +51,23 @@ export default function usePolygon() {
           ...defaultOptions,
         })
 
-        canvas.add(line)
+        _canvas.add(line)
         setLines((prevLines) => [...prevLines, line])
       }
     }
     function handleMouseMove(event: TPointerEventInfo<TPointerEvent>) {
-      if (!isDrawing || !lines.length || !canvas) return
+      if (!isDrawing || !lines.length || !_canvas) return
 
-      const viewportPoint = canvas.getViewportPoint(event.e)
+      const viewportPoint = _canvas.getViewportPoint(event.e)
       const pointer = new Point(viewportPoint.x, viewportPoint.y).transform(
-        util.invertTransform(canvas.viewportTransform),
+        util.invertTransform(_canvas.viewportTransform),
       )
 
       lines[lines.length - 1].set({ x2: pointer.x, y2: pointer.y })
-      canvas.renderAll()
+      _canvas.renderAll()
     }
     function handleDoubleClick() {
-      if (points.length <= 2 || !canvas) return
+      if (points.length <= 2 || !_canvas) return
 
       const polygon = new Polygon(points, {
         fill: category?.color,
@@ -73,7 +75,7 @@ export default function usePolygon() {
       })
 
       polygon.set({ id })
-      canvas.add(polygon)
+      _canvas.add(polygon)
       nextId()
 
       setPoints([])
@@ -81,14 +83,14 @@ export default function usePolygon() {
       setDrawing(false)
     }
 
-    canvas.on('mouse:down', handleMouseDown)
-    canvas.on('mouse:move', handleMouseMove)
-    canvas.on('mouse:dblclick', handleDoubleClick)
+    _canvas.on('mouse:down', handleMouseDown)
+    _canvas.on('mouse:move', handleMouseMove)
+    _canvas.on('mouse:dblclick', handleDoubleClick)
 
     return () => {
-      canvas.off('mouse:down', handleMouseDown)
-      canvas.off('mouse:move', handleMouseMove)
-      canvas.off('mouse:dblclick', handleDoubleClick)
+      _canvas.off('mouse:down', handleMouseDown)
+      _canvas.off('mouse:move', handleMouseMove)
+      _canvas.off('mouse:dblclick', handleDoubleClick)
     }
-  }, [lines, isDrawing, points, id, category, refs, mode, nextId])
+  }, [lines, isDrawing, points, id, category, mode, nextId, canvas])
 }
