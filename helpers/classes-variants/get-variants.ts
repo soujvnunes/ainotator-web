@@ -4,16 +4,21 @@ import isAriaVariant from './is-aria-variant'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import isAttributeVariant from './is-attribute-variant'
 
-export type Variant<K extends string> = {
-  [Key in K | AriaVariants | AttributeVariants]?: boolean
-}
+export type Variant<V extends string> = Partial<
+  Record<V | AriaVariants | AttributeVariants, boolean>
+>
+export type Property<V extends string> = V extends AriaVariants
+  ? `aria-${V}`
+  : V extends AttributeVariants
+    ? V
+    : `data-${V}`
 
-export default function getVariants<K extends string>(
-  variant: Variant<K | AriaVariants | AttributeVariants>,
-) {
+export default function getVariants<V extends string>(
+  variant: Variant<V>,
+): Record<Property<V>, boolean | undefined> {
   const attributes: Record<string, boolean | undefined> = {}
 
-  for (const [key, value] of Object.entries(variant) as [K, boolean][]) {
+  for (const [key, value] of Object.entries(variant) as [V, boolean][]) {
     let prop: string
 
     if (isAriaVariant(key)) {
