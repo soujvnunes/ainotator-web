@@ -3,7 +3,7 @@ import '@/ui/tailwind.css'
 import type { Metadata, Viewport } from 'next'
 import { Outfit } from 'next/font/google'
 
-import { RefsProvider, StoreProvider } from '@/providers'
+import { CanvasProvider, StoreProvider } from '@/providers'
 
 import { Header } from '@/containers'
 
@@ -32,10 +32,10 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
       className={outfit.variable}>
       <body>
         <StoreProvider>
-          <RefsProvider>
+          <CanvasProvider>
             <Header />
             {children}
-          </RefsProvider>
+          </CanvasProvider>
         </StoreProvider>
       </body>
     </html>
