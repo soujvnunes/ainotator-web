@@ -48,4 +48,4 @@ export default function ActionsLicenses() {
   )
 }
 
-const iconButtonVariants = classes('data-[unlicensed]:text-red-400')
+const iconButtonVariants = classes('data-unlicensed:text-red-400')

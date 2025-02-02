@@ -73,4 +73,4 @@ export default function ActionsAddInfo() {
   )
 }
 
-const iconButtonVariants = classes('data-[unknown]:text-red-400')
+const iconButtonVariants = classes('data-unknown:text-red-400')
