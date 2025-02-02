@@ -2,9 +2,11 @@
 
 import { ChevronDownIcon } from '@heroicons/react/24/solid'
 
+import { classes } from '@/helpers'
+
 import { useStoreState } from '@/hooks'
 
-import { IconButton, typographyStyles } from '@/ui'
+import { IconButton } from '@/ui'
 
 export default function FileDetails() {
   const id = useStoreState((state) => state.annotator.current.id.image)
@@ -13,12 +15,7 @@ export default function FileDetails() {
 
   return (
     <div className="flex items-center space-x-1">
-      <p
-        data-file={image?.file_name || undefined}
-        className={typographyStyles.root({
-          variant: 'caption',
-          className: 'text-white/60 data-[file]:text-white',
-        })}>
+      <p {...textVariants({ file: !!image?.file_name })}>
         {image?.file_name || 'No filed selected'}
       </p>
       <IconButton
@@ -29,3 +26,8 @@ export default function FileDetails() {
     </div>
   )
 }
+
+const textVariants = classes(
+  'text-caption text-white/60',
+  'data-file:text-white',
+)
