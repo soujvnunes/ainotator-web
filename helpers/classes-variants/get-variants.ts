@@ -1,7 +1,6 @@
 import { type AriaVariants } from './aria-variants'
 import { type AttributeVariants } from './attribute-variants'
 import isAriaVariant from './is-aria-variant'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import isAttributeVariant from './is-attribute-variant'
 
 export type Variant<V extends string> = Partial<
@@ -23,10 +22,9 @@ export default function getVariants<V extends string>(
 
     if (isAriaVariant(key)) {
       prop = `aria-${key}`
-      // TODO: uncomment when update to tailwind 4 https://tailwindcss.com/docs/hover-focus-and-other-states#styling-inert-elements
-    } /* else if (isAttributeVariant(key)) {
-          prop = key
-        } */ else {
+    } else if (isAttributeVariant(key)) {
+      prop = key
+    } else {
       prop = `data-${key}`
     }
 
