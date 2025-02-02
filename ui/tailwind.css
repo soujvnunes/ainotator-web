@@ -5,6 +5,18 @@
   --font-sans: var(--font-outfit-sans), -apple-system-font, ui-sans-serif,
     system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
     'Segoe UI Symbol', 'Noto Color Emoji';
+  --text-label: var(--text-xs);
+  --text-label--line-height: var(--text-xs--line-height);
+  --text-label--letter-spacing: var(--tracking-widest);
+  --text-label--font-weight: var(--font-weight-semibold);
+  --text-caption: var(--text-xs);
+  --text-caption--font-weight: var(--font-weight-semibold);
+}
+
+@layer utilities {
+  .text-label {
+    @apply uppercase;
+  }
 }
 
 @layer base {
