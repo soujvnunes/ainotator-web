@@ -10,17 +10,21 @@ import { annotator } from '@/reducers'
 
 import { generateLink, isDatasetValid } from '@/helpers'
 
-import { useRefs, useStoreDispatch, useStoreState } from '@/hooks'
+import { useCanvas, useStoreDispatch, useStoreState } from '@/hooks'
 
 import { IconButton } from '@/ui'
 
 export default function ActionsExport() {
-  const refs = useRefs()
+  const canvas = useCanvas()
   const dispatch = useStoreDispatch()
   const dataset = useStoreState((state) => state.dataset)
   const image = useStoreState((state) => state.annotator.current.id.image)
   const [isPending, startTransition] = useTransition()
   const handleValidation = useCallback(() => {
+    const _canvas = canvas.current
+
+    if (!_canvas) return
+
     dispatch(annotator.actions.setMode('exporting'))
 
     startTransition(async () => {
@@ -39,17 +43,13 @@ export default function ActionsExport() {
           name: `${currentImage.file_name}_${dataset.info.date_created}_annotations.json`,
           value: dataset,
         })
-        // CLEAN DATASET?
         // RESET ANNOTATOR STATE
         dispatch(annotator.actions.setMode('waiting'))
         dispatch(annotator.actions.setCategory(0))
-        // CLEAN REFS
-        refs.file.current = null
-        refs.image.current = null
-        refs.canvas.current?.clear()
+        _canvas.clear()
       })
     })
-  }, [dataset, dispatch, image, refs.canvas, refs.file, refs.image])
+  }, [canvas, dataset, dispatch, image])
 
   return (
     <IconButton

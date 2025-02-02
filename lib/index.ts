@@ -11,4 +11,4 @@ export {
   type AnnotatorTypes,
 } from './annotator-types'
 export { default as store, type StoreState, type StoreDispatch } from './store'
-export { default as RefsContext } from './refs-context'
+export { default as CanvasContext } from './canvas-context'

@@ -2,13 +2,12 @@
 
 import {
   useBrush,
-  useCanvas,
+  useInitializeCanvas,
   useGenerateAnnotation,
   usePolygon,
   useUnselectCanvas,
 } from '@/hooks'
 
-import AddFile from './add-file'
 import Onboarding from './onboarding'
 
 const CONTROLS_Y =
@@ -16,7 +15,7 @@ const CONTROLS_Y =
   40 // HEADER
 
 export default function Canvas() {
-  const canvasId = useCanvas({ offset: { y: CONTROLS_Y } })
+  const canvasId = useInitializeCanvas({ offset: { y: CONTROLS_Y } })
 
   useUnselectCanvas()
   useBrush()
@@ -25,7 +24,6 @@ export default function Canvas() {
 
   return (
     <div className="group relative h-[calc(100vh-104px)] bg-black transition-[background-color] hover:bg-white/5">
-      <AddFile />
       <Onboarding />
       <canvas id={canvasId} />
     </div>

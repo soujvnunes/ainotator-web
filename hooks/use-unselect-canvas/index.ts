@@ -1,23 +1,23 @@
 import { useEffect } from 'react'
 
-import useRefs from '../use-refs'
+import useCanvas from '../use-canvas'
 import useStoreState from '../use-store-state'
 
 export default function useUnselectCanvas() {
-  const refs = useRefs()
+  const canvas = useCanvas()
   const category = useStoreState((state) => state.annotator.current.id.category)
 
   useEffect(() => {
-    const canvas = refs.canvas.current
+    const _canvas = canvas.current
 
-    if (!canvas) return
+    if (!_canvas) return
 
-    canvas.isDrawingMode = false
-    canvas.selection = false
-    canvas.forEachObject((obj) => {
+    _canvas.isDrawingMode = false
+    _canvas.selection = false
+    _canvas.forEachObject((obj) => {
       obj.selectable = false
       obj.hasControls = false
     })
-    canvas.renderAll()
-  }, [refs, category])
+    _canvas.renderAll()
+  }, [category, canvas])
 }
