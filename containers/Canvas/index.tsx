@@ -24,6 +24,9 @@ export default function Canvas() {
 
   return (
     <div className="group relative h-[calc(100vh-104px)] bg-black transition-[background-color] hover:bg-white/5">
+      <div className="absolute h-full w-full bg-[url(/rapport.png)] bg-repeat">
+        <div className="h-full w-full bg-radial from-black/80 to-black transition-colors group-hover:from-black/60" />
+      </div>
       <Onboarding />
       <canvas id={canvasId} />
     </div>
