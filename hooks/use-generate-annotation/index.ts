@@ -2,34 +2,32 @@ import { useEffect } from 'react'
 
 import { dataset } from '@/reducers'
 
+import useCanvas from '../use-canvas'
 import useCurrentCategory from '../use-current-category'
 import useEnhancedId from '../use-enhanced-id'
-import useRefs from '../use-refs'
 import useStoreDispatch from '../use-store-dispatch'
 import useStoreState from '../use-store-state'
 import getAnnotation from './get-annotation'
 
 export default function useGenerateAnnotation() {
   const dispatch = useStoreDispatch()
-  const refs = useRefs()
+  const canvas = useCanvas()
   const category = useCurrentCategory()
   const image = useStoreState((state) => state.annotator.current.id.image)
   const mode = useStoreState((state) => state.annotator.mode)
   const [id, nextId] = useEnhancedId()
 
   useEffect(() => {
-    const canvas = refs.canvas.current
+    const _canvas = canvas.current
 
-    if (!canvas) return
+    if (!_canvas) return
 
     function handleMouseUp() {
-      if (!canvas || !category || mode !== 'annotating') {
-        return
-      }
+      if (!_canvas || !category || mode !== 'annotating') return
 
-      const datasetAnnotation = getAnnotation(canvas)
+      const annotation = getAnnotation(_canvas)
 
-      if (!datasetAnnotation) return
+      if (!annotation) return
 
       dispatch(
         dataset.actions.addAnnotation({
@@ -37,7 +35,7 @@ export default function useGenerateAnnotation() {
           image_id: image,
           category_id: category.id,
           iscrowd: category.isCrowd === 'yes' ? 1 : 0,
-          ...datasetAnnotation,
+          ...annotation,
         }),
       )
       dispatch(
@@ -49,11 +47,10 @@ export default function useGenerateAnnotation() {
       )
       nextId()
     }
-
-    canvas.on('mouse:up', handleMouseUp)
+    _canvas.on('mouse:up', handleMouseUp)
 
     return () => {
-      canvas.off('mouse:up', handleMouseUp)
+      _canvas.off('mouse:up', handleMouseUp)
     }
-  }, [refs, image, id, dispatch, nextId, category, mode])
+  }, [image, id, dispatch, nextId, category, mode, canvas])
 }
