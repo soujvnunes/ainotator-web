@@ -1,4 +1,4 @@
-const ariaVariants = [
+const ariaAttributes = [
   'busy',
   'checked',
   'disabled',
@@ -10,5 +10,5 @@ const ariaVariants = [
   'selected',
 ] as const
 
-export type AriaVariants = (typeof ariaVariants)[number]
-export default ariaVariants
+export type AriaAttributes = (typeof ariaAttributes)[number]
+export default ariaAttributes
