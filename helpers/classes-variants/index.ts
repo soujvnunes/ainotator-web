@@ -4,10 +4,10 @@ import getVariants, { type Variant } from './get-variants'
 export default function classes(...classNames: string[]) {
   const className = extendedTailwindMerge(classNames)
 
-  return function variants<K extends string>(variant: Variant<K>) {
+  return function variants<V extends Variant>(variant: V) {
     return {
       className,
-      ...getVariants(variant),
+      ...getVariants<V>(variant),
     }
   }
 }
