@@ -15,7 +15,7 @@ export default function FileDetails() {
 
   return (
     <div className="flex items-center space-x-1">
-      <p {...textVariants({ file: !!image?.file_name })}>
+      <p {...nameAttrs({ file: !!image?.file_name })}>
         {image?.file_name || 'No filed selected'}
       </p>
       <IconButton
@@ -27,7 +27,4 @@ export default function FileDetails() {
   )
 }
 
-const textVariants = classes(
-  'text-caption text-white/60',
-  'data-file:text-white',
-)
+const nameAttrs = classes('text-caption text-white/60', 'data-file:text-white')
