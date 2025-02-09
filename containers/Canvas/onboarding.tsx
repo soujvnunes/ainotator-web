@@ -11,7 +11,7 @@ export default function Onboarding() {
   const mode = useStoreState((state) => state.annotator.mode)
 
   return (
-    <section {...rootVariants({ inert: mode !== 'waiting' })}>
+    <section {...rootAttrs({ inert: mode !== 'waiting' })}>
       <p className="text-label text-white/60">AINotator WEB</p>
       <h2 className="mb-4 text-center text-4xl lg:text-6xl">
         Start by adding <br /> an image
@@ -37,7 +37,7 @@ export default function Onboarding() {
   )
 }
 
-const rootVariants = classes(
+const rootAttrs = classes(
   'absolute z-10 flex h-full w-full flex-col items-center justify-center',
   'inert:hidden',
 )
