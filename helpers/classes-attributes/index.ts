@@ -3,8 +3,7 @@ import getAttributes, { type Attribute } from './get-attributes'
 
 export default function classes(...baseClassNames: string[]) {
   const baseClassName = extendedTailwindMerge(baseClassNames)
-
-  return function attributes<A extends Attribute>(
+  const attributes = function attributes<A extends Attribute>(
     attribute: A,
     ...classNames: (string | undefined)[]
   ) {
@@ -19,4 +18,8 @@ export default function classes(...baseClassNames: string[]) {
       ...getAttributes<A>(attribute),
     }
   }
+
+  attributes['className'] = baseClassName
+
+  return attributes
 }
