@@ -1,7 +1,6 @@
 const ariaAttributes = [
   'busy',
   'checked',
-  'disabled',
   'expanded',
   'hidden',
   'pressed',
