@@ -73,4 +73,4 @@ export default function ActionsAddInfo() {
   )
 }
 
-const addAttrs = classes('data-unknown:text-red-400')
+const addAttrs = classes('data-classes-unknown:text-red-400')

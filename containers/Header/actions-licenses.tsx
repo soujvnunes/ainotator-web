@@ -47,4 +47,4 @@ export default function ActionsLicenses() {
   )
 }
 
-const addAttrs = classes('data-unlicensed:text-red-400')
+const addAttrs = classes('data-classes-unlicensed:text-red-400')
