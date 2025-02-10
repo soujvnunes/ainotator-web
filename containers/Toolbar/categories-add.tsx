@@ -52,6 +52,7 @@ export default function CategoriesAdd() {
             name="name"
             label="Name"
             placeholder="Cat"
+            className="mt-4"
             autoComplete="annotation class name"
             invalid={{
               when: formSubmit.fields.empty.includes('name'),
