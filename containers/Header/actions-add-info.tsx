@@ -64,7 +64,7 @@ export default function ActionsAddInfo() {
           })}
           <Button
             type="submit"
-            stretch>
+            fullWidth>
             Add
           </Button>
         </Fieldset>
