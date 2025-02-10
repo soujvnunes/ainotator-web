@@ -2,9 +2,7 @@
 
 @theme {
   --font-*: initial;
-  --font-sans: var(--font-outfit-sans), -apple-system-font, ui-sans-serif,
-    system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-    'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-sans: var(--font-outfit-sans), system-ui, sans-serif;
   --text-label: var(--text-xs);
   --text-label--line-height: var(--text-xs--line-height);
   --text-label--letter-spacing: var(--tracking-widest);
