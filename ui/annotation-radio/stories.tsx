@@ -1,10 +1,10 @@
 import { RadioGroup } from '@headlessui/react'
 import type { Meta, StoryObj } from '@storybook/react'
 
-import AnnotationButton from './index'
+import AnnotationRadio from './index'
 
 const meta = {
-  component: AnnotationButton,
+  component: AnnotationRadio,
   tags: ['autodocs'],
   args: {
     type: 'brush',
@@ -23,7 +23,7 @@ const meta = {
       </RadioGroup>
     ),
   ],
-} satisfies Meta<typeof AnnotationButton>
+} satisfies Meta<typeof AnnotationRadio>
 
 export default meta
 
