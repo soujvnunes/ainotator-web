@@ -1,4 +1,4 @@
-import { twMerge } from 'tailwind-merge'
+import { twMerge } from '@/helpers'
 
 import Button, { type ButtonProps } from '../button'
 import iconButtonStyles from './styles'

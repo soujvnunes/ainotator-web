@@ -1,5 +1,6 @@
 import { Button as HeadlessButton } from '@headlessui/react'
-import { twMerge } from 'tailwind-merge'
+
+import { twMerge } from '@/helpers'
 
 import buttonStyles from './styles'
 

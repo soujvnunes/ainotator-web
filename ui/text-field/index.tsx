@@ -3,7 +3,8 @@
 import { useId } from 'react'
 
 import { Field, Input, Label } from '@headlessui/react'
-import { twMerge } from 'tailwind-merge'
+
+import { twMerge } from '@/helpers'
 
 import textFieldStyles from './styles'
 

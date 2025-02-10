@@ -11,7 +11,8 @@ import {
   Description,
 } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/solid'
-import { twMerge } from 'tailwind-merge'
+
+import { twMerge } from '@/helpers'
 
 import IconButton from '../icon-button'
 import dialogStyles from './styles'

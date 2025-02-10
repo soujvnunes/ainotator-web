@@ -5,9 +5,11 @@ import {
   PaintBrushIcon,
   UserGroupIcon,
 } from '@heroicons/react/24/solid'
-import { twMerge } from 'tailwind-merge'
 
 import type { AnnotatorColors, AnnotatorCrowds, AnnotatorTypes } from '@/lib'
+
+import { twMerge } from '@/helpers'
+
 
 import annotationRadioStyles from './styles'
 
