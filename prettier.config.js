@@ -1,6 +1,6 @@
 module.exports = {
   plugins: ['prettier-plugin-tailwindcss'],
-  tailwindFunctions: ['classes'],
+  tailwindFunctions: ['classes', 'cva', 'twMerge'],
   jsxSingleQuote: false,
   bracketSameLine: true,
   singleAttributePerLine: true,

@@ -20,7 +20,7 @@ export default function Controls() {
     <Popover>
       <PopoverButton
         size="lg"
-        className="focus:outline-none"
+        className="focus:outline-hidden"
         aria-label="Controls menu"
         disabled={!['editting', 'annotating'].includes(mode)}
         as={IconButton}>

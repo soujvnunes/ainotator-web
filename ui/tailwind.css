@@ -1,12 +1,37 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-html,
-body {
-  @apply h-full;
+@theme {
+  --font-*: initial;
+  --font-sans: var(--font-outfit-sans), system-ui, sans-serif;
+  --text-label: var(--text-xs);
+  --text-label--line-height: var(--text-xs--line-height);
+  --text-label--letter-spacing: var(--tracking-widest);
+  --text-label--font-weight: var(--font-weight-semibold);
+  --text-caption: var(--text-xs);
+  --text-caption--font-weight: var(--font-weight-semibold);
 }
 
-body {
-  @apply text-white bg-black;
+@layer utilities {
+  .text-label {
+    @apply uppercase;
+  }
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+
+  html,
+  body {
+    @apply h-full;
+  }
+
+  body {
+    @apply bg-black text-white;
+  }
 }

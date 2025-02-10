@@ -30,7 +30,7 @@ export default function ActionsAddInfo() {
         <IconButton
           onClick={open}
           aria-label="Add the dataset information"
-          {...iconButtonVariants({
+          {...addAttrs({
             unknown: Object.values(info).some(
               (value) => !!value || value === 0,
             ),
@@ -73,4 +73,4 @@ export default function ActionsAddInfo() {
   )
 }
 
-const iconButtonVariants = classes('data-[unknown]:text-red-400')
+const addAttrs = classes('data-classes-unknown:text-red-400')

@@ -1,5 +1,6 @@
 import { cva } from 'class-variance-authority'
-import { twMerge } from 'tailwind-merge'
+
+import { twMerge } from '@/helpers'
 
 import { buttonStyles } from '../button'
 
@@ -10,7 +11,7 @@ const tabsStyles = {
       buttonStyles.root({
         variant: 'text',
         className:
-          'border-b-2 border-b-transparent grow hover:border-gray-50 data-[selected]:border-gray-50/20 hover:data-[selected]:border-gray-50',
+          'border-b-2 border-b-transparent grow hover:border-gray-50 data-selected:border-gray-50/20 hover:data-selected:border-gray-50',
       }),
     ),
   ),

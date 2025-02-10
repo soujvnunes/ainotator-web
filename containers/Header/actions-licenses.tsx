@@ -1,6 +1,5 @@
 'use client'
 
-import { TabGroup, TabPanel, TabPanels } from '@headlessui/react'
 import { CheckBadgeIcon } from '@heroicons/react/24/solid'
 
 import { classes } from '@/helpers'
@@ -25,27 +24,27 @@ export default function ActionsLicenses() {
         <IconButton
           onClick={open}
           aria-label="Select or add an image license"
-          {...iconButtonVariants({
+          {...addAttrs({
             unlicensed: !images.find(({ id }) => id === image)?.license,
           })}>
           <CheckBadgeIcon className="m-auto size-6" />
         </IconButton>
       )}>
-      <TabGroup>
-        <Tabs
-          value={['Add', { children: 'Select', disabled: !licenses.length }]}
-        />
-        <TabPanels>
-          <TabPanel>
-            <ActionsLicensesAdd />
-          </TabPanel>
-          <TabPanel>
-            <ActionsLicensesSelect />
-          </TabPanel>
-        </TabPanels>
-      </TabGroup>
+      <Tabs
+        values={[
+          {
+            label: 'Add',
+            panel: <ActionsLicensesAdd />,
+          },
+          {
+            label: 'Select',
+            panel: <ActionsLicensesSelect />,
+            disabled: !licenses.length,
+          },
+        ]}
+      />
     </Dialog>
   )
 }
 
-const iconButtonVariants = classes('data-[unlicensed]:text-red-400')
+const addAttrs = classes('data-classes-unlicensed:text-red-400')
