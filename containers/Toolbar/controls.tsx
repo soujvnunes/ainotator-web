@@ -3,7 +3,7 @@
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
 import { Squares2X2Icon } from '@heroicons/react/24/solid'
 
-import { useStoreState } from '@/hooks'
+import useStoreState from '@/hooks/useStoreState'
 
 import IconButton from '@/ui/IconButton'
 

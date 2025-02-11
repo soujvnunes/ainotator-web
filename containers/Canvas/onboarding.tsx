@@ -2,7 +2,7 @@
 
 import { classes } from '@/helpers'
 
-import { useStoreState } from '@/hooks'
+import useStoreState from '@/hooks/useStoreState'
 
 import OnboardingAddFile from './onboarding-add-file'
 import onboardingItems from './onboarding-items'

@@ -7,12 +7,10 @@ import type { DatasetLicense } from '@/actions'
 import annotator from '@/reducers/annotator'
 import dataset from '@/reducers/dataset'
 
-import {
-  useEnhancedId,
-  useFormSubmit,
-  useStoreDispatch,
-  useStoreState,
-} from '@/hooks'
+import useStoreDispatch from '@/hooks/useDispatch'
+import useEnhancedId from '@/hooks/useEnhancedId'
+import useFormSubmit from '@/hooks/useFormSubmit'
+import useStoreState from '@/hooks/useStoreState'
 
 import Button from '@/ui/Button'
 import TextField from '@/ui/TextField'

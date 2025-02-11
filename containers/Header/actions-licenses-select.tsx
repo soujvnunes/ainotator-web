@@ -5,7 +5,8 @@ import { useCallback, useMemo } from 'react'
 import annotator from '@/reducers/annotator'
 import dataset from '@/reducers/dataset'
 
-import { useStoreDispatch, useStoreState } from '@/hooks'
+import useStoreDispatch from '@/hooks/useDispatch'
+import useStoreState from '@/hooks/useStoreState'
 
 import textField from '@/styles/textField'
 

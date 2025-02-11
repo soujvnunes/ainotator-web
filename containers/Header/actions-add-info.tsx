@@ -7,7 +7,9 @@ import dataset from '@/reducers/dataset'
 
 import { classes } from '@/helpers'
 
-import { useFormSubmit, useStoreDispatch, useStoreState } from '@/hooks'
+import useStoreDispatch from '@/hooks/useDispatch'
+import useFormSubmit from '@/hooks/useFormSubmit'
+import useStoreState from '@/hooks/useStoreState'
 
 import Button from '@/ui/Button'
 import Dialog from '@/ui/Dialog'

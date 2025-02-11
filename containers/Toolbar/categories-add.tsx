@@ -5,7 +5,9 @@ import { PlusIcon } from '@heroicons/react/24/solid'
 
 import annotator, { type AnnotatorCategory } from '@/reducers/annotator'
 
-import { useEnhancedId, useFormSubmit, useStoreDispatch } from '@/hooks'
+import useStoreDispatch from '@/hooks/useDispatch'
+import useEnhancedId from '@/hooks/useEnhancedId'
+import useFormSubmit from '@/hooks/useFormSubmit'
 
 import textField from '@/styles/textField'
 

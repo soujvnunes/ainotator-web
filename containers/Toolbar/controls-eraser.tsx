@@ -2,7 +2,7 @@
 
 import { PaintBrushIcon, XMarkIcon } from '@heroicons/react/24/solid'
 
-import { useStoreState } from '@/hooks'
+import useStoreState from '@/hooks/useStoreState'
 
 import IconButton from '@/ui/IconButton'
 

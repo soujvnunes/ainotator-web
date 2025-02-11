@@ -10,12 +10,10 @@ import dataset from '@/reducers/dataset'
 
 import { getDateTime } from '@/helpers'
 
-import {
-  useEnhancedId,
-  useCanvas,
-  useStoreDispatch,
-  useStoreState,
-} from '@/hooks'
+import useCanvas from '@/hooks/useCanvas'
+import useStoreDispatch from '@/hooks/useDispatch'
+import useEnhancedId from '@/hooks/useEnhancedId'
+import useStoreState from '@/hooks/useStoreState'
 
 export default function OnboardingAddFile() {
   const canvas = useCanvas()

@@ -10,7 +10,9 @@ import annotator from '@/reducers/annotator'
 
 import { generateLink, isDatasetValid } from '@/helpers'
 
-import { useCanvas, useStoreDispatch, useStoreState } from '@/hooks'
+import useCanvas from '@/hooks/useCanvas'
+import useStoreDispatch from '@/hooks/useDispatch'
+import useStoreState from '@/hooks/useStoreState'
 
 import IconButton from '@/ui/IconButton'
 

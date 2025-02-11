@@ -4,7 +4,9 @@ import { useCallback } from 'react'
 
 import annotator from '@/reducers/annotator'
 
-import { useCurrentCategory, useStoreDispatch, useStoreState } from '@/hooks'
+import useCurrentCategory from '@/hooks/useCurrentCategory'
+import useStoreDispatch from '@/hooks/useDispatch'
+import useStoreState from '@/hooks/useStoreState'
 
 import RangeField from '@/ui/RangeField'
 

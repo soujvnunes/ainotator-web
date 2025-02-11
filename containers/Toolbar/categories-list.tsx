@@ -6,7 +6,8 @@ import { RadioGroup } from '@headlessui/react'
 
 import annotator from '@/reducers/annotator'
 
-import { useStoreDispatch, useStoreState } from '@/hooks'
+import useStoreDispatch from '@/hooks/useDispatch'
+import useStoreState from '@/hooks/useStoreState'
 
 import AnnotationRadio from '@/ui/AnnotationRadio'
 
