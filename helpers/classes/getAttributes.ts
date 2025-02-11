@@ -1,7 +1,7 @@
-import { type AriaAttributes } from './aria-attributes'
-import { type ElementAttributes } from './element-attributes'
-import isAriaAttribute from './is-aria-attribute'
-import isAttributeVariant from './is-element-attribute'
+import { type AriaAttributes } from './ariaAttributes'
+import { type ElementAttributes } from './elementAttributes'
+import isAriaAttribute from './isAriaAttribute'
+import isAttributeVariant from './isElementAttribute'
 
 const ariaAttribute = 'aria-' as const
 const dataAttribute = 'data-classes-' as const

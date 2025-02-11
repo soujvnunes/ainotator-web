@@ -1,4 +1,4 @@
-import elementAttributes, { type ElementAttributes } from './element-attributes'
+import elementAttributes, { type ElementAttributes } from './elementAttributes'
 
 export default function isElementAttribute(
   params: string,

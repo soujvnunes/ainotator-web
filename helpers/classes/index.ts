@@ -1,7 +1,6 @@
-import getAttributes, { type Attribute } from './get-attributes'
-import twMerge from './tw-merge'
+import twMerge from '../twMerge'
+import getAttributes, { type Attribute } from './getAttributes'
 
-export { twMerge }
 export default function classes(...baseClassNames: string[]) {
   const baseClassName = twMerge(baseClassNames)
   const attributes = function attributes<A extends Attribute>(

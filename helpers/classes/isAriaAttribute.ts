@@ -1,4 +1,4 @@
-import ariaAttributes, { type AriaAttributes } from './aria-attributes'
+import ariaAttributes, { type AriaAttributes } from './ariaAttributes'
 
 export default function isAriaAttribute(
   params: string,
