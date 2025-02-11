@@ -6,6 +6,4 @@ import type { Canvas } from 'fabric'
 
 type CanvasContextProps = React.RefObject<Canvas | null>
 
-const CanvasContext = createContext<CanvasContextProps>(createRef<Canvas>())
-
-export default CanvasContext
+export default createContext<CanvasContextProps>(createRef<Canvas>())
