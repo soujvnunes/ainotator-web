@@ -26,6 +26,7 @@ module.exports = {
           '/@/helpers/',
           '/@/providers/',
           '/@/hooks/',
+          '/@/styles/',
           '/@/ui/',
           '/@/containers/',
           ['parent', 'sibling', 'index'],
