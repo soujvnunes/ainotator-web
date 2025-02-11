@@ -10,7 +10,7 @@ import { type AnnotatorColors } from '@/lib/annotatorColors'
 import { type AnnotatorCrowds } from '@/lib/annotatorCrowds'
 import { type AnnotatorTypes } from '@/lib/annotatorTypes'
 
-import { twMerge } from '@/helpers'
+import twMerge from '@/helpers/twMerge'
 
 import annotationRadio from '@/styles/annotationRadio'
 

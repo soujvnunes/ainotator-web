@@ -1,7 +1,7 @@
 import { Radio, RadioGroup, RadioGroupProps } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/24/solid'
 
-import { twMerge } from '@/helpers'
+import twMerge from '@/helpers/twMerge'
 
 import radioField from '@/styles/radioField'
 

@@ -4,7 +4,7 @@ import { useId } from 'react'
 
 import { Field, Input, Label } from '@headlessui/react'
 
-import { twMerge } from '@/helpers'
+import twMerge from '@/helpers/twMerge'
 
 import textField from '@/styles/textField'
 

@@ -12,7 +12,7 @@ import {
 } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/solid'
 
-import { twMerge } from '@/helpers'
+import twMerge from '@/helpers/twMerge'
 
 import dialog from '@/styles/dialog'
 

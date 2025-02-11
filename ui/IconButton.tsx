@@ -1,4 +1,4 @@
-import { twMerge } from '@/helpers'
+import twMerge from '@/helpers/twMerge'
 
 import iconButton from '@/styles/iconButton'
 
