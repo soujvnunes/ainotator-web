@@ -1,9 +1,9 @@
-import '@/ui/tailwind.css'
-
 import type { Metadata, Viewport } from 'next'
 import { Outfit } from 'next/font/google'
 
 import { CanvasProvider, StoreProvider } from '@/providers'
+
+import '@/styles/tailwind.css'
 
 import { Header } from '@/containers'
 
