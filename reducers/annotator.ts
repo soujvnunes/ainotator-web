@@ -3,7 +3,9 @@ import { type PayloadAction } from '@reduxjs/toolkit'
 
 import type { DatasetCategory, DatasetImage, DatasetLicense } from '@/actions'
 
-import type { AnnotatorColors, AnnotatorCrowds, AnnotatorTypes } from '@/lib'
+import { type AnnotatorColors } from '@/lib/annotatorColors'
+import { type AnnotatorCrowds } from '@/lib/annotatorCrowds'
+import { type AnnotatorTypes } from '@/lib/annotatorTypes'
 
 export interface AnnotatorCategory extends DatasetCategory {
   isCrowd: AnnotatorCrowds
