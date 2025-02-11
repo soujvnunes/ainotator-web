@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import type { Meta, StoryObj } from '@storybook/react'
 
-import RangeField from './index'
+import RangeField from '@/ui/RangeField'
 
 const meta = {
   component: RangeField,
@@ -10,6 +10,8 @@ const meta = {
   args: {
     label: 'Range',
     value: 24,
+    max: 40,
+    min: 8,
   },
   parameters: {
     layout: 'centered',

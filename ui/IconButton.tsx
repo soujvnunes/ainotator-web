@@ -1,7 +1,8 @@
 import { twMerge } from '@/helpers'
 
-import Button, { type ButtonProps } from '../button'
-import iconButtonStyles from './styles'
+import iconButton from '@/styles/iconButton'
+
+import Button, { type ButtonProps } from './Button'
 
 interface IconButtonProps
   extends Omit<ButtonProps, 'aria-label' | 'fullWidth'> {
@@ -12,7 +13,6 @@ interface IconButtonProps
   size?: 'lg' | 'md'
 }
 
-export { iconButtonStyles }
 export default function IconButton({
   className,
   size,
@@ -20,7 +20,7 @@ export default function IconButton({
 }: IconButtonProps) {
   return (
     <Button
-      className={twMerge(iconButtonStyles.root({ size, className }))}
+      className={twMerge(iconButton.root({ size, className }))}
       {...props}
     />
   )

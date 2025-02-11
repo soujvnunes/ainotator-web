@@ -2,7 +2,7 @@ import { Button as HeadlessButton } from '@headlessui/react'
 
 import { twMerge } from '@/helpers'
 
-import buttonStyles from './styles'
+import button from '@/styles/button'
 
 export interface ButtonProps extends React.ComponentPropsWithRef<'button'> {
   fullWidth?: boolean
@@ -12,7 +12,6 @@ export interface ButtonProps extends React.ComponentPropsWithRef<'button'> {
   variant?: 'filled' | 'text'
 }
 
-export { buttonStyles }
 export default function Button({
   className,
   variant,
@@ -21,7 +20,7 @@ export default function Button({
 }: ButtonProps) {
   return (
     <HeadlessButton
-      className={twMerge(buttonStyles.root({ variant, fullWidth, className }))}
+      className={twMerge(button.root({ variant, fullWidth, className }))}
       {...props}
     />
   )

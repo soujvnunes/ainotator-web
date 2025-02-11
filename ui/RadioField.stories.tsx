@@ -1,7 +1,7 @@
 import { UserCircleIcon, UserGroupIcon } from '@heroicons/react/24/solid'
 import type { Meta, StoryObj } from '@storybook/react'
 
-import RadioField from './index'
+import RadioField from '@/ui/RadioField'
 
 const values = [
   { value: 'radio_one', children: 'Radio One' },

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import TextField from './index'
+import TextField from '@/ui/TextField'
 
 const meta = {
   component: TextField,

@@ -6,7 +6,7 @@ import { Field, Input, Label } from '@headlessui/react'
 
 import { twMerge } from '@/helpers'
 
-import textFieldStyles from './styles'
+import textField from '@/styles/textField'
 
 export interface TextFieldProps extends React.ComponentPropsWithRef<'input'> {
   label: string
@@ -17,7 +17,6 @@ export interface TextFieldProps extends React.ComponentPropsWithRef<'input'> {
   }
 }
 
-export { textFieldStyles }
 export default function TextField({
   label,
   invalid,
@@ -31,24 +30,22 @@ export default function TextField({
   return (
     <Field
       disabled={disabled}
-      className={twMerge(textFieldStyles.root({ className }))}>
-      <Label className={textFieldStyles.label.root}>
+      className={twMerge(textField.root({ className }))}>
+      <Label className={textField.label.root}>
         {label}
-        {props.required && (
-          <span className={textFieldStyles.label.required}> *</span>
-        )}
+        {props.required && <span className={textField.label.required}> *</span>}
       </Label>
       <Input
         type={type}
         invalid={invalid?.when}
         aria-description={errorMessageId}
         aria-errormessage={errorMessageId}
-        className={textFieldStyles.input()}
+        className={textField.input()}
         {...props}
       />
       <p
         aria-live="polite"
-        className={textFieldStyles.invalid.message}
+        className={textField.invalid.message}
         id={errorMessageId}>
         {invalid?.when && invalid?.message}
       </p>

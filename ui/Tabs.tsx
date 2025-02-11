@@ -1,6 +1,6 @@
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 
-import tabsStyles from './styles'
+import tabs from '@/styles/tabs'
 
 interface TabsContentProps {
   label: string
@@ -14,11 +14,11 @@ interface TabsProps {
 export default function Tabs({ values }: TabsProps) {
   return (
     <TabGroup>
-      <TabList className={tabsStyles.root()}>
+      <TabList className={tabs.root()}>
         {values.map(({ label, ...value }) => (
           <Tab
             key={label}
-            className={tabsStyles.tab()}
+            className={tabs.tab()}
             {...value}>
             {label}
           </Tab>

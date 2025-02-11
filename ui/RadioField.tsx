@@ -3,7 +3,7 @@ import { CheckIcon } from '@heroicons/react/24/solid'
 
 import { twMerge } from '@/helpers'
 
-import radioFieldStyles from './styles'
+import radioField from '@/styles/radioField'
 
 interface RadioFieldProps<V extends string | number>
   extends RadioGroupProps<'div', V> {
@@ -19,18 +19,18 @@ export default function RadioField<V extends string | number>({
 }: RadioFieldProps<V>) {
   return (
     <RadioGroup
-      className={radioFieldStyles.root({ className, vertical })}
+      className={radioField.root({ className, vertical })}
       {...props}>
       {values.map(({ label, children, ...radioProps }) => (
         <Radio
           key={radioProps.value}
           defaultChecked={props.defaultValue === radioProps.value}
-          className={twMerge(radioFieldStyles.radio.root({ vertical }))}
+          className={twMerge(radioField.radio.root({ vertical }))}
           aria-label={vertical ? undefined : label}
           {...radioProps}>
           {vertical && (
-            <div className={radioFieldStyles.radio.button.root}>
-              <CheckIcon className={radioFieldStyles.radio.button.icon} />
+            <div className={radioField.radio.button.root}>
+              <CheckIcon className={radioField.radio.button.icon} />
             </div>
           )}
           {children}

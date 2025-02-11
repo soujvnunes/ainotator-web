@@ -1,7 +1,7 @@
 import { RadioGroup } from '@headlessui/react'
 import type { Meta, StoryObj } from '@storybook/react'
 
-import AnnotationRadio from './index'
+import AnnotationRadio from '@/ui/AnnotationRadio'
 
 const meta = {
   component: AnnotationRadio,

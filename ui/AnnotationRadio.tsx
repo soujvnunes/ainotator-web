@@ -10,8 +10,7 @@ import type { AnnotatorColors, AnnotatorCrowds, AnnotatorTypes } from '@/lib'
 
 import { twMerge } from '@/helpers'
 
-
-import annotationRadioStyles from './styles'
+import annotationRadio from '@/styles/annotationRadio'
 
 export interface AnnotationRadioProps<V extends string | number>
   extends React.ComponentPropsWithRef<'input'> {
@@ -35,37 +34,30 @@ export default function AnnotationRadio<V extends string | number>({
 
   return (
     <Radio
-      className={twMerge(
-        annotationRadioStyles.root({ color, compact, className }),
-      )}
+      className={twMerge(annotationRadio.root({ color, compact, className }))}
       {...props}>
       {compact ? (
-        <CheckIcon
-          className={annotationRadioStyles.slots.root({ compact: true })}
-        />
+        <CheckIcon className={annotationRadio.slots.root({ compact: true })} />
       ) : (
         <>
-          <span
-            className={annotationRadioStyles.slots.root({ compact: false })}>
+          <span className={annotationRadio.slots.root({ compact: false })}>
             <span
-              className={annotationRadioStyles.slots.item.root({
+              className={annotationRadio.slots.item.root({
                 color,
                 type: true,
               })}>
-              <TypeIcon className={annotationRadioStyles.slots.item.icon()} />
+              <TypeIcon className={annotationRadio.slots.item.icon()} />
             </span>
             {isCrowd === 'yes' && (
               <span
-                className={annotationRadioStyles.slots.item.root({
+                className={annotationRadio.slots.item.root({
                   crowd: true,
                 })}>
-                <UserGroupIcon
-                  className={annotationRadioStyles.slots.item.icon()}
-                />
+                <UserGroupIcon className={annotationRadio.slots.item.icon()} />
               </span>
             )}
           </span>
-          <span className={annotationRadioStyles.label}>{children}</span>
+          <span className={annotationRadio.label}>{children}</span>
         </>
       )}
     </Radio>

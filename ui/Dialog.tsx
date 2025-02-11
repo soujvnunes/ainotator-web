@@ -14,8 +14,9 @@ import { XMarkIcon } from '@heroicons/react/24/solid'
 
 import { twMerge } from '@/helpers'
 
-import IconButton from '../icon-button'
-import dialogStyles from './styles'
+import dialog from '@/styles/dialog'
+
+import IconButton from './IconButton'
 
 export interface DialogProps {
   title: string
@@ -54,22 +55,18 @@ export default function Dialog({
           <div className="flex min-h-full items-center justify-center p-4">
             <DialogPanel
               transition
-              className={twMerge(dialogStyles.root({ className }))}>
-              <header className={dialogStyles.header.root}>
-                <DialogTitle className={dialogStyles.header.title.root}>
-                  <span className={dialogStyles.header.title.text}>
-                    {title}
-                  </span>
+              className={twMerge(dialog.root({ className }))}>
+              <header className={dialog.header.root}>
+                <DialogTitle className={dialog.header.title.root}>
+                  <span className={dialog.header.title.text}>{title}</span>
                   <CloseButton
                     as={IconButton}
-                    aria-label={`Close ${title} dialogStyles`}
-                    className={dialogStyles.header.title.close.root}>
-                    <XMarkIcon
-                      className={dialogStyles.header.title.close.icon}
-                    />
+                    aria-label={`Close ${title} dialog`}
+                    className={dialog.header.title.close.root}>
+                    <XMarkIcon className={dialog.header.title.close.icon} />
                   </CloseButton>
                 </DialogTitle>
-                <Description className={dialogStyles.header.description}>
+                <Description className={dialog.header.description}>
                   {description}
                 </Description>
               </header>
