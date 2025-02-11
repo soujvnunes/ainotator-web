@@ -2,12 +2,13 @@ import { useEffect } from 'react'
 
 import dataset from '@/reducers/dataset'
 
-import useCanvas from '../use-canvas'
-import useCurrentCategory from '../use-current-category'
-import useEnhancedId from '../use-enhanced-id'
-import useStoreDispatch from '../use-store-dispatch'
-import useStoreState from '../use-store-state'
-import getAnnotation from './get-annotation'
+import generateAnnotation from '@/helpers/getAnnotation'
+
+import useCanvas from './useCanvas'
+import useCurrentCategory from './useCurrentCategory'
+import useStoreDispatch from './useDispatch'
+import useEnhancedId from './useEnhancedId'
+import useStoreState from './useStoreState'
 
 export default function useGenerateAnnotation() {
   const dispatch = useStoreDispatch()
@@ -25,7 +26,8 @@ export default function useGenerateAnnotation() {
     function handleMouseUp() {
       if (!_canvas || !category || mode !== 'annotating') return
 
-      const annotation = getAnnotation(_canvas)
+      // TODO: skip previous generated annotation
+      const annotation = generateAnnotation(_canvas)
 
       if (!annotation) return
 

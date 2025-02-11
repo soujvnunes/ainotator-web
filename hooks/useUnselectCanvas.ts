@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
-import useCanvas from '../use-canvas'
-import useStoreState from '../use-store-state'
+import useCanvas from './useCanvas'
+import useStoreState from './useStoreState'
 
 export default function useUnselectCanvas() {
   const canvas = useCanvas()

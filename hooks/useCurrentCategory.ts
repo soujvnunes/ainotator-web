@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 
 import annotatorColors from '@/lib/annotatorColors'
 
-import useStoreState from '../use-store-state'
+import useStoreState from './useStoreState'
 
 export default function useCurrentCategory() {
   const category = useStoreState((state) => state.annotator.current.id.category)

@@ -2,9 +2,9 @@ import { useEffect } from 'react'
 
 import { PencilBrush } from 'fabric'
 
-import useCanvas from '../use-canvas'
-import useCurrentCategory from '../use-current-category'
-import useStoreState from '../use-store-state'
+import useCanvas from './useCanvas'
+import useCurrentCategory from './useCurrentCategory'
+import useStoreState from './useStoreState'
 
 export default function useBrush() {
   const category = useCurrentCategory()

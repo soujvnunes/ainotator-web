@@ -4,7 +4,7 @@ import { useEffect, useId } from 'react'
 
 import { Canvas } from 'fabric'
 
-import useCanvas from '../use-canvas'
+import useCanvas from './useCanvas'
 
 interface CanvasArgs {
   offset: {

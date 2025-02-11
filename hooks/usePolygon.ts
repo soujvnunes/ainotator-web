@@ -11,10 +11,10 @@ import {
   type TPointerEventInfo,
 } from 'fabric'
 
-import useCanvas from '../use-canvas'
-import useCurrentCategory from '../use-current-category'
-import useEnhancedId from '../use-enhanced-id'
-import useStoreState from '../use-store-state'
+import useCanvas from './useCanvas'
+import useCurrentCategory from './useCurrentCategory'
+import useEnhancedId from './useEnhancedId'
+import useStoreState from './useStoreState'
 
 export default function usePolygon() {
   const canvas = useCanvas()
