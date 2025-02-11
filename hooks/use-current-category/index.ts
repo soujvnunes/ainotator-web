@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { annotatorColors } from '@/lib'
+import annotatorColors from '@/lib/annotatorColors'
 
 import useStoreState from '../use-store-state'
 
