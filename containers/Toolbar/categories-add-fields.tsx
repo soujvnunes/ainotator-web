@@ -1,14 +1,9 @@
 import { UserGroupIcon, UserIcon } from '@heroicons/react/24/solid'
 import { PaintBrushIcon, StarIcon } from '@heroicons/react/24/solid'
 
-import {
-  type AnnotatorColors,
-  annotatorColors,
-  type AnnotatorCrowds,
-  annotatorCrowds,
-  annotatorTypes,
-  type AnnotatorTypes,
-} from '@/lib'
+import annotatorColors, { type AnnotatorColors } from '@/lib/annotatorColors'
+import annotatorCrowds, { type AnnotatorCrowds } from '@/lib/annotatorCrowds'
+import annotatorTypes, { type AnnotatorTypes } from '@/lib/annotatorTypes'
 
 export const categoriesAddCrowds = annotatorCrowds.reduce(
   (fields, value) => {
