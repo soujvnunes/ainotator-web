@@ -2,7 +2,7 @@
 
 import { Fieldset, Legend } from '@headlessui/react'
 
-import type { DatasetLicense } from '@/actions'
+import { type DatasetLicense } from '@/actions/validateDataset'
 
 import annotator from '@/reducers/annotator'
 import dataset from '@/reducers/dataset'

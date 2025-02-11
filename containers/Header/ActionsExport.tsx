@@ -4,7 +4,7 @@ import { useCallback, useTransition } from 'react'
 
 import { DocumentArrowDownIcon } from '@heroicons/react/24/solid'
 
-import { validateDataset } from '@/actions'
+import validateDataset from '@/actions/validateDataset'
 
 import annotator from '@/reducers/annotator'
 
