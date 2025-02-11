@@ -4,7 +4,8 @@ import { Fieldset, Legend } from '@headlessui/react'
 
 import type { DatasetLicense } from '@/actions'
 
-import { annotator, dataset } from '@/reducers'
+import annotator from '@/reducers/annotator'
+import dataset from '@/reducers/dataset'
 
 import {
   useEnhancedId,

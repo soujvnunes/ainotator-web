@@ -2,7 +2,8 @@
 
 import { useCallback, useMemo } from 'react'
 
-import { annotator, dataset } from '@/reducers'
+import annotator from '@/reducers/annotator'
+import dataset from '@/reducers/dataset'
 
 import { useStoreDispatch, useStoreState } from '@/hooks'
 

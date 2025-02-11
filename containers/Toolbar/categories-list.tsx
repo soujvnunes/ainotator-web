@@ -4,7 +4,7 @@ import { useCallback } from 'react'
 
 import { RadioGroup } from '@headlessui/react'
 
-import { annotator } from '@/reducers'
+import annotator from '@/reducers/annotator'
 
 import { useStoreDispatch, useStoreState } from '@/hooks'
 

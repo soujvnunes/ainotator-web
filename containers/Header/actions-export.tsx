@@ -6,7 +6,7 @@ import { DocumentArrowDownIcon } from '@heroicons/react/24/solid'
 
 import { validateDataset } from '@/actions'
 
-import { annotator } from '@/reducers'
+import annotator from '@/reducers/annotator'
 
 import { generateLink, isDatasetValid } from '@/helpers'
 

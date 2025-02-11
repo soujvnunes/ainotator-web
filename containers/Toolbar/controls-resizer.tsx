@@ -2,7 +2,7 @@
 
 import { useCallback } from 'react'
 
-import { annotator } from '@/reducers'
+import annotator from '@/reducers/annotator'
 
 import { useCurrentCategory, useStoreDispatch, useStoreState } from '@/hooks'
 

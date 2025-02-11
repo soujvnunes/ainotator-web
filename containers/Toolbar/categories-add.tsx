@@ -3,7 +3,7 @@
 import { Fieldset, Legend, RadioGroup } from '@headlessui/react'
 import { PlusIcon } from '@heroicons/react/24/solid'
 
-import { type AnnotatorCategory, annotator } from '@/reducers'
+import annotator, { type AnnotatorCategory } from '@/reducers/annotator'
 
 import { useEnhancedId, useFormSubmit, useStoreDispatch } from '@/hooks'
 

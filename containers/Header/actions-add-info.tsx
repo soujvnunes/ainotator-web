@@ -3,12 +3,13 @@
 import { Fieldset, Legend } from '@headlessui/react'
 import { InformationCircleIcon } from '@heroicons/react/24/solid'
 
-import { dataset } from '@/reducers'
+import dataset from '@/reducers/dataset'
 
 import { classes } from '@/helpers'
 
 import { useFormSubmit, useStoreDispatch, useStoreState } from '@/hooks'
 
+import Button from '@/ui/Button'
 import Dialog from '@/ui/Dialog'
 import IconButton from '@/ui/IconButton'
 import TextField from '@/ui/TextField'

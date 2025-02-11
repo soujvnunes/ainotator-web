@@ -5,7 +5,8 @@ import { useCallback } from 'react'
 import { DocumentArrowUpIcon } from '@heroicons/react/24/solid'
 import { FabricImage } from 'fabric'
 
-import { annotator, dataset } from '@/reducers'
+import annotator from '@/reducers/annotator'
+import dataset from '@/reducers/dataset'
 
 import { getDateTime } from '@/helpers'
 
