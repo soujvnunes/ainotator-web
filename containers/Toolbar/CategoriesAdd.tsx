@@ -18,11 +18,9 @@ import IconButton from '@/ui/IconButton'
 import RadioField from '@/ui/RadioField'
 import TextField from '@/ui/TextField'
 
-import {
-  categoriesAddColors,
-  categoriesAddCrowds,
-  categoriesAddType,
-} from './categories-add-fields'
+import categoriesAddColors from './categoriesAddColors'
+import categoriesAddCrowds from './categoriesAddCrowds'
+import categoriesAddType from './categoriesAddType'
 
 export default function CategoriesAdd() {
   const dispatch = useStoreDispatch()

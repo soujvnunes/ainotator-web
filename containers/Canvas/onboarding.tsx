@@ -1,11 +1,16 @@
 'use client'
 
+import {
+  DocumentArrowDownIcon,
+  PaintBrushIcon,
+  PlusIcon,
+} from '@heroicons/react/24/solid'
+
 import classes from '@/helpers/classes'
 
 import useStoreState from '@/hooks/useStoreState'
 
-import OnboardingAddFile from './onboarding-add-file'
-import onboardingItems from './onboarding-items'
+import OnboardingAddFile from './OnboardingAddFile'
 
 export default function Onboarding() {
   const mode = useStoreState((state) => state.annotator.mode)
@@ -41,3 +46,11 @@ const rootAttrs = classes(
   'absolute z-10 flex h-full w-full flex-col items-center justify-center',
   'inert:hidden',
 )
+const onboardingItems = [
+  { Icon: PlusIcon, label: 'Add the annotation categories' },
+  { Icon: PaintBrushIcon, label: 'Use brush or polygon forms to annotate it' },
+  {
+    Icon: DocumentArrowDownIcon,
+    label: 'Validate the dataset and export it in COCO format',
+  },
+]

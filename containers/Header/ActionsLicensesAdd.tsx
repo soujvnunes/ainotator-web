@@ -15,7 +15,7 @@ import useStoreState from '@/hooks/useStoreState'
 import Button from '@/ui/Button'
 import TextField from '@/ui/TextField'
 
-import actionsLicensesAddFields from './actions-licenses-add-fields'
+import actionsLicensesAddFields from './actionsLicensesAddFields'
 
 export default function ActionsLicensesAdd() {
   const dispatch = useStoreDispatch()

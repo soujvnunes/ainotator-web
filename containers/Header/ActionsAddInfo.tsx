@@ -18,7 +18,7 @@ import TextField from '@/ui/TextField'
 
 import actionsAddInfoFields, {
   type ActionsAddInfoFields,
-} from './actions-add-info-fields'
+} from './actionsAddInfoFields'
 
 export default function ActionsAddInfo() {
   const dispatch = useStoreDispatch()
