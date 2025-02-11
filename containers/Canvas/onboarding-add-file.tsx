@@ -8,7 +8,7 @@ import { FabricImage } from 'fabric'
 import annotator from '@/reducers/annotator'
 import dataset from '@/reducers/dataset'
 
-import { getDateTime } from '@/helpers'
+import getDateTime from '@/helpers/getDateTime'
 
 import useCanvas from '@/hooks/useCanvas'
 import useStoreDispatch from '@/hooks/useDispatch'

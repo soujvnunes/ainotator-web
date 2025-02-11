@@ -8,7 +8,8 @@ import { validateDataset } from '@/actions'
 
 import annotator from '@/reducers/annotator'
 
-import { generateLink, isDatasetValid } from '@/helpers'
+import generateLink from '@/helpers/generateLink'
+import isDatasetValid from '@/helpers/isDatasetValid'
 
 import useCanvas from '@/hooks/useCanvas'
 import useStoreDispatch from '@/hooks/useDispatch'

@@ -2,7 +2,7 @@
 
 import { ChevronDownIcon } from '@heroicons/react/24/solid'
 
-import { classes } from '@/helpers'
+import classes from '@/helpers/classes'
 
 import useStoreState from '@/hooks/useStoreState'
 

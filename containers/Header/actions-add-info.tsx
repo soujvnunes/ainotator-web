@@ -5,7 +5,7 @@ import { InformationCircleIcon } from '@heroicons/react/24/solid'
 
 import dataset from '@/reducers/dataset'
 
-import { classes } from '@/helpers'
+import classes from '@/helpers/classes'
 
 import useStoreDispatch from '@/hooks/useDispatch'
 import useFormSubmit from '@/hooks/useFormSubmit'

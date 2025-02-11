@@ -1,6 +1,6 @@
 'use client'
 
-import { classes } from '@/helpers'
+import classes from '@/helpers/classes'
 
 import useStoreState from '@/hooks/useStoreState'
 
