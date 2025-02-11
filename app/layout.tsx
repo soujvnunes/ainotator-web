@@ -6,7 +6,7 @@ import StoreProvider from '@/providers/StoreProvider'
 
 import '@/styles/tailwind.css'
 
-import { Header } from '@/containers'
+import Header from '@/containers/Header'
 
 const outfit = Outfit({
   subsets: ['latin'],
