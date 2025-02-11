@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from 'next'
 import { Outfit } from 'next/font/google'
 
-import { CanvasProvider, StoreProvider } from '@/providers'
+import CanvasProvider from '@/providers/CanvasProvider'
+import StoreProvider from '@/providers/StoreProvider'
 
 import '@/styles/tailwind.css'
 
