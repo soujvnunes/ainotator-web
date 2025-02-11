@@ -1,6 +1,6 @@
 import { cva } from 'class-variance-authority'
 
-import { twMerge } from '@/helpers'
+import twMerge from '@/helpers/twMerge'
 
 import button from './button'
 
