@@ -6,7 +6,7 @@ import { classes } from '@/helpers'
 
 import { useStoreState } from '@/hooks'
 
-import { IconButton } from '@/ui'
+import IconButton from '@/ui/IconButton'
 
 export default function FileDetails() {
   const id = useStoreState((state) => state.annotator.current.id.image)

@@ -9,7 +9,9 @@ import { classes } from '@/helpers'
 
 import { useFormSubmit, useStoreDispatch, useStoreState } from '@/hooks'
 
-import { Button, Dialog, IconButton, TextField } from '@/ui'
+import Dialog from '@/ui/Dialog'
+import IconButton from '@/ui/IconButton'
+import TextField from '@/ui/TextField'
 
 import actionsAddInfoFields, {
   type ActionsAddInfoFields,

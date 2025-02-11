@@ -13,7 +13,8 @@ import {
   useStoreState,
 } from '@/hooks'
 
-import { Button, TextField } from '@/ui'
+import Button from '@/ui/Button'
+import TextField from '@/ui/TextField'
 
 import actionsLicensesAddFields from './actions-licenses-add-fields'
 

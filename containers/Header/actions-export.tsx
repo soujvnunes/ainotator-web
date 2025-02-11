@@ -12,7 +12,7 @@ import { generateLink, isDatasetValid } from '@/helpers'
 
 import { useCanvas, useStoreDispatch, useStoreState } from '@/hooks'
 
-import { IconButton } from '@/ui'
+import IconButton from '@/ui/IconButton'
 
 export default function ActionsExport() {
   const canvas = useCanvas()

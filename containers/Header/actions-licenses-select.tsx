@@ -6,7 +6,9 @@ import { annotator, dataset } from '@/reducers'
 
 import { useStoreDispatch, useStoreState } from '@/hooks'
 
-import { RadioField, textFieldStyles } from '@/ui'
+import textField from '@/styles/textField'
+
+import RadioField from '@/ui/RadioField'
 
 export default function ActionsLicensesSelect() {
   const dispatch = useStoreDispatch()
@@ -31,7 +33,7 @@ export default function ActionsLicensesSelect() {
     <>
       <p
         aria-hidden="true"
-        className={textFieldStyles.label.root({
+        className={textField.label.root({
           className: 'mt-4 cursor-default',
         })}>
         Licenses
