@@ -1,4 +1,4 @@
-import { type DatasetValidation } from '@/actions'
+import { type DatasetValidation } from '@/actions/validateDataset'
 
 interface ValidDataset {
   message: 'Success'

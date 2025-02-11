@@ -1,4 +1,4 @@
-import { DatasetValidation } from '@/actions'
+import { type DatasetValidation } from '@/actions/validateDataset'
 
 interface FormarttedValidation {
   field: string
