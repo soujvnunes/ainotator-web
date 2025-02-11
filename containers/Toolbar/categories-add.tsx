@@ -7,15 +7,14 @@ import { type AnnotatorCategory, annotator } from '@/reducers'
 
 import { useEnhancedId, useFormSubmit, useStoreDispatch } from '@/hooks'
 
-import {
-  AnnotationRadio,
-  Button,
-  RadioField,
-  TextField,
-  textFieldStyles,
-  Dialog,
-  IconButton,
-} from '@/ui'
+import textField from '@/styles/textField'
+
+import AnnotationRadio from '@/ui/AnnotationRadio'
+import Button from '@/ui/Button'
+import Dialog from '@/ui/Dialog'
+import IconButton from '@/ui/IconButton'
+import RadioField from '@/ui/RadioField'
+import TextField from '@/ui/TextField'
 
 import {
   categoriesAddColors,
@@ -72,7 +71,7 @@ export default function CategoriesAdd() {
           <div>
             <p
               aria-hidden="true"
-              className={textFieldStyles.label.root({
+              className={textField.label.root({
                 className: 'cursor-default',
               })}>
               Is crowd?
@@ -88,7 +87,7 @@ export default function CategoriesAdd() {
           <div>
             <p
               aria-hidden="true"
-              className={textFieldStyles.label.root({
+              className={textField.label.root({
                 className: 'cursor-default',
               })}>
               Type

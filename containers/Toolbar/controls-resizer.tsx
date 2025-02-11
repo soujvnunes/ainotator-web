@@ -6,7 +6,7 @@ import { annotator } from '@/reducers'
 
 import { useCurrentCategory, useStoreDispatch, useStoreState } from '@/hooks'
 
-import { RangeField } from '@/ui'
+import RangeField from '@/ui/RangeField'
 
 export default function ControlsResizer() {
   const category = useCurrentCategory()
@@ -24,6 +24,8 @@ export default function ControlsResizer() {
     <RangeField
       label="Brush size"
       value={size}
+      max={40}
+      min={8}
       onChange={handleSize}
       disabled={mode !== 'annotating' || category?.type !== 'brush'}
     />

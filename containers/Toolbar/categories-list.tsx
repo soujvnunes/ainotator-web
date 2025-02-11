@@ -8,7 +8,7 @@ import { annotator } from '@/reducers'
 
 import { useStoreDispatch, useStoreState } from '@/hooks'
 
-import { AnnotationRadio } from '@/ui'
+import AnnotationRadio from '@/ui/AnnotationRadio'
 
 export default function CategoriesList() {
   const dispatch = useStoreDispatch()

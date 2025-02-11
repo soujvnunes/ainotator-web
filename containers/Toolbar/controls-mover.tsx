@@ -2,7 +2,7 @@
 
 import { ArrowsPointingOutIcon } from '@heroicons/react/24/solid'
 
-import { IconButton } from '@/ui'
+import IconButton from '@/ui/IconButton'
 
 export default function ControlsMover() {
   return (

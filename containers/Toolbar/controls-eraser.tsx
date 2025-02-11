@@ -4,7 +4,7 @@ import { PaintBrushIcon, XMarkIcon } from '@heroicons/react/24/solid'
 
 import { useStoreState } from '@/hooks'
 
-import { IconButton } from '@/ui'
+import IconButton from '@/ui/IconButton'
 
 export default function ControlsEraser() {
   const annotations = useStoreState((state) => state.dataset.annotations)
@@ -14,7 +14,7 @@ export default function ControlsEraser() {
       disabled={!annotations.length}
       aria-label="Start erasing current drawning">
       <PaintBrushIcon className="size-6" />
-      <span className="absolute bottom-1.5 right-1.5 h-4 w-4 rounded-full bg-black text-red-400">
+      <span className="absolute right-1.5 bottom-1.5 h-4 w-4 rounded-full bg-black text-red-400">
         <XMarkIcon className="m-auto size-4" />
       </span>
     </IconButton>
