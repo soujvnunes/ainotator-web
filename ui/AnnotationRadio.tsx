@@ -6,7 +6,9 @@ import {
   UserGroupIcon,
 } from '@heroicons/react/24/solid'
 
-import type { AnnotatorColors, AnnotatorCrowds, AnnotatorTypes } from '@/lib'
+import { type AnnotatorColors } from '@/lib/annotatorColors'
+import { type AnnotatorCrowds } from '@/lib/annotatorCrowds'
+import { type AnnotatorTypes } from '@/lib/annotatorTypes'
 
 import { twMerge } from '@/helpers'
 
