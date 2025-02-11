@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { dataset } from '@/reducers'
+import dataset from '@/reducers/dataset'
 
 import useCanvas from '../use-canvas'
 import useCurrentCategory from '../use-current-category'
