@@ -1,6 +1,6 @@
 import { cva } from 'class-variance-authority'
 
-import { annotatorColors } from '@/lib'
+import annotatorColors from '@/lib/annotatorColors'
 
 const annotationRadio = {
   root: cva(
@@ -9,9 +9,9 @@ const annotationRadio = {
       variants: {
         color: { ...annotatorColors.classes.background },
         compact: {
-          true: 'aspect-square w-full min-w-10 data-disabled:bg-opacity-40 data-hover:bg-opacity-60',
+          true: 'data-disabled:bg-opacity-40 data-hover:bg-opacity-60 aspect-square w-full min-w-10',
           false:
-            'h-16 w-24 flex-col justify-between bg-opacity-60 data-disabled:bg-opacity-40',
+            'bg-opacity-60 data-disabled:bg-opacity-40 h-16 w-24 flex-col justify-between',
         },
       },
       defaultVariants: {
