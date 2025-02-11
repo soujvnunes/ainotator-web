@@ -7,7 +7,7 @@ import type {
   DatasetImage,
   DatasetInfo,
   DatasetLicense,
-} from '@/actions'
+} from '@/actions/validateDataset'
 
 type DatasetState = Dataset
 

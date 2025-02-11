@@ -1,7 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { type PayloadAction } from '@reduxjs/toolkit'
 
-import type { DatasetCategory, DatasetImage, DatasetLicense } from '@/actions'
+import type {
+  DatasetCategory,
+  DatasetImage,
+  DatasetLicense,
+} from '@/actions/validateDataset'
 
 import { type AnnotatorColors } from '@/lib/annotatorColors'
 import { type AnnotatorCrowds } from '@/lib/annotatorCrowds'
