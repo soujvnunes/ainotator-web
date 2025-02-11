@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import { annotator, dataset } from '@/reducers'
+import annotator from '@/reducers/annotator'
+import dataset from '@/reducers/dataset'
 
 const store = configureStore({
   reducer: {
