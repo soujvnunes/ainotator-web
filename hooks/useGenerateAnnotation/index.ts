@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 
 import dataset from '@/reducers/dataset'
 
-import selectCategory from '@/selectors/selectCategory'
+import selectCurrentCategory from '@/selectors/selectCurrentCategory'
 
 import useCanvas from '../useCanvas'
 import useStoreDispatch from '../useDispatch'
@@ -13,7 +13,7 @@ import generateAnnotation from './generateAnnotation'
 export default function useGenerateAnnotation() {
   const dispatch = useStoreDispatch()
   const canvas = useCanvas()
-  const category = useStoreState(selectCategory)
+  const currentCategory = useStoreState(selectCurrentCategory)
   const image = useStoreState((state) => state.annotator.current.id.image)
   const mode = useStoreState((state) => state.annotator.mode)
   const [id, nextId] = useEnhancedId()
@@ -24,7 +24,7 @@ export default function useGenerateAnnotation() {
     if (!_canvas) return
 
     function handleMouseUp() {
-      if (!_canvas || !category || mode !== 'annotating') return
+      if (!_canvas || !currentCategory || mode !== 'annotating') return
 
       // TODO: skip previous generated annotation
       const annotation = generateAnnotation(_canvas)
@@ -35,18 +35,12 @@ export default function useGenerateAnnotation() {
         dataset.actions.addAnnotation({
           id,
           image_id: image,
-          category_id: category.id,
-          iscrowd: category.isCrowd === 'yes' ? 1 : 0,
+          category_id: currentCategory.id,
+          iscrowd: currentCategory.isCrowd === 'yes' ? 1 : 0,
           ...annotation,
         }),
       )
-      dispatch(
-        dataset.actions.addCategory({
-          supercategory: category.supercategory,
-          id: category.id,
-          name: category.name,
-        }),
-      )
+      dispatch(dataset.actions.addCategory(currentCategory))
       nextId()
     }
     _canvas.on('mouse:up', handleMouseUp)
@@ -54,5 +48,5 @@ export default function useGenerateAnnotation() {
     return () => {
       _canvas.off('mouse:up', handleMouseUp)
     }
-  }, [image, id, dispatch, nextId, category, mode, canvas])
+  }, [image, id, dispatch, nextId, currentCategory, mode, canvas])
 }

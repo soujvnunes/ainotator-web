@@ -11,7 +11,7 @@ import {
   type TPointerEventInfo,
 } from 'fabric'
 
-import selectCategory from '@/selectors/selectCategory'
+import selectCurrentCategory from '@/selectors/selectCurrentCategory'
 
 import useCanvas from './useCanvas'
 import useEnhancedId from './useEnhancedId'
@@ -19,7 +19,7 @@ import useStoreState from './useStoreState'
 
 export default function usePolygon() {
   const canvas = useCanvas()
-  const category = useStoreState(selectCategory)
+  const currentCategory = useStoreState(selectCurrentCategory)
   const mode = useStoreState((state) => state.annotator.mode)
   const [id, nextId] = useEnhancedId()
   const [lines, setLines] = useState<Line[]>([])
@@ -29,10 +29,6 @@ export default function usePolygon() {
   useEffect(() => {
     const _canvas = canvas.current
     const defaultOptions = { selectable: false, hasControls: false }
-
-    if (!_canvas || mode !== 'annotating' || category?.type !== 'polygon') {
-      return
-    }
 
     function handleMouseDown(event: TPointerEventInfo<TPointerEvent>) {
       if (!_canvas) return
@@ -47,7 +43,7 @@ export default function usePolygon() {
       if (!!points.length) {
         const point = points[points.length - 1]
         const line = new Line([point.x, point.y, pointer.x, pointer.y], {
-          stroke: category?.color,
+          stroke: currentCategory?.color,
           strokeWidth: 2,
           ...defaultOptions,
         })
@@ -71,7 +67,7 @@ export default function usePolygon() {
       if (points.length <= 2 || !_canvas) return
 
       const polygon = new Polygon(points, {
-        fill: category?.color,
+        fill: currentCategory?.color,
         ...defaultOptions,
       })
 
@@ -84,6 +80,14 @@ export default function usePolygon() {
       setDrawing(false)
     }
 
+    if (
+      !_canvas ||
+      mode !== 'annotating' ||
+      currentCategory?.type !== 'polygon'
+    ) {
+      return
+    }
+
     _canvas.on('mouse:down', handleMouseDown)
     _canvas.on('mouse:move', handleMouseMove)
     _canvas.on('mouse:dblclick', handleDoubleClick)
@@ -93,5 +97,5 @@ export default function usePolygon() {
       _canvas.off('mouse:move', handleMouseMove)
       _canvas.off('mouse:dblclick', handleDoubleClick)
     }
-  }, [lines, isDrawing, points, id, category, mode, nextId, canvas])
+  }, [lines, isDrawing, points, id, currentCategory, mode, nextId, canvas])
 }
