@@ -2,13 +2,12 @@ import { useEffect } from 'react'
 
 import dataset from '@/reducers/dataset'
 
-import generateAnnotation from '@/helpers/getAnnotation'
-
-import useCanvas from './useCanvas'
-import useCurrentCategory from './useCurrentCategory'
-import useStoreDispatch from './useDispatch'
-import useEnhancedId from './useEnhancedId'
-import useStoreState from './useStoreState'
+import useCanvas from '../useCanvas'
+import useCurrentCategory from '../useCurrentCategory'
+import useStoreDispatch from '../useDispatch'
+import useEnhancedId from '../useEnhancedId'
+import useStoreState from '../useStoreState'
+import generateAnnotation from './generateAnnotation'
 
 export default function useGenerateAnnotation() {
   const dispatch = useStoreDispatch()
