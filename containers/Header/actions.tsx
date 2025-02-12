@@ -1,6 +1,6 @@
-import ActionsAddInfo from './actions-add-info'
-import ActionsExport from './actions-export'
-import ActionsLicenses from './actions-licenses'
+import ActionsAddInfo from './ActionsAddInfo'
+import ActionsExport from './ActionsExport'
+import ActionsLicenses from './ActionsLicenses'
 
 export default function Actions() {
   return (

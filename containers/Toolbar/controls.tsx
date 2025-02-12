@@ -3,15 +3,15 @@
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
 import { Squares2X2Icon } from '@heroicons/react/24/solid'
 
-import { useStoreState } from '@/hooks'
+import useStoreState from '@/hooks/useStoreState'
 
-import { IconButton } from '@/ui'
+import IconButton from '@/components/IconButton'
 
-import ControlsEraser from './controls-eraser'
-import ControlsMover from './controls-mover'
-import ControlsResizer from './controls-resizer'
-import ControlsZoomIn from './controls-zoom-in'
-import ControlsZoomOut from './controls-zoom-out'
+import ControlsEraser from './ControlsEraser'
+import ControlsMover from './ControlsMover'
+import ControlsResizer from './ControlsResizer'
+import ControlsZoomIn from './ControlsZoomIn'
+import ControlsZoomOut from './ControlsZoomOut'
 
 export default function Controls() {
   const mode = useStoreState((state) => state.annotator.mode)

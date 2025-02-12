@@ -1,14 +1,12 @@
 'use client'
 
-import {
-  useBrush,
-  useInitializeCanvas,
-  useGenerateAnnotation,
-  usePolygon,
-  useUnselectCanvas,
-} from '@/hooks'
+import useBrush from '@/hooks/useBrush'
+import useGenerateAnnotation from '@/hooks/useGenerateAnnotation'
+import useInitializeCanvas from '@/hooks/useInitializeCanvas'
+import usePolygon from '@/hooks/usePolygon'
+import useUnselectCanvas from '@/hooks/useUnselectCanvas'
 
-import Onboarding from './onboarding'
+import Onboarding from './Onboarding'
 
 const CONTROLS_Y =
   64 + // TOOLBAR
