@@ -11,12 +11,12 @@ import useFormSubmit from '@/hooks/useFormSubmit'
 
 import textField from '@/styles/textField'
 
-import AnnotationRadio from '@/ui/AnnotationRadio'
-import Button from '@/ui/Button'
-import Dialog from '@/ui/Dialog'
-import IconButton from '@/ui/IconButton'
-import RadioField from '@/ui/RadioField'
-import TextField from '@/ui/TextField'
+import AnnotationRadio from '@/components/AnnotationRadio'
+import Button from '@/components/Button'
+import Dialog from '@/components/Dialog'
+import IconButton from '@/components/IconButton'
+import RadioField from '@/components/RadioField'
+import TextField from '@/components/TextField'
 
 import categoriesAddColors from './categoriesAddColors'
 import categoriesAddCrowds from './categoriesAddCrowds'

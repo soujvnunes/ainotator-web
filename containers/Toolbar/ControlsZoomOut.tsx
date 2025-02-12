@@ -2,7 +2,7 @@
 
 import { MagnifyingGlassMinusIcon } from '@heroicons/react/24/solid'
 
-import IconButton from '@/ui/IconButton'
+import IconButton from '@/components/IconButton'
 
 export default function ControlsZoomOut() {
   return (

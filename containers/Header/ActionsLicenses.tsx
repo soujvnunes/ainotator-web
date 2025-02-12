@@ -6,9 +6,9 @@ import classes from '@/helpers/classes'
 
 import useStoreState from '@/hooks/useStoreState'
 
-import Dialog from '@/ui/Dialog'
-import IconButton from '@/ui/IconButton'
-import Tabs from '@/ui/Tabs'
+import Dialog from '@/components/Dialog'
+import IconButton from '@/components/IconButton'
+import Tabs from '@/components/Tabs'
 
 import ActionsLicensesAdd from './ActionsLicensesAdd'
 import ActionsLicensesSelect from './ActionsLicensesSelect'

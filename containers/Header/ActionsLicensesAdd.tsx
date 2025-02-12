@@ -12,8 +12,8 @@ import useEnhancedId from '@/hooks/useEnhancedId'
 import useFormSubmit from '@/hooks/useFormSubmit'
 import useStoreState from '@/hooks/useStoreState'
 
-import Button from '@/ui/Button'
-import TextField from '@/ui/TextField'
+import Button from '@/components/Button'
+import TextField from '@/components/TextField'
 
 import actionsLicensesAddFields from './actionsLicensesAddFields'
 

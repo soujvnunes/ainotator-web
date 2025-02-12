@@ -5,7 +5,7 @@ import { Squares2X2Icon } from '@heroicons/react/24/solid'
 
 import useStoreState from '@/hooks/useStoreState'
 
-import IconButton from '@/ui/IconButton'
+import IconButton from '@/components/IconButton'
 
 import ControlsEraser from './ControlsEraser'
 import ControlsMover from './ControlsMover'

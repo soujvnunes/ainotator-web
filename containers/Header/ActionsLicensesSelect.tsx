@@ -10,7 +10,7 @@ import useStoreState from '@/hooks/useStoreState'
 
 import textField from '@/styles/textField'
 
-import RadioField from '@/ui/RadioField'
+import RadioField from '@/components/RadioField'
 
 export default function ActionsLicensesSelect() {
   const dispatch = useStoreDispatch()

@@ -15,7 +15,7 @@ import useCanvas from '@/hooks/useCanvas'
 import useStoreDispatch from '@/hooks/useDispatch'
 import useStoreState from '@/hooks/useStoreState'
 
-import IconButton from '@/ui/IconButton'
+import IconButton from '@/components/IconButton'
 
 export default function ActionsExport() {
   const canvas = useCanvas()

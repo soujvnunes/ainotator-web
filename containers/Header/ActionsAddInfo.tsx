@@ -11,10 +11,10 @@ import useStoreDispatch from '@/hooks/useDispatch'
 import useFormSubmit from '@/hooks/useFormSubmit'
 import useStoreState from '@/hooks/useStoreState'
 
-import Button from '@/ui/Button'
-import Dialog from '@/ui/Dialog'
-import IconButton from '@/ui/IconButton'
-import TextField from '@/ui/TextField'
+import Button from '@/components/Button'
+import Dialog from '@/components/Dialog'
+import IconButton from '@/components/IconButton'
+import TextField from '@/components/TextField'
 
 import actionsAddInfoFields, {
   type ActionsAddInfoFields,

@@ -8,7 +8,7 @@ import useCurrentCategory from '@/hooks/useCurrentCategory'
 import useStoreDispatch from '@/hooks/useDispatch'
 import useStoreState from '@/hooks/useStoreState'
 
-import RangeField from '@/ui/RangeField'
+import RangeField from '@/components/RangeField'
 
 export default function ControlsResizer() {
   const category = useCurrentCategory()
