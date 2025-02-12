@@ -13,13 +13,13 @@ export default function useBrush() {
   const mode = useStoreState((state) => state.annotator.mode)
 
   useEffect(() => {
-    const _canva = canvas.current
+    const _canvas = canvas.current
 
-    if (!_canva || mode !== 'annotating' || category?.type !== 'brush') return
+    if (!_canvas || mode !== 'annotating' || category?.type !== 'brush') return
 
-    _canva.isDrawingMode = true
-    _canva.freeDrawingBrush = new PencilBrush(_canva)
-    _canva.freeDrawingBrush.color = category.color
-    _canva.freeDrawingBrush.width = size
+    _canvas.isDrawingMode = true
+    _canvas.freeDrawingBrush = new PencilBrush(_canvas)
+    _canvas.freeDrawingBrush.color = category.color
+    _canvas.freeDrawingBrush.width = size
   }, [canvas, category, mode, size])
 }
