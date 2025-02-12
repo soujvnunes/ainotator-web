@@ -27,7 +27,7 @@ module.exports = {
           '/@/providers/',
           '/@/hooks/',
           '/@/styles/',
-          '/@/ui/',
+          '/@/components/',
           '/@/containers/',
           ['parent', 'sibling', 'index'],
         ],
