@@ -4,7 +4,7 @@ import { useCallback } from 'react'
 
 import annotator from '@/reducers/annotator'
 
-import selectCategory from '@/selectors/selectCategory'
+import selectCurrentCategory from '@/selectors/selectCurrentCategory'
 
 import useStoreDispatch from '@/hooks/useDispatch'
 import useStoreState from '@/hooks/useStoreState'
@@ -12,7 +12,7 @@ import useStoreState from '@/hooks/useStoreState'
 import RangeField from '@/components/RangeField'
 
 export default function ControlsResizer() {
-  const category = useStoreState(selectCategory)
+  const currentCategory = useStoreState(selectCurrentCategory)
   const mode = useStoreState((state) => state.annotator.mode)
   const size = useStoreState((state) => state.annotator.size.brush)
   const dispatch = useStoreDispatch()
@@ -30,7 +30,7 @@ export default function ControlsResizer() {
       max={40}
       min={8}
       onChange={handleSize}
-      disabled={mode !== 'annotating' || category?.type !== 'brush'}
+      disabled={mode !== 'annotating' || currentCategory?.type !== 'brush'}
     />
   )
 }
