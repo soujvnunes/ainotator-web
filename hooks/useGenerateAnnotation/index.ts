@@ -2,8 +2,9 @@ import { useEffect } from 'react'
 
 import dataset from '@/reducers/dataset'
 
+import selectCategory from '@/selectors/selectCategory'
+
 import useCanvas from '../useCanvas'
-import useCurrentCategory from '../useCurrentCategory'
 import useStoreDispatch from '../useDispatch'
 import useEnhancedId from '../useEnhancedId'
 import useStoreState from '../useStoreState'
@@ -12,7 +13,7 @@ import generateAnnotation from './generateAnnotation'
 export default function useGenerateAnnotation() {
   const dispatch = useStoreDispatch()
   const canvas = useCanvas()
-  const category = useCurrentCategory()
+  const category = useStoreState(selectCategory)
   const image = useStoreState((state) => state.annotator.current.id.image)
   const mode = useStoreState((state) => state.annotator.mode)
   const [id, nextId] = useEnhancedId()
