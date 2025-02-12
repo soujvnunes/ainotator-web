@@ -24,6 +24,7 @@ module.exports = {
           '/@/actions/',
           '/@/reducers/',
           '/@/lib/',
+          '/@/selector/',
           '/@/helpers/',
           '/@/providers/',
           '/@/hooks/',
