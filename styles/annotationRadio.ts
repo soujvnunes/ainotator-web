@@ -1,6 +1,6 @@
 import { cva } from 'class-variance-authority'
 
-import annotatorColors from '@/lib/annotatorColors'
+import annotatorColors from '@/consts/annotatorColors'
 
 const annotationRadio = {
   root: cva(
