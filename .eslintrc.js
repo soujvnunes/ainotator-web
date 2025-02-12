@@ -20,6 +20,7 @@ module.exports = {
           '/^react/',
           '/^next/',
           'module',
+          '/@/consts/',
           '/@/actions/',
           '/@/reducers/',
           '/@/lib/',
