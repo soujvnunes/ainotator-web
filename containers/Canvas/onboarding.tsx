@@ -6,6 +6,8 @@ import {
   PlusIcon,
 } from '@heroicons/react/24/solid'
 
+import selectIsWaiting from '@/selectors/selectIsWaiting'
+
 import classes from '@/helpers/classes'
 
 import useStoreState from '@/hooks/useStoreState'
@@ -13,10 +15,10 @@ import useStoreState from '@/hooks/useStoreState'
 import OnboardingAddFile from './OnboardingAddFile'
 
 export default function Onboarding() {
-  const mode = useStoreState((state) => state.annotator.mode)
+  const isWaiting = useStoreState(selectIsWaiting)
 
   return (
-    <section {...rootAttrs({ inert: mode !== 'waiting' })}>
+    <section {...rootAttrs({ inert: !isWaiting })}>
       <p className="text-label text-white/60">AINotator WEB</p>
       <h2 className="mb-4 text-center text-4xl lg:text-6xl">
         Start by adding <br /> an image
