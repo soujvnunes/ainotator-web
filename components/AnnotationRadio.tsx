@@ -6,9 +6,9 @@ import {
   UserGroupIcon,
 } from '@heroicons/react/24/solid'
 
-import { type AnnotatorColors } from '@/lib/annotatorColors'
-import { type AnnotatorCrowds } from '@/lib/annotatorCrowds'
-import { type AnnotatorTypes } from '@/lib/annotatorTypes'
+import { type AnnotatorColors } from '@/consts/annotatorColors'
+import { type AnnotatorCrowds } from '@/consts/annotatorCrowds'
+import { type AnnotatorTypes } from '@/consts/annotatorTypes'
 
 import twMerge from '@/helpers/twMerge'
 
@@ -25,11 +25,11 @@ export interface AnnotationRadioProps<V extends string | number>
 
 export default function AnnotationRadio<V extends string | number>({
   className,
-  type,
-  color,
-  isCrowd,
+  type = 'brush',
+  color = 'red',
+  isCrowd = 'no',
   children,
-  compact,
+  compact = false,
   ...props
 }: AnnotationRadioProps<V>) {
   const TypeIcon = type === 'polygon' ? CubeTransparentIcon : PaintBrushIcon
