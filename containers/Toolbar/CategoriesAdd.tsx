@@ -3,6 +3,8 @@
 import { Fieldset, Legend, RadioGroup } from '@headlessui/react'
 import { PlusIcon } from '@heroicons/react/24/solid'
 
+import annotatorColors from '@/consts/annotatorColors'
+
 import annotator, { type AnnotatorCategory } from '@/reducers/annotator'
 
 import useStoreDispatch from '@/hooks/useDispatch'
@@ -11,7 +13,6 @@ import useFormSubmit from '@/hooks/useFormSubmit'
 
 import textField from '@/styles/textField'
 
-import AnnotationRadio from '@/components/AnnotationRadio'
 import Button from '@/components/Button'
 import Dialog from '@/components/Dialog'
 import IconButton from '@/components/IconButton'
@@ -102,16 +103,8 @@ export default function CategoriesAdd() {
             <RadioGroup
               className="flex"
               name="color"
-              defaultValue={categoriesAddColors[0]}>
-              {categoriesAddColors.map((color) => (
-                <AnnotationRadio
-                  compact
-                  key={color}
-                  value={color}
-                  color={color}
-                  aria-label={color}
-                />
-              ))}
+              defaultValue={annotatorColors.value[0]}>
+              {categoriesAddColors}
             </RadioGroup>
             <Button
               type="submit"

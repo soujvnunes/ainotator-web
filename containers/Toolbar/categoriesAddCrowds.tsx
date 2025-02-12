@@ -1,17 +1,9 @@
 import { UserGroupIcon, UserIcon } from '@heroicons/react/24/solid'
 
-import annotatorCrowds, { type AnnotatorCrowds } from '@/lib/annotatorCrowds'
+import annotatorCrowds from '@/consts/annotatorCrowds'
 
-export default annotatorCrowds.reduce(
-  (fields, value) => {
-    const children =
-      value === 'yes' ? (
-        <UserGroupIcon className="size-4" />
-      ) : (
-        <UserIcon className="size-4" />
-      )
+export default annotatorCrowds.map((value) => {
+  const Icon = value === 'yes' ? UserGroupIcon : UserIcon
 
-    return [...fields, { children, value }]
-  },
-  [] as { children: React.JSX.Element; value: AnnotatorCrowds }[],
-)
+  return { children: <Icon className="size-4" />, value }
+})

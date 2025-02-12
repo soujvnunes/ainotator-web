@@ -1,3 +1,13 @@
-import annotatorColors, { type AnnotatorColors } from '@/lib/annotatorColors'
+import annotatorColors from '@/consts/annotatorColors'
 
-export default Object.keys(annotatorColors.rgb) as AnnotatorColors[]
+import AnnotationRadio from '@/components/AnnotationRadio'
+
+export default annotatorColors.value.map((color) => (
+  <AnnotationRadio
+    compact
+    key={color}
+    value={color}
+    color={color}
+    aria-label={color}
+  />
+))

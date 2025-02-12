@@ -1,17 +1,9 @@
 import { PaintBrushIcon, StarIcon } from '@heroicons/react/24/solid'
 
-import annotatorTypes, { type AnnotatorTypes } from '@/lib/annotatorTypes'
+import annotatorTypes from '@/consts/annotatorTypes'
 
-export default annotatorTypes.reduce(
-  (fields, value) => {
-    const children =
-      value === 'polygon' ? (
-        <StarIcon className="size-4" />
-      ) : (
-        <PaintBrushIcon className="size-4" />
-      )
+export default annotatorTypes.map((value) => {
+  const Icon = value === 'polygon' ? StarIcon : PaintBrushIcon
 
-    return [...fields, { children, value }]
-  },
-  [] as { children: React.JSX.Element; value: AnnotatorTypes }[],
-)
+  return { children: <Icon className="size-4" />, value }
+})
