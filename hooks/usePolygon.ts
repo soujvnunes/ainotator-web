@@ -12,6 +12,7 @@ import {
 } from 'fabric'
 
 import selectCurrentCategory from '@/selectors/selectCurrentCategory'
+import selectIsAnnotating from '@/selectors/selectIsAnnoting'
 
 import useCanvas from './useCanvas'
 import useEnhancedId from './useEnhancedId'
@@ -20,7 +21,7 @@ import useStoreState from './useStoreState'
 export default function usePolygon() {
   const canvas = useCanvas()
   const currentCategory = useStoreState(selectCurrentCategory)
-  const mode = useStoreState((state) => state.annotator.mode)
+  const isAnnotating = useStoreState(selectIsAnnotating)
   const [id, nextId] = useEnhancedId()
   const [lines, setLines] = useState<Line[]>([])
   const [isDrawing, setDrawing] = useState(false)
@@ -29,6 +30,10 @@ export default function usePolygon() {
   useEffect(() => {
     const _canvas = canvas.current
     const defaultOptions = { selectable: false, hasControls: false }
+
+    if (!_canvas || !isAnnotating || currentCategory?.type !== 'polygon') {
+      return
+    }
 
     function handleMouseDown(event: TPointerEventInfo<TPointerEvent>) {
       if (!_canvas) return
@@ -80,14 +85,6 @@ export default function usePolygon() {
       setDrawing(false)
     }
 
-    if (
-      !_canvas ||
-      mode !== 'annotating' ||
-      currentCategory?.type !== 'polygon'
-    ) {
-      return
-    }
-
     _canvas.on('mouse:down', handleMouseDown)
     _canvas.on('mouse:move', handleMouseMove)
     _canvas.on('mouse:dblclick', handleDoubleClick)
@@ -97,5 +94,14 @@ export default function usePolygon() {
       _canvas.off('mouse:move', handleMouseMove)
       _canvas.off('mouse:dblclick', handleDoubleClick)
     }
-  }, [lines, isDrawing, points, id, currentCategory, mode, nextId, canvas])
+  }, [
+    lines,
+    isDrawing,
+    points,
+    id,
+    currentCategory,
+    nextId,
+    canvas,
+    isAnnotating,
+  ])
 }
