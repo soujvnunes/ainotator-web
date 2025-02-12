@@ -3,10 +3,10 @@ import { createSelector } from '@reduxjs/toolkit'
 import annotatorColors from '@/consts/annotatorColors'
 
 import selectCategories from './selectCategories'
-import selectCategoryId from './selectCategoryId'
+import selectCurrentCategoryId from './selectCurrentCategoryId'
 
-const selectCategory = createSelector(
-  [selectCategoryId, selectCategories],
+const selectCurrentCategory = createSelector(
+  [selectCurrentCategoryId, selectCategories],
   (id, categories) => {
     if (!id) return
 
@@ -21,4 +21,4 @@ const selectCategory = createSelector(
   },
 )
 
-export default selectCategory
+export default selectCurrentCategory
