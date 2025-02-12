@@ -3,8 +3,8 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import dialog from '@/styles/dialog'
 
-import OriginalDialog, { type DialogProps } from '@/ui/Dialog'
-import IconButton from '@/ui/IconButton'
+import OriginalDialog, { type DialogProps } from '@/components/Dialog'
+import IconButton from '@/components/IconButton'
 
 // TODO: remove this workaround when Headless make a way to render a element inside Stories available
 function Dialog(props: React.PropsWithChildren<DialogProps>) {

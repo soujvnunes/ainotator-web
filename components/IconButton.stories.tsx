@@ -1,7 +1,7 @@
 import { PlusIcon } from '@heroicons/react/24/solid'
 import type { Meta, StoryObj } from '@storybook/react'
 
-import IconButton from '@/ui/IconButton'
+import IconButton from '@/components/IconButton'
 
 // TODO: remove it when heroicon package provide a displayName for their icons
 PlusIcon.displayName = 'PlusIcon'
