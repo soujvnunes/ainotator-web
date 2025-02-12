@@ -5,6 +5,8 @@ import { useCallback, useMemo } from 'react'
 import annotator from '@/reducers/annotator'
 import dataset from '@/reducers/dataset'
 
+import selectCurrentLicenseId from '@/selectors/selectCurrentLicenseId'
+
 import useStoreDispatch from '@/hooks/useDispatch'
 import useStoreState from '@/hooks/useStoreState'
 
@@ -14,7 +16,7 @@ import RadioField from '@/components/RadioField'
 
 export default function ActionsLicensesSelect() {
   const dispatch = useStoreDispatch()
-  const licenseId = useStoreState((state) => state.annotator.current.id.license)
+  const licenseId = useStoreState(selectCurrentLicenseId)
   const imageId = useStoreState((state) => state.annotator.current.id.image)
   const licenses = useStoreState((state) => state.dataset.licenses)
   const handleLicense = useCallback(
