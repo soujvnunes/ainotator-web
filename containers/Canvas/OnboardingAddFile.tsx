@@ -54,7 +54,6 @@ export default function OnboardingAddFile() {
         image.hasControls = false
         _canvas.add(image)
         _canvas.renderAll()
-        dispatch(annotator.actions.setMode('editting'))
         dispatch(annotator.actions.setImage(id))
         dispatch(
           dataset.actions.addImage({
