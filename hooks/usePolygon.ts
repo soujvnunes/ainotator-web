@@ -11,14 +11,15 @@ import {
   type TPointerEventInfo,
 } from 'fabric'
 
+import selectCategory from '@/selectors/selectCategory'
+
 import useCanvas from './useCanvas'
-import useCurrentCategory from './useCurrentCategory'
 import useEnhancedId from './useEnhancedId'
 import useStoreState from './useStoreState'
 
 export default function usePolygon() {
   const canvas = useCanvas()
-  const category = useCurrentCategory()
+  const category = useStoreState(selectCategory)
   const mode = useStoreState((state) => state.annotator.mode)
   const [id, nextId] = useEnhancedId()
   const [lines, setLines] = useState<Line[]>([])
