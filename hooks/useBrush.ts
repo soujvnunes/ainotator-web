@@ -2,13 +2,14 @@ import { useEffect } from 'react'
 
 import { PencilBrush } from 'fabric'
 
+import selectCategory from '@/selectors/selectCategory'
+
 import useCanvas from './useCanvas'
-import useCurrentCategory from './useCurrentCategory'
 import useStoreState from './useStoreState'
 
 export default function useBrush() {
-  const category = useCurrentCategory()
   const canvas = useCanvas()
+  const category = useStoreState(selectCategory)
   const size = useStoreState((state) => state.annotator.size.brush)
   const mode = useStoreState((state) => state.annotator.mode)
 
