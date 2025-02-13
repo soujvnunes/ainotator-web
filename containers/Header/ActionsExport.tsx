@@ -8,6 +8,8 @@ import validateDataset from '@/actions/validateDataset'
 
 import annotator from '@/reducers/annotator'
 
+import selectDataset from '@/selectors/selectDataset'
+
 import generateLink from '@/helpers/generateLink'
 import isDatasetValid from '@/helpers/isDatasetValid'
 
@@ -20,7 +22,7 @@ import IconButton from '@/components/IconButton'
 export default function ActionsExport() {
   const canvas = useCanvas()
   const dispatch = useStoreDispatch()
-  const dataset = useStoreState((state) => state.dataset)
+  const dataset = useStoreState(selectDataset)
   const [isPending, startTransition] = useTransition()
   const handleValidation = useCallback(() => {
     const _canvas = canvas.current

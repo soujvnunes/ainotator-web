@@ -8,6 +8,7 @@ import annotator from '@/reducers/annotator'
 import dataset from '@/reducers/dataset'
 
 import selectCurrentImageId from '@/selectors/selectCurrentImageId'
+import selectDatasetLicenses from '@/selectors/selectDatasetLicenses'
 
 import useStoreDispatch from '@/hooks/useDispatch'
 import useEnhancedId from '@/hooks/useEnhancedId'
@@ -22,7 +23,7 @@ import actionsLicensesAddFields from './actionsLicensesAddFields'
 export default function ActionsLicensesAdd() {
   const dispatch = useStoreDispatch()
   const [id, nextId] = useEnhancedId()
-  const licenses = useStoreState((state) => state.dataset.licenses)
+  const licenses = useStoreState(selectDatasetLicenses)
   const currentImageId = useStoreState(selectCurrentImageId)
   const formSubmit = useFormSubmit<Omit<DatasetLicense, 'id'>>((fields) => {
     dispatch(annotator.actions.setLicense(id))
