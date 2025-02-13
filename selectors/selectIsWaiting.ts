@@ -1,5 +1,10 @@
-import { type StoreState } from '@/lib/store'
+import { createSelector } from '@reduxjs/toolkit'
 
-export default function selectIsWaiting(state: StoreState) {
-  return state.annotator.mode === 'waiting'
-}
+import selectMode from './selectMode'
+
+const selectIsWaiting = createSelector(
+  [selectMode],
+  (mode) => mode === 'waiting',
+)
+
+export default selectIsWaiting

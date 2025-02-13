@@ -1,5 +1,10 @@
-import { type StoreState } from '@/lib/store'
+import { createSelector } from '@reduxjs/toolkit'
 
-export default function selectIsAnnotating(state: StoreState) {
-  return state.annotator.mode === 'annotating'
-}
+import selectMode from './selectMode'
+
+const selectIsAnnotating = createSelector(
+  [selectMode],
+  (mode) => mode === 'annotating',
+)
+
+export default selectIsAnnotating
