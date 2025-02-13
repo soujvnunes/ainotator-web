@@ -21,7 +21,6 @@ export default function ActionsExport() {
   const canvas = useCanvas()
   const dispatch = useStoreDispatch()
   const dataset = useStoreState((state) => state.dataset)
-  const image = useStoreState((state) => state.annotator.current.id.image)
   const [isPending, startTransition] = useTransition()
   const handleValidation = useCallback(() => {
     const _canvas = canvas.current
@@ -37,13 +36,11 @@ export default function ActionsExport() {
         // TODO: show a toast with error fields with @/lib/formatValidation
         if (!isDatasetValid(validation)) return
 
-        const currentImage = dataset.images.find(({ id }) => id === image)
-
-        // TODO: show a toast with error: image details not provided
-        if (!currentImage) return
+        // TODO: ask for the dataset name in a route /export
+        const DATASET_NAME = 'dataset_name'
 
         generateLink({
-          name: `${currentImage.file_name}_${dataset.info.date_created}_annotations.json`,
+          name: `${DATASET_NAME}_${dataset.info.date_created}_annotations.json`,
           value: dataset,
         })
         // RESET ANNOTATOR STATE
@@ -52,7 +49,7 @@ export default function ActionsExport() {
         _canvas.clear()
       })
     })
-  }, [canvas, dataset, dispatch, image])
+  }, [canvas, dataset, dispatch])
 
   return (
     <IconButton

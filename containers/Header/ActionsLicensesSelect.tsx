@@ -5,6 +5,7 @@ import { useCallback, useMemo } from 'react'
 import annotator from '@/reducers/annotator'
 import dataset from '@/reducers/dataset'
 
+import selectCurrentImageId from '@/selectors/selectCurrentImageId'
 import selectCurrentLicenseId from '@/selectors/selectCurrentLicenseId'
 
 import useStoreDispatch from '@/hooks/useDispatch'
@@ -16,15 +17,15 @@ import RadioField from '@/components/RadioField'
 
 export default function ActionsLicensesSelect() {
   const dispatch = useStoreDispatch()
-  const licenseId = useStoreState(selectCurrentLicenseId)
-  const imageId = useStoreState((state) => state.annotator.current.id.image)
+  const currentLicenseId = useStoreState(selectCurrentLicenseId)
+  const currentImageId = useStoreState(selectCurrentImageId)
   const licenses = useStoreState((state) => state.dataset.licenses)
   const handleLicense = useCallback(
     (id: number) => {
       dispatch(annotator.actions.setLicense(id))
-      dispatch(dataset.actions.setImage({ id: imageId, license: id }))
+      dispatch(dataset.actions.setImage({ id: currentImageId, license: id }))
     },
-    [dispatch, imageId],
+    [dispatch, currentImageId],
   )
   const licenseFields = useMemo(() => {
     return licenses.map((license) => ({
@@ -45,7 +46,7 @@ export default function ActionsLicensesSelect() {
       <RadioField
         vertical
         aria-label="Licenses"
-        value={licenseId}
+        value={currentLicenseId}
         values={licenseFields}
         onChange={handleLicense}
       />
