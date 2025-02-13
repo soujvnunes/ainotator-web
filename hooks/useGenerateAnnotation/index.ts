@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import dataset from '@/reducers/dataset'
 
 import selectCurrentCategory from '@/selectors/selectCurrentCategory'
+import selectCurrentImageId from '@/selectors/selectCurrentImageId'
 import selectIsAnnotating from '@/selectors/selectIsAnnoting'
 
 import useCanvas from '../useCanvas'
@@ -15,7 +16,7 @@ export default function useGenerateAnnotation() {
   const dispatch = useStoreDispatch()
   const canvas = useCanvas()
   const currentCategory = useStoreState(selectCurrentCategory)
-  const image = useStoreState((state) => state.annotator.current.id.image)
+  const currentImageId = useStoreState(selectCurrentImageId)
   const isAnnotating = useStoreState(selectIsAnnotating)
   const [id, nextId] = useEnhancedId()
 
@@ -35,7 +36,7 @@ export default function useGenerateAnnotation() {
       dispatch(
         dataset.actions.addAnnotation({
           id,
-          image_id: image,
+          image_id: currentImageId,
           category_id: currentCategory.id,
           iscrowd: currentCategory.isCrowd === 'yes' ? 1 : 0,
           ...annotation,
@@ -49,5 +50,13 @@ export default function useGenerateAnnotation() {
     return () => {
       _canvas.off('mouse:up', handleMouseUp)
     }
-  }, [image, id, dispatch, nextId, currentCategory, canvas, isAnnotating])
+  }, [
+    currentImageId,
+    id,
+    dispatch,
+    nextId,
+    currentCategory,
+    canvas,
+    isAnnotating,
+  ])
 }
