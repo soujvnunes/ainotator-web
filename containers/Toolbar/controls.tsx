@@ -3,6 +3,8 @@
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
 import { Squares2X2Icon } from '@heroicons/react/24/solid'
 
+import selectIsAnnotating from '@/selectors/selectIsAnnoting'
+
 import useStoreState from '@/hooks/useStoreState'
 
 import IconButton from '@/components/IconButton'
@@ -14,7 +16,7 @@ import ControlsZoomIn from './ControlsZoomIn'
 import ControlsZoomOut from './ControlsZoomOut'
 
 export default function Controls() {
-  const mode = useStoreState((state) => state.annotator.mode)
+  const isAnnotating = useStoreState(selectIsAnnotating)
 
   return (
     <Popover>
@@ -22,7 +24,7 @@ export default function Controls() {
         size="lg"
         className="focus:outline-hidden"
         aria-label="Controls menu"
-        disabled={!['editting', 'annotating'].includes(mode)}
+        disabled={!isAnnotating}
         as={IconButton}>
         <Squares2X2Icon className="size-6" />
       </PopoverButton>

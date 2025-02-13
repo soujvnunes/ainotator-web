@@ -6,6 +6,10 @@ import { RadioGroup } from '@headlessui/react'
 
 import annotator from '@/reducers/annotator'
 
+import selectCategories from '@/selectors/selectCategories'
+import selectCurrentCategoryId from '@/selectors/selectCurrentCategoryId'
+import selectIsAnnotating from '@/selectors/selectIsAnnoting'
+
 import useStoreDispatch from '@/hooks/useDispatch'
 import useStoreState from '@/hooks/useStoreState'
 
@@ -13,9 +17,9 @@ import AnnotationRadio from '@/components/AnnotationRadio'
 
 export default function CategoriesList() {
   const dispatch = useStoreDispatch()
-  const mode = useStoreState((state) => state.annotator.mode)
-  const categories = useStoreState((state) => state.annotator.categories)
-  const category = useStoreState((state) => state.annotator.current.id.category)
+  const isAnnotating = useStoreState(selectIsAnnotating)
+  const categories = useStoreState(selectCategories)
+  const currentCategoryId = useStoreState(selectCurrentCategoryId)
   const handleCategory = useCallback(
     (id: number) => {
       dispatch(annotator.actions.setCategory(id))
@@ -27,8 +31,8 @@ export default function CategoriesList() {
   return (
     <RadioGroup
       className="flex w-full overflow-y-hidden"
-      disabled={!['editting', 'annotating'].includes(mode)}
-      value={category}
+      disabled={!isAnnotating}
+      value={currentCategoryId}
       onChange={handleCategory}>
       {categories.map(({ id, name, ...category }) => (
         <AnnotationRadio

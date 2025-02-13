@@ -11,15 +11,17 @@ import {
   type TPointerEventInfo,
 } from 'fabric'
 
+import selectCurrentCategory from '@/selectors/selectCurrentCategory'
+import selectIsAnnotating from '@/selectors/selectIsAnnoting'
+
 import useCanvas from './useCanvas'
-import useCurrentCategory from './useCurrentCategory'
 import useEnhancedId from './useEnhancedId'
 import useStoreState from './useStoreState'
 
 export default function usePolygon() {
   const canvas = useCanvas()
-  const category = useCurrentCategory()
-  const mode = useStoreState((state) => state.annotator.mode)
+  const currentCategory = useStoreState(selectCurrentCategory)
+  const isAnnotating = useStoreState(selectIsAnnotating)
   const [id, nextId] = useEnhancedId()
   const [lines, setLines] = useState<Line[]>([])
   const [isDrawing, setDrawing] = useState(false)
@@ -29,7 +31,7 @@ export default function usePolygon() {
     const _canvas = canvas.current
     const defaultOptions = { selectable: false, hasControls: false }
 
-    if (!_canvas || mode !== 'annotating' || category?.type !== 'polygon') {
+    if (!_canvas || !isAnnotating || currentCategory?.type !== 'polygon') {
       return
     }
 
@@ -46,7 +48,7 @@ export default function usePolygon() {
       if (!!points.length) {
         const point = points[points.length - 1]
         const line = new Line([point.x, point.y, pointer.x, pointer.y], {
-          stroke: category?.color,
+          stroke: currentCategory?.color,
           strokeWidth: 2,
           ...defaultOptions,
         })
@@ -70,7 +72,7 @@ export default function usePolygon() {
       if (points.length <= 2 || !_canvas) return
 
       const polygon = new Polygon(points, {
-        fill: category?.color,
+        fill: currentCategory?.color,
         ...defaultOptions,
       })
 
@@ -92,5 +94,14 @@ export default function usePolygon() {
       _canvas.off('mouse:move', handleMouseMove)
       _canvas.off('mouse:dblclick', handleDoubleClick)
     }
-  }, [lines, isDrawing, points, id, category, mode, nextId, canvas])
+  }, [
+    lines,
+    isDrawing,
+    points,
+    id,
+    currentCategory,
+    nextId,
+    canvas,
+    isAnnotating,
+  ])
 }

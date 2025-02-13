@@ -5,6 +5,9 @@ import { InformationCircleIcon } from '@heroicons/react/24/solid'
 
 import dataset from '@/reducers/dataset'
 
+import selectDatasetHasInfo from '@/selectors/selectDatasetHasInfo'
+import selectDatasetInfo from '@/selectors/selectDatasetInfo'
+
 import classes from '@/helpers/classes'
 
 import useStoreDispatch from '@/hooks/useDispatch'
@@ -22,7 +25,8 @@ import actionsAddInfoFields, {
 
 export default function ActionsAddInfo() {
   const dispatch = useStoreDispatch()
-  const info = useStoreState((state) => state.dataset.info)
+  const datasetInfo = useStoreState(selectDatasetInfo)
+  const datasetHasInfo = useStoreState(selectDatasetHasInfo)
   const formSubmit = useFormSubmit<ActionsAddInfoFields>((fields) => {
     dispatch(dataset.actions.setInfo({ ...fields, year: +fields.year }))
   })
@@ -35,11 +39,7 @@ export default function ActionsAddInfo() {
         <IconButton
           onClick={open}
           aria-label="Add the dataset information"
-          {...addAttrs({
-            unknown: Object.values(info).some(
-              (value) => !!value || value === 0,
-            ),
-          })}>
+          {...addAttrs({ unknown: !datasetHasInfo })}>
           <InformationCircleIcon className="m-auto size-6" />
         </IconButton>
       )}>
@@ -59,7 +59,7 @@ export default function ActionsAddInfo() {
                 name={field.name}
                 label={field.label}
                 placeholder={field.placeholder}
-                defaultValue={info[field.name] || undefined}
+                defaultValue={datasetInfo[field.name] || undefined}
                 invalid={{
                   when: formSubmit.fields.empty.includes(field.name),
                   message: 'Empty',

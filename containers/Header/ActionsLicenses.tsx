@@ -2,6 +2,9 @@
 
 import { CheckBadgeIcon } from '@heroicons/react/24/solid'
 
+import selectCurrentImage from '@/selectors/selectCurrentImage'
+import selectDatasetLicenses from '@/selectors/selectDatasetLicenses'
+
 import classes from '@/helpers/classes'
 
 import useStoreState from '@/hooks/useStoreState'
@@ -14,9 +17,8 @@ import ActionsLicensesAdd from './ActionsLicensesAdd'
 import ActionsLicensesSelect from './ActionsLicensesSelect'
 
 export default function ActionsLicenses() {
-  const image = useStoreState((state) => state.annotator.current.id.image)
-  const images = useStoreState((state) => state.dataset.images)
-  const licenses = useStoreState((state) => state.dataset.licenses)
+  const currentImage = useStoreState(selectCurrentImage)
+  const licenses = useStoreState(selectDatasetLicenses)
 
   return (
     <Dialog
@@ -24,11 +26,9 @@ export default function ActionsLicenses() {
       description="Fill in the license image details or select a previous one."
       renderController={(open) => (
         <IconButton
-          onClick={open}
           aria-label="Select or add an image license"
-          {...addAttrs({
-            unlicensed: !images.find(({ id }) => id === image)?.license,
-          })}>
+          onClick={open}
+          {...addAttrs({ unlicensed: !currentImage?.license })}>
           <CheckBadgeIcon className="m-auto size-6" />
         </IconButton>
       )}>

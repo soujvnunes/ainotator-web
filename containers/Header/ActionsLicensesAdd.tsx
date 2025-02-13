@@ -7,6 +7,9 @@ import { type DatasetLicense } from '@/actions/validateDataset'
 import annotator from '@/reducers/annotator'
 import dataset from '@/reducers/dataset'
 
+import selectCurrentImageId from '@/selectors/selectCurrentImageId'
+import selectDatasetLicenses from '@/selectors/selectDatasetLicenses'
+
 import useStoreDispatch from '@/hooks/useDispatch'
 import useEnhancedId from '@/hooks/useEnhancedId'
 import useFormSubmit from '@/hooks/useFormSubmit'
@@ -20,14 +23,14 @@ import actionsLicensesAddFields from './actionsLicensesAddFields'
 export default function ActionsLicensesAdd() {
   const dispatch = useStoreDispatch()
   const [id, nextId] = useEnhancedId()
-  const licenses = useStoreState((state) => state.dataset.licenses)
-  const imageId = useStoreState((state) => state.annotator.current.id.image)
+  const licenses = useStoreState(selectDatasetLicenses)
+  const currentImageId = useStoreState(selectCurrentImageId)
   const formSubmit = useFormSubmit<Omit<DatasetLicense, 'id'>>((fields) => {
     dispatch(annotator.actions.setLicense(id))
     dispatch(dataset.actions.addLicense({ id, ...fields }))
 
-    if (!!imageId && licenses.length < 1) {
-      dispatch(dataset.actions.setImage({ id: imageId, license: id }))
+    if (!!currentImageId && licenses.length < 1) {
+      dispatch(dataset.actions.setImage({ id: currentImageId, license: id }))
     }
 
     nextId()

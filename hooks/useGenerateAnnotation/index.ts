@@ -2,8 +2,11 @@ import { useEffect } from 'react'
 
 import dataset from '@/reducers/dataset'
 
+import selectCurrentCategory from '@/selectors/selectCurrentCategory'
+import selectCurrentImageId from '@/selectors/selectCurrentImageId'
+import selectIsAnnotating from '@/selectors/selectIsAnnoting'
+
 import useCanvas from '../useCanvas'
-import useCurrentCategory from '../useCurrentCategory'
 import useStoreDispatch from '../useDispatch'
 import useEnhancedId from '../useEnhancedId'
 import useStoreState from '../useStoreState'
@@ -12,9 +15,9 @@ import generateAnnotation from './generateAnnotation'
 export default function useGenerateAnnotation() {
   const dispatch = useStoreDispatch()
   const canvas = useCanvas()
-  const category = useCurrentCategory()
-  const image = useStoreState((state) => state.annotator.current.id.image)
-  const mode = useStoreState((state) => state.annotator.mode)
+  const currentCategory = useStoreState(selectCurrentCategory)
+  const currentImageId = useStoreState(selectCurrentImageId)
+  const isAnnotating = useStoreState(selectIsAnnotating)
   const [id, nextId] = useEnhancedId()
 
   useEffect(() => {
@@ -23,7 +26,7 @@ export default function useGenerateAnnotation() {
     if (!_canvas) return
 
     function handleMouseUp() {
-      if (!_canvas || !category || mode !== 'annotating') return
+      if (!_canvas || !currentCategory || !isAnnotating) return
 
       // TODO: skip previous generated annotation
       const annotation = generateAnnotation(_canvas)
@@ -33,19 +36,13 @@ export default function useGenerateAnnotation() {
       dispatch(
         dataset.actions.addAnnotation({
           id,
-          image_id: image,
-          category_id: category.id,
-          iscrowd: category.isCrowd === 'yes' ? 1 : 0,
+          image_id: currentImageId,
+          category_id: currentCategory.id,
+          iscrowd: currentCategory.isCrowd === 'yes' ? 1 : 0,
           ...annotation,
         }),
       )
-      dispatch(
-        dataset.actions.addCategory({
-          supercategory: category.supercategory,
-          id: category.id,
-          name: category.name,
-        }),
-      )
+      dispatch(dataset.actions.addCategory(currentCategory))
       nextId()
     }
     _canvas.on('mouse:up', handleMouseUp)
@@ -53,5 +50,13 @@ export default function useGenerateAnnotation() {
     return () => {
       _canvas.off('mouse:up', handleMouseUp)
     }
-  }, [image, id, dispatch, nextId, category, mode, canvas])
+  }, [
+    currentImageId,
+    id,
+    dispatch,
+    nextId,
+    currentCategory,
+    canvas,
+    isAnnotating,
+  ])
 }

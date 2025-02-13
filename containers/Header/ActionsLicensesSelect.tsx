@@ -1,9 +1,13 @@
 'use client'
 
-import { useCallback, useMemo } from 'react'
+import { useCallback } from 'react'
 
 import annotator from '@/reducers/annotator'
 import dataset from '@/reducers/dataset'
+
+import selectCurrentImageId from '@/selectors/selectCurrentImageId'
+import selectCurrentLicenseId from '@/selectors/selectCurrentLicenseId'
+import selectDatasetLicensesFields from '@/selectors/selectDatasetLicensesFields'
 
 import useStoreDispatch from '@/hooks/useDispatch'
 import useStoreState from '@/hooks/useStoreState'
@@ -14,22 +18,16 @@ import RadioField from '@/components/RadioField'
 
 export default function ActionsLicensesSelect() {
   const dispatch = useStoreDispatch()
-  const licenseId = useStoreState((state) => state.annotator.current.id.license)
-  const imageId = useStoreState((state) => state.annotator.current.id.image)
-  const licenses = useStoreState((state) => state.dataset.licenses)
+  const currentLicenseId = useStoreState(selectCurrentLicenseId)
+  const currentImageId = useStoreState(selectCurrentImageId)
+  const licensesFields = useStoreState(selectDatasetLicensesFields)
   const handleLicense = useCallback(
     (id: number) => {
       dispatch(annotator.actions.setLicense(id))
-      dispatch(dataset.actions.setImage({ id: imageId, license: id }))
+      dispatch(dataset.actions.setImage({ id: currentImageId, license: id }))
     },
-    [dispatch, imageId],
+    [dispatch, currentImageId],
   )
-  const licenseFields = useMemo(() => {
-    return licenses.map((license) => ({
-      value: license.id,
-      children: license.name,
-    }))
-  }, [licenses])
 
   return (
     <>
@@ -43,8 +41,8 @@ export default function ActionsLicensesSelect() {
       <RadioField
         vertical
         aria-label="Licenses"
-        value={licenseId}
-        values={licenseFields}
+        value={currentLicenseId}
+        values={licensesFields}
         onChange={handleLicense}
       />
     </>

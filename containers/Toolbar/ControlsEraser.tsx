@@ -2,12 +2,14 @@
 
 import { PaintBrushIcon, XMarkIcon } from '@heroicons/react/24/solid'
 
+import selectDatasetAnnotations from '@/selectors/selectDatasetAnnotations'
+
 import useStoreState from '@/hooks/useStoreState'
 
 import IconButton from '@/components/IconButton'
 
 export default function ControlsEraser() {
-  const annotations = useStoreState((state) => state.dataset.annotations)
+  const annotations = useStoreState(selectDatasetAnnotations)
 
   return (
     <IconButton
