@@ -54,21 +54,12 @@ In the root of the repository, install the dependencies with pnpm:
 pnpm install
 ```
 
-4. Write the necessary `.env.development` file
-
-Check if the `.env.development` file has the following entries:
-
-```text
-API_BASE_URL=http://127.0.0.1:5328
-```
-
-5. Start the application
+4. Start the application
 
 Check the scripts section in the repository’s `package.json` file:
 
 ```bash
 pnpm dev # To run the front-end concurrently with the back-end server, necessary for the COCO format validation
-pnpm next-dev # or just the front-end
 ```
 
 ### Using the web application

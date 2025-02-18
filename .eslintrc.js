@@ -21,7 +21,6 @@ module.exports = {
           '/^next/',
           'module',
           '/@/consts/',
-          '/@/actions/',
           '/@/reducers/',
           '/@/lib/',
           '/@/selector/',
