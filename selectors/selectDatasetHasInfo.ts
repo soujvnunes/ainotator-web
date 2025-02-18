@@ -4,9 +4,7 @@ import selectDatasetInfo from './selectDatasetInfo'
 
 const selectDatasetHasInfo = createSelector(
   [selectDatasetInfo],
-  (datasetInfo) => {
-    return Object.values(datasetInfo).some((value) => !!value || value === 0)
-  },
+  (datasetInfo) => Object.values(datasetInfo).some(Boolean),
 )
 
 export default selectDatasetHasInfo

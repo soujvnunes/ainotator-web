@@ -6,7 +6,6 @@ import {
   UserGroupIcon,
 } from '@heroicons/react/24/solid'
 
-import { type AnnotatorColors } from '@/consts/annotatorColors'
 import { type AnnotatorCrowds } from '@/consts/annotatorCrowds'
 import { type AnnotatorTypes } from '@/consts/annotatorTypes'
 
@@ -15,9 +14,9 @@ import twMerge from '@/helpers/twMerge'
 import annotationRadio from '@/styles/annotationRadio'
 
 export interface AnnotationRadioProps<V extends string | number>
-  extends React.ComponentPropsWithRef<'input'> {
+  extends Omit<React.ComponentPropsWithRef<'input'>, 'color' | 'type'> {
   value: V
-  color: AnnotatorColors
+  color: `${number} ${number} ${number}`
   compact?: boolean
   isCrowd?: AnnotatorCrowds
   type?: AnnotatorTypes
@@ -25,8 +24,8 @@ export interface AnnotationRadioProps<V extends string | number>
 
 export default function AnnotationRadio<V extends string | number>({
   className,
+  color,
   type = 'brush',
-  color = 'red',
   isCrowd = 'no',
   children,
   compact = false,
@@ -36,18 +35,15 @@ export default function AnnotationRadio<V extends string | number>({
 
   return (
     <Radio
-      className={twMerge(annotationRadio.root({ color, compact, className }))}
+      style={{ ['--color' as string]: `rgb(${color})` }}
+      className={twMerge(annotationRadio.root({ compact, className }))}
       {...props}>
       {compact ? (
         <CheckIcon className={annotationRadio.slots.root({ compact: true })} />
       ) : (
         <>
           <span className={annotationRadio.slots.root({ compact: false })}>
-            <span
-              className={annotationRadio.slots.item.root({
-                color,
-                type: true,
-              })}>
+            <span className={annotationRadio.slots.item.root({ type: true })}>
               <TypeIcon className={annotationRadio.slots.item.icon()} />
             </span>
             {isCrowd === 'yes' && (

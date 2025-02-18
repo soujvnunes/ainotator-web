@@ -1,9 +1,7 @@
 'use client'
 
-import { Fieldset, Legend, RadioGroup } from '@headlessui/react'
+import { Fieldset, Legend } from '@headlessui/react'
 import { PlusIcon } from '@heroicons/react/24/solid'
-
-import annotatorColors from '@/consts/annotatorColors'
 
 import annotator, { type AnnotatorCategory } from '@/reducers/annotator'
 
@@ -11,23 +9,19 @@ import useStoreDispatch from '@/hooks/useDispatch'
 import useEnhancedId from '@/hooks/useEnhancedId'
 import useFormSubmit from '@/hooks/useFormSubmit'
 
-import textField from '@/styles/textField'
-
 import Button from '@/components/Button'
 import Dialog from '@/components/Dialog'
 import IconButton from '@/components/IconButton'
-import RadioField from '@/components/RadioField'
 import TextField from '@/components/TextField'
 
-import categoriesAddColors from './categoriesAddColors'
-import categoriesAddCrowds from './categoriesAddCrowds'
-import categoriesAddType from './categoriesAddType'
+import CategoriesAddColors from './CategoriesAddColors'
+import CategoriesAddCrowds from './CategoriesAddCrowds'
+import CategoriesAddType from './CategoriesAddType'
 
 export default function CategoriesAdd() {
   const dispatch = useStoreDispatch()
   const [id, nextId] = useEnhancedId()
   const formSubmit = useFormSubmit<Omit<AnnotatorCategory, 'id'>>((fields) => {
-    // TODO: implement fields.already to implement error feedback for an existent category
     dispatch(annotator.actions.addCategory({ id, ...fields }))
     nextId()
   })
@@ -54,58 +48,22 @@ export default function CategoriesAdd() {
             placeholder="Cat"
             className="mt-4"
             autoComplete="annotation class name"
-            invalid={{
-              when: formSubmit.fields.empty.includes('name'),
-              message: 'Empty',
-            }}
+            invalid={[formSubmit.fields.empty.includes('name'), 'Empty']}
           />
           <TextField
             name="supercategory"
             label="Supercategory"
             placeholder="Animal"
             autoComplete="annotation super category name"
-            invalid={{
-              when: formSubmit.fields.empty.includes('supercategory'),
-              message: 'Empty',
-            }}
+            invalid={[
+              formSubmit.fields.empty.includes('supercategory'),
+              'Empty',
+            ]}
           />
+          <CategoriesAddCrowds />
           <div>
-            <p
-              aria-hidden="true"
-              className={textField.label.root({
-                className: 'cursor-default',
-              })}>
-              Is crowd?
-            </p>
-            <RadioField
-              aria-label="Is crowd?"
-              className="mt-2 flex"
-              name="isCrowd"
-              defaultValue={categoriesAddCrowds[0].value}
-              values={categoriesAddCrowds}
-            />
-          </div>
-          <div>
-            <p
-              aria-hidden="true"
-              className={textField.label.root({
-                className: 'cursor-default',
-              })}>
-              Type
-            </p>
-            <RadioField
-              aria-label="Type"
-              className="mt-2 flex"
-              name="type"
-              defaultValue={categoriesAddType[0].value}
-              values={categoriesAddType}
-            />
-            <RadioGroup
-              className="flex"
-              name="color"
-              defaultValue={annotatorColors.value[0]}>
-              {categoriesAddColors}
-            </RadioGroup>
+            <CategoriesAddType />
+            <CategoriesAddColors />
             <Button
               type="submit"
               fullWidth>

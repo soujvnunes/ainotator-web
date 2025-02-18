@@ -10,10 +10,7 @@ const meta = {
     placeholder: 'Placeholder',
     required: false,
     disabled: false,
-    invalid: {
-      when: false,
-      message: 'Invalid message',
-    },
+    invalid: [false, 'Invalid message'],
   },
   parameters: {
     layout: 'centered',
@@ -37,9 +34,15 @@ export const Disabled: Story = {
 export const Invalid: Story = {
   args: {
     defaultValue: '3rr0r',
-    invalid: {
-      when: true,
-      message: 'Invalid value',
-    },
+    invalid: [true, 'Invalid value'],
+  },
+}
+export const MultipleInvalid: Story = {
+  args: {
+    defaultValue: '3rr0rs',
+    invalid: [
+      [true, 'Empty'],
+      [true, 'Invalid'],
+    ],
   },
 }

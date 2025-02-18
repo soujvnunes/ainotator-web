@@ -8,15 +8,29 @@ import twMerge from '@/helpers/twMerge'
 
 import textField from '@/styles/textField'
 
+type TextFieldInvalidProp = [when: boolean, message: string]
 export interface TextFieldProps extends React.ComponentPropsWithRef<'input'> {
   label: string
   disabled?: boolean
-  invalid?: {
-    when: boolean
-    message: string
-  }
+  invalid?: TextFieldInvalidProp | TextFieldInvalidProp[]
 }
 
+function isInvalidProp(
+  invalid: TextFieldProps['invalid'],
+): invalid is TextFieldInvalidProp {
+  return (
+    Array.isArray(invalid) &&
+    typeof invalid[0] === 'boolean' &&
+    typeof invalid[1] === 'string'
+  )
+}
+function resolveInvalid(invalid: TextFieldProps['invalid']) {
+  if (!Array.isArray(invalid)) return
+
+  return (
+    isInvalidProp(invalid) ? [invalid] : invalid
+  ) as TextFieldInvalidProp[]
+}
 export default function TextField({
   label,
   invalid,
@@ -26,6 +40,7 @@ export default function TextField({
   ...props
 }: TextFieldProps) {
   const errorMessageId = useId()
+  const resolvedInvalid = resolveInvalid(invalid)
 
   return (
     <Field
@@ -37,18 +52,21 @@ export default function TextField({
       </Label>
       <Input
         type={type}
-        invalid={invalid?.when}
+        className={textField.input()}
         aria-description={errorMessageId}
         aria-errormessage={errorMessageId}
-        className={textField.input()}
+        invalid={resolvedInvalid?.map(([when]) => when).some(Boolean)}
         {...props}
       />
-      <p
-        aria-live="polite"
-        className={textField.invalid.message}
-        id={errorMessageId}>
-        {invalid?.when && invalid?.message}
-      </p>
+      {resolvedInvalid?.map(([when, message]) => (
+        <p
+          aria-live="polite"
+          key={message}
+          id={errorMessageId}
+          className={textField.invalid.message}>
+          {when && message}
+        </p>
+      ))}
     </Field>
   )
 }

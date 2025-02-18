@@ -2,10 +2,8 @@
 
 import { Fieldset, Legend } from '@headlessui/react'
 
-import { type DatasetLicense } from '@/actions/validateDataset'
-
 import annotator from '@/reducers/annotator'
-import dataset from '@/reducers/dataset'
+import dataset, { type DatasetLicense } from '@/reducers/dataset'
 
 import selectCurrentImageId from '@/selectors/selectCurrentImageId'
 import selectDatasetLicenses from '@/selectors/selectDatasetLicenses'
@@ -17,8 +15,6 @@ import useStoreState from '@/hooks/useStoreState'
 
 import Button from '@/components/Button'
 import TextField from '@/components/TextField'
-
-import actionsLicensesAddFields from './actionsLicensesAddFields'
 
 export default function ActionsLicensesAdd() {
   const dispatch = useStoreDispatch()
@@ -47,10 +43,7 @@ export default function ActionsLicensesAdd() {
             name={field.name}
             label={field.label}
             placeholder={field.placeholder}
-            invalid={{
-              when: formSubmit.fields.empty.includes(field.name),
-              message: 'Empty',
-            }}
+            invalid={[formSubmit.fields.empty.includes(field.name), 'Empty']}
           />
         ))}
         <Button
@@ -62,3 +55,16 @@ export default function ActionsLicensesAdd() {
     </form>
   )
 }
+
+const actionsLicensesAddFields = [
+  {
+    label: 'Name',
+    name: 'name',
+    placeholder: 'Attribution-NonCommercial-ShareAlike License',
+  },
+  {
+    label: 'URL',
+    name: 'url',
+    placeholder: 'http://creativecommons.org/licenses/by-nc-sa/2.0/',
+  },
+] as const
