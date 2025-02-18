@@ -1,15 +1,54 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
-import type {
-  Dataset,
-  DatasetAnnotation,
-  DatasetCategory,
-  DatasetImage,
-  DatasetInfo,
-  DatasetLicense,
-} from '@/actions/validateDataset'
+export interface DatasetInfo {
+  description: string
+  url: string
+  version: string
+  year: number
+  contributor: string
+  date_created: string
+}
 
-type DatasetState = Dataset
+export interface DatasetLicense {
+  id: number
+  url: string
+  name: string
+}
+
+export interface DatasetImage {
+  license: number
+  file_name: string
+  height: number
+  width: number
+  date_captured: string
+  coco_url: string
+  flickr_url: string
+  id: number
+}
+
+export interface DatasetCategory {
+  supercategory: string
+  id: number
+  name: string
+}
+
+export interface DatasetAnnotation {
+  segmentation: number[][]
+  area: number
+  iscrowd: number
+  image_id: number
+  bbox: number[]
+  category_id: number
+  id: number
+}
+
+export interface DatasetState {
+  info: DatasetInfo
+  licenses: DatasetLicense[]
+  images: DatasetImage[]
+  annotations: DatasetAnnotation[]
+  categories: DatasetCategory[]
+}
 
 const initialState: DatasetState = {
   info: {
