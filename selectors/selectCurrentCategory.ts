@@ -1,7 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit'
 
-import annotatorColors from '@/consts/annotatorColors'
-
 import selectCategories from './selectCategories'
 import selectCurrentCategoryId from './selectCurrentCategoryId'
 
@@ -16,7 +14,7 @@ const selectCurrentCategory = createSelector(
 
     return {
       ...currentCategory,
-      color: `rgb(${annotatorColors.classes.channel[currentCategory.color]} / 0.4)`,
+      color: `rgb(${currentCategory.color} / 0.4)`,
     }
   },
 )
