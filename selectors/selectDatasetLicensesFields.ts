@@ -4,12 +4,7 @@ import selectDatasetLicenses from './selectDatasetLicenses'
 
 const selectDatasetLicensesFields = createSelector(
   [selectDatasetLicenses],
-  (licenses) => {
-    return licenses.map((license) => ({
-      value: license.id,
-      children: license.name,
-    }))
-  },
+  (licenses) => licenses.map(({ id, name }) => ({ value: id, children: name })),
 )
 
 export default selectDatasetLicensesFields

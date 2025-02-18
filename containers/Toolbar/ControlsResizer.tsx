@@ -30,7 +30,7 @@ export default function ControlsResizer() {
       max={40}
       min={8}
       onChange={handleSize}
-      disabled={currentCategory?.type !== 'brush'}
+      disabled={!currentCategory || currentCategory.type !== 'brush'}
     />
   )
 }
