@@ -18,8 +18,6 @@ import useStoreState from '@/hooks/useStoreState'
 import Button from '@/components/Button'
 import TextField from '@/components/TextField'
 
-import actionsLicensesAddFields from './actionsLicensesAddFields'
-
 export default function ActionsLicensesAdd() {
   const dispatch = useStoreDispatch()
   const [id, nextId] = useEnhancedId()
@@ -62,3 +60,16 @@ export default function ActionsLicensesAdd() {
     </form>
   )
 }
+
+const actionsLicensesAddFields = [
+  {
+    label: 'Name',
+    name: 'name',
+    placeholder: 'Attribution-NonCommercial-ShareAlike License',
+  },
+  {
+    label: 'URL',
+    name: 'url',
+    placeholder: 'http://creativecommons.org/licenses/by-nc-sa/2.0/',
+  },
+] as const
