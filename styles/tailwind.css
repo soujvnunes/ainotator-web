@@ -5,7 +5,6 @@
   --font-sans: var(--font-outfit-sans), system-ui, sans-serif;
   --text-label: var(--text-xs);
   --text-label--line-height: var(--text-xs--line-height);
-  --text-label--letter-spacing: var(--tracking-widest);
   --text-label--font-weight: var(--font-weight-semibold);
   --text-caption: var(--text-xs);
   --text-caption--font-weight: var(--font-weight-semibold);
