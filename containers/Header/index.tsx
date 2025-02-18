@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-import Actions from './Actions'
+import Actions from './_actions'
 import FileDetails from './FileDetails'
 
 export default function Header() {

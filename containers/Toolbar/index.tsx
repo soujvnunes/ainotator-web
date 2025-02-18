@@ -1,6 +1,6 @@
 import CategoriesAdd from './CategoriesAdd'
 import CategoriesList from './CategoriesList'
-import Controls from './Controls'
+import Controls from './_controls'
 
 export default function Toolbar() {
   return (

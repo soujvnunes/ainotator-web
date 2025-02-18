@@ -6,7 +6,7 @@ import useInitializeCanvas from '@/hooks/useInitializeCanvas'
 import usePolygon from '@/hooks/usePolygon'
 import useUnselectCanvas from '@/hooks/useUnselectCanvas'
 
-import Onboarding from './Onboarding'
+import Onboarding from './_onboarding'
 
 const CONTROLS_Y =
   64 + // TOOLBAR
