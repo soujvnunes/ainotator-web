@@ -2,10 +2,8 @@
 
 import { Fieldset, Legend } from '@headlessui/react'
 
-import { type DatasetLicense } from '@/actions/validateDataset'
-
 import annotator from '@/reducers/annotator'
-import dataset from '@/reducers/dataset'
+import dataset, { type DatasetLicense } from '@/reducers/dataset'
 
 import selectCurrentImageId from '@/selectors/selectCurrentImageId'
 import selectDatasetLicenses from '@/selectors/selectDatasetLicenses'
@@ -45,10 +43,7 @@ export default function ActionsLicensesAdd() {
             name={field.name}
             label={field.label}
             placeholder={field.placeholder}
-            invalid={{
-              when: formSubmit.fields.empty.includes(field.name),
-              message: 'Empty',
-            }}
+            invalid={[formSubmit.fields.empty.includes(field.name), 'Empty']}
           />
         ))}
         <Button

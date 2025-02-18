@@ -48,20 +48,17 @@ export default function CategoriesAdd() {
             placeholder="Cat"
             className="mt-4"
             autoComplete="annotation class name"
-            invalid={{
-              when: formSubmit.fields.empty.includes('name'),
-              message: 'Empty',
-            }}
+            invalid={[formSubmit.fields.empty.includes('name'), 'Empty']}
           />
           <TextField
             name="supercategory"
             label="Supercategory"
             placeholder="Animal"
             autoComplete="annotation super category name"
-            invalid={{
-              when: formSubmit.fields.empty.includes('supercategory'),
-              message: 'Empty',
-            }}
+            invalid={[
+              formSubmit.fields.empty.includes('supercategory'),
+              'Empty',
+            ]}
           />
           <CategoriesAddCrowds />
           <div>

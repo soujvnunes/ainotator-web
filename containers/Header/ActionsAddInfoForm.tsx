@@ -40,10 +40,7 @@ export default function ActionsAddInfoForm() {
             className="mt-4"
             key={field.name}
             defaultValue={datasetInfo[field.name] || undefined}
-            invalid={{
-              when: formSubmit.fields.empty.includes(field.name),
-              message: 'Empty',
-            }}
+            invalid={[formSubmit.fields.empty.includes(field.name), 'Empty']}
             {...field}
           />
         ))}
