@@ -1,82 +1,107 @@
-import { Line, Point, Polygon, util } from 'fabric'
-import type { TPointerEvent, TPointerEventInfo } from 'fabric'
-import { useEffect, useId, useState } from 'react'
-import useAppState from './useAppState'
-import useCanvasRefs from './useCanvasRefs'
+'use client'
 
-// TODO: not finishing when closes
+import { useEffect, useState } from 'react'
+
+import {
+  Line,
+  Point,
+  Polygon,
+  util,
+  type TPointerEvent,
+  type TPointerEventInfo,
+} from 'fabric'
+
+import selectCurrentCategory from '@/selectors/selectCurrentCategory'
+import selectIsAnnotating from '@/selectors/selectIsAnnoting'
+
+import useCanvas from './useCanvas'
+import useEnhancedId from './useEnhancedId'
+import useStoreState from './useStoreState'
+
 export default function usePolygon() {
-  const annotatorRefs = useCanvasRefs()
-  const category = useAppState((state) => state.annotator.current.category)
-  const id = useId()
+  const canvas = useCanvas()
+  const currentCategory = useStoreState(selectCurrentCategory)
+  const isAnnotating = useStoreState(selectIsAnnotating)
+  const [id, nextId] = useEnhancedId()
   const [lines, setLines] = useState<Line[]>([])
   const [isDrawing, setDrawing] = useState(false)
   const [points, setPoints] = useState<Record<'x' | 'y', number>[]>([])
 
   useEffect(() => {
-    const canvas = annotatorRefs.canvas.current
+    const _canvas = canvas.current
     const defaultOptions = { selectable: false, hasControls: false }
 
-    if (canvas == null || category?.type !== 'polygon') return
-
-    const color = `rgb(${category.color} / 0.4)`
+    if (!_canvas || !isAnnotating || currentCategory?.type !== 'polygon') {
+      return
+    }
 
     function handleMouseDown(event: TPointerEventInfo<TPointerEvent>) {
-      if (!canvas) return
+      if (!_canvas) return
 
-      const viewportPoint = canvas.getViewportPoint(event.e)
+      const viewportPoint = _canvas.getViewportPoint(event.e)
       const pointer = new Point(viewportPoint.x, viewportPoint.y).transform(
-        util.invertTransform(canvas.viewportTransform),
+        util.invertTransform(_canvas.viewportTransform),
       )
 
       setPoints((prevPoints) => [...prevPoints, { x: pointer.x, y: pointer.y }])
 
       if (!!points.length) {
-        const line = new Line(
-          [
-            points[points.length - 1].x,
-            points[points.length - 1].y,
-            pointer.x,
-            pointer.y,
-          ],
-          { stroke: color, strokeWidth: 2, ...defaultOptions },
-        )
-        canvas.add(line)
+        const point = points[points.length - 1]
+        const line = new Line([point.x, point.y, pointer.x, pointer.y], {
+          stroke: currentCategory?.color,
+          strokeWidth: 2,
+          ...defaultOptions,
+        })
+
+        _canvas.add(line)
         setLines((prevLines) => [...prevLines, line])
       }
     }
     function handleMouseMove(event: TPointerEventInfo<TPointerEvent>) {
-      if (!isDrawing || !lines.length || !canvas) return
+      if (!isDrawing || !lines.length || !_canvas) return
 
-      const viewportPoint = canvas.getViewportPoint(event.e)
+      const viewportPoint = _canvas.getViewportPoint(event.e)
       const pointer = new Point(viewportPoint.x, viewportPoint.y).transform(
-        util.invertTransform(canvas.viewportTransform),
+        util.invertTransform(_canvas.viewportTransform),
       )
 
       lines[lines.length - 1].set({ x2: pointer.x, y2: pointer.y })
-      canvas.renderAll()
+      _canvas.renderAll()
     }
-    function handleDoubleClick(event: TPointerEventInfo<TPointerEvent>) {
-      if (points.length <= 2 || !canvas) return
+    function handleDoubleClick() {
+      if (points.length <= 2 || !_canvas) return
 
-      const polygon = new Polygon(points, { fill: color, ...defaultOptions })
+      const polygon = new Polygon(points, {
+        fill: currentCategory?.color,
+        ...defaultOptions,
+      })
 
       polygon.set({ id })
-      canvas.add(polygon)
+      _canvas.add(polygon)
+      nextId()
 
       setPoints([])
       setLines([])
       setDrawing(false)
     }
 
-    canvas.on('mouse:down', handleMouseDown)
-    canvas.on('mouse:move', handleMouseMove)
-    canvas.on('mouse:dblclick', handleDoubleClick)
+    _canvas.on('mouse:down', handleMouseDown)
+    _canvas.on('mouse:move', handleMouseMove)
+    _canvas.on('mouse:dblclick', handleDoubleClick)
 
     return () => {
-      canvas.off('mouse:down', handleMouseDown)
-      canvas.off('mouse:move', handleMouseMove)
-      canvas.off('mouse:dblclick', handleDoubleClick)
+      _canvas.off('mouse:down', handleMouseDown)
+      _canvas.off('mouse:move', handleMouseMove)
+      _canvas.off('mouse:dblclick', handleDoubleClick)
     }
-  }, [lines, isDrawing, points, id, category, annotatorRefs])
+  }, [
+    lines,
+    isDrawing,
+    points,
+    id,
+    currentCategory,
+    nextId,
+    canvas,
+    isAnnotating,
+  ])
 }

@@ -1,10 +1,17 @@
 {
-  "prettier.jsxSingleQuote": false,
-  "prettier.bracketSameLine": true,
-  "prettier.singleAttributePerLine": true,
-  "prettier.singleQuote": true,
-  "prettier.semi": false,
-  "prettier.trailingComma": "all",
+  "prettier.configPath": "./prettier.config.js",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "prettier.enableDebugLogs": true
+  "editor.formatOnSave": true,
+  "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[typescript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[json]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "tailwindCSS.experimental.classRegex": [
+    ["([\"'`][^\"'`]*.*?[\"'`])", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["classes\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["classes\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cva\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
+    ["twMerge\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["twMerge\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ]
 }

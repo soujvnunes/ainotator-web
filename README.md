@@ -2,6 +2,25 @@
 
 Upload images and configure classes to annotate semantic segmentation data interactively using brush tools or polygon drawing to export the results in COCO format.
 
+## Architecture
+
+### Branching
+
+    .
+    ├── main/ # Finished until the deadline
+    └── next/ # I wish I had more time
+
+## Design System Composition Convention
+
+    .
+    └── ui/
+        ├── Component/
+        │   ├── index.tsx                   # Root component and sub components wrapped
+        │   ├── SubComponent.tsx            # Any sub component to help composition
+        .   ├── Component.stories.tsx|ts    # Storybook component story
+        .   ├── Component.lib.ts            # Local component library with consts or helper functions
+        .   └── Component.styles.ts         # Component styles using CVA
+
 ## How to use?
 
 ### Setup local development environment
@@ -35,21 +54,12 @@ In the root of the repository, install the dependencies with pnpm:
 pnpm install
 ```
 
-4. Write the necessary `.env.development` file
-
-Check if the `.env.development` file has the following entries:
-
-```text
-API_BASE_URL=http://127.0.0.1:5328
-```
-
-5. Start the application
+4. Start the application
 
 Check the scripts section in the repository’s `package.json` file:
 
 ```bash
 pnpm dev # To run the front-end concurrently with the back-end server, necessary for the COCO format validation
-pnpm next-dev # or just the front-end
 ```
 
 ### Using the web application

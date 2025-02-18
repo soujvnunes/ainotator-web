@@ -1,14 +1,18 @@
-import { Outfit } from 'next/font/google'
-import '@/ui/tailwind.css'
 import type { Metadata, Viewport } from 'next'
-import Header from '@/containers/Header/Header'
-import AppProvider from '@/providers/AppProvider'
-import CanvasRefsProvider from '@/providers/CanvasRefsProvider'
+import { Outfit } from 'next/font/google'
+
+import CanvasProvider from '@/providers/CanvasProvider'
+import StoreProvider from '@/providers/StoreProvider'
+
+import '@/styles/tailwind.css'
+
+import Header from '@/containers/Header'
 
 const outfit = Outfit({
   subsets: ['latin'],
   variable: '--font-outfit-sans',
 })
+
 export const metadata: Metadata = {
   title: 'AINotator',
   description: 'Brush and polygon design tools for precise data segmentation',
@@ -26,14 +30,14 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
     <html
       lang="en"
-      className={`${outfit.variable} h-full`}>
-      <body className="h-full text-white bg-black">
-        <AppProvider>
-          <CanvasRefsProvider>
+      className={outfit.variable}>
+      <body>
+        <StoreProvider>
+          <CanvasProvider>
             <Header />
             {children}
-          </CanvasRefsProvider>
-        </AppProvider>
+          </CanvasProvider>
+        </StoreProvider>
       </body>
     </html>
   )

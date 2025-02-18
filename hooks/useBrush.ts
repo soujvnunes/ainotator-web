@@ -1,21 +1,32 @@
-import { PencilBrush } from 'fabric'
 import { useEffect } from 'react'
-import useAppState from './useAppState'
-import useCanvasRefs from './useCanvasRefs'
+
+import { PencilBrush } from 'fabric'
+
+import selectBrushWidth from '@/selectors/selectBrushWidth'
+import selectCurrentCategory from '@/selectors/selectCurrentCategory'
+import selectIsAnnotating from '@/selectors/selectIsAnnoting'
+
+import useCanvas from './useCanvas'
+import useStoreState from './useStoreState'
 
 export default function useBrush() {
-  const annotatorRefs = useCanvasRefs()
-  const size = useAppState((state) => state.annotator.current.size.brush)
-  const category = useAppState((state) => state.annotator.current.category)
+  const canvas = useCanvas()
+  const category = useStoreState(selectCurrentCategory)
+  const brushWidth = useStoreState(selectBrushWidth)
+  const isAnnotating = useStoreState(selectIsAnnotating)
 
   useEffect(() => {
-    const canvas = annotatorRefs.canvas.current
+    const _canvas = canvas.current
 
-    if (canvas == null || category?.type !== 'brush') return
+    if (!_canvas) return
 
-    canvas.isDrawingMode = true
-    canvas.freeDrawingBrush = new PencilBrush(canvas)
-    canvas.freeDrawingBrush.color = `rgb(${category.color} / 0.4)`
-    canvas.freeDrawingBrush.width = size
-  }, [annotatorRefs, category, size])
+    _canvas.isDrawingMode = false
+
+    if (!isAnnotating || category?.type !== 'brush') return
+
+    _canvas.isDrawingMode = true
+    _canvas.freeDrawingBrush = new PencilBrush(_canvas)
+    _canvas.freeDrawingBrush.color = category.color
+    _canvas.freeDrawingBrush.width = brushWidth
+  }, [canvas, category, isAnnotating, brushWidth])
 }
