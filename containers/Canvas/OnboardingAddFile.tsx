@@ -35,13 +35,19 @@ export default function OnboardingAddFile() {
         const _canvas = canvas.current
 
         if (typeof result !== 'string' || !_canvas) return
+        /* 
+        try {
+          const imageId = String(id)
+          const query = new URLSearchParams({ image: imageId })
+          const { redirect } = await import('next/navigation')
 
-        /**
-         * TODO: implement /canvas page as router and pass image as query
-         *
-         * router.replace({ pathname: '/canvas', query: { result }})
-         *
-         */
+          sessionStorage.setItem(imageId, result)
+          redirect(`/canvas?${query.toString()}`)
+        } catch (error) {
+          alert(JSON.stringify(error))
+        }
+ */
+
         const image = await FabricImage.fromURL(result)
 
         if (_canvas.width / image.width > _canvas.height / image.height) {
@@ -75,11 +81,11 @@ export default function OnboardingAddFile() {
   )
 
   return (
-    <label className="flex cursor-pointer items-center bg-neutral-800 pr-4 text-white">
-      <span className="mr-4 flex h-12 w-12 bg-white text-black">
+    <label className="text-label flex cursor-pointer items-center bg-neutral-800 pr-4 text-white">
+      <span className="mr-4 flex h-10 w-10 bg-white text-black">
         <DocumentArrowUpIcon className="m-auto size-6" />
       </span>
-      Pick your image
+      Pick an image
       <input
         type="file"
         accept="image/*"
