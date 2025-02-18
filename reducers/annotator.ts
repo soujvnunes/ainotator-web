@@ -5,11 +5,7 @@ import { type AnnotatorColors } from '@/consts/annotatorColors'
 import { type AnnotatorCrowds } from '@/consts/annotatorCrowds'
 import { type AnnotatorTypes } from '@/consts/annotatorTypes'
 
-import type {
-  DatasetCategory,
-  DatasetImage,
-  DatasetLicense,
-} from '@/actions/validateDataset'
+import type { DatasetCategory, DatasetImage, DatasetLicense } from './dataset'
 
 export interface AnnotatorCategory extends DatasetCategory {
   isCrowd: AnnotatorCrowds
@@ -24,8 +20,6 @@ export type AnnotatorModes =
   | 'annotating'
   // User switched to erase mode
   | 'erasing'
-  // User clicked on Export icon button
-  | 'exporting'
 
 interface AnnotatorState {
   mode: AnnotatorModes
