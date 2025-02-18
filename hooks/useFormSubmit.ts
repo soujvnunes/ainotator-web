@@ -3,7 +3,7 @@
 import { useCallback, useState } from 'react'
 
 export default function useFormSubmit<
-  O extends Record<K, string>,
+  O extends Record<K, string | number>,
   K extends keyof O = keyof O,
 >(formSubmit: (fields: O) => void) {
   const [empty, setEmpty] = useState<K[]>([])
