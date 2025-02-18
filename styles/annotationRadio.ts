@@ -1,17 +1,14 @@
 import { cva } from 'class-variance-authority'
 
-import annotatorColors from '@/consts/annotatorColors'
-
 const annotationRadio = {
   root: cva(
-    'group inline-flex cursor-pointer text-white data-disabled:cursor-not-allowed data-disabled:text-white/60',
+    'group inline-flex cursor-pointer bg-(--color)/(--alpha,100%) text-white data-disabled:cursor-not-allowed data-disabled:text-white/60',
     {
       variants: {
-        color: { ...annotatorColors.classes.background },
         compact: {
-          true: 'data-disabled:bg-opacity-40 data-hover:bg-opacity-60 aspect-square w-full min-w-10',
+          true: 'aspect-square w-full min-w-10 data-disabled:[--alpha:40%] data-hover:[--alpha:60%]',
           false:
-            'bg-opacity-60 data-disabled:bg-opacity-40 h-16 w-24 flex-col justify-between',
+            'h-16 w-24 flex-col justify-between [--alpha:60%] data-disabled:[--alpha:40%]',
         },
       },
       defaultVariants: {
@@ -32,14 +29,13 @@ const annotationRadio = {
       root: cva('inline-flex h-10 w-10 items-center justify-center', {
         variants: {
           type: {
-            true: 'group-data-checked:bg-black group-data-hover:bg-black/60',
+            true: 'group-data-checked:bg-black group-data-checked:text-(--color) group-data-hover:bg-black/60',
             false: '',
           },
           crowd: {
             true: 'ml-auto',
             false: '',
           },
-          color: { ...annotatorColors.classes.color },
         },
       }),
       icon: cva('size-4'),
