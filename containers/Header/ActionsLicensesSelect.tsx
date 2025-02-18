@@ -2,6 +2,8 @@
 
 import { useCallback } from 'react'
 
+import { useClose } from '@headlessui/react'
+
 import annotator from '@/reducers/annotator'
 import dataset from '@/reducers/dataset'
 
@@ -14,9 +16,11 @@ import useStoreState from '@/hooks/useStoreState'
 
 import textField from '@/styles/textField'
 
+import Button from '@/components/Button'
 import RadioField from '@/components/RadioField'
 
 export default function ActionsLicensesSelect() {
+  const closeActionsLicenses = useClose()
   const dispatch = useStoreDispatch()
   const currentLicenseId = useStoreState(selectCurrentLicenseId)
   const currentImageId = useStoreState(selectCurrentImageId)
@@ -45,6 +49,11 @@ export default function ActionsLicensesSelect() {
         values={licensesFields}
         onChange={handleLicense}
       />
+      <Button
+        fullWidth
+        onClick={closeActionsLicenses}>
+        Close
+      </Button>
     </>
   )
 }
