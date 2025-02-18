@@ -35,18 +35,6 @@ export default function OnboardingAddFile() {
         const _canvas = canvas.current
 
         if (typeof result !== 'string' || !_canvas) return
-        /* 
-        try {
-          const imageId = String(id)
-          const query = new URLSearchParams({ image: imageId })
-          const { redirect } = await import('next/navigation')
-
-          sessionStorage.setItem(imageId, result)
-          redirect(`/canvas?${query.toString()}`)
-        } catch (error) {
-          alert(JSON.stringify(error))
-        }
- */
 
         const image = await FabricImage.fromURL(result)
 
