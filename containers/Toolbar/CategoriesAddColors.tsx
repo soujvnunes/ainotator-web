@@ -9,13 +9,13 @@ export default function CategoriesAddColors() {
     <RadioGroup
       className="flex"
       name="color"
-      defaultValue={annotatorColors.value[0]}>
-      {annotatorColors.value.map((color) => (
+      defaultValue={annotatorColors.red}>
+      {Object.entries(annotatorColors).map(([color, value]) => (
         <AnnotationRadio
           compact
           key={color}
-          value={color}
-          color={color}
+          value={value}
+          color={value}
           aria-label={color}
         />
       ))}
