@@ -1,6 +1,8 @@
 import { RadioGroup } from '@headlessui/react'
 import type { Meta, StoryObj } from '@storybook/react'
 
+import annotatorColors from '@/consts/annotatorColors'
+
 import AnnotationRadio from '@/components/AnnotationRadio'
 
 const meta = {
@@ -10,7 +12,7 @@ const meta = {
     type: 'brush',
     isCrowd: 'yes',
     value: 'cat',
-    color: 'red',
+    color: annotatorColors.red,
     children: 'Cat',
   },
   parameters: {
