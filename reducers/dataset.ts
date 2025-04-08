@@ -1,4 +1,8 @@
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
+import {
+  createSelector,
+  createSlice,
+  type PayloadAction,
+} from '@reduxjs/toolkit'
 
 export interface DatasetInfo {
   description: string
@@ -102,5 +106,24 @@ export default createSlice({
       ...state,
       categories: [...state.categories, action.payload],
     }),
+  },
+  selectors: {
+    annotations: (state) => state.annotations,
+    hasInfo: createSelector(
+      (state: DatasetState) => state.info,
+      (info) => Object.values(info).some(Boolean),
+    ),
+    info: (state) => state.info,
+    licenses: (state) => state.licenses,
+    licensesFields: createSelector(
+      (state: DatasetState) => state.licenses,
+      (licenses) => {
+        return licenses.map((license) => ({
+          value: license.id,
+          children: license.name,
+        }))
+      },
+    ),
+    images: (state) => state.images,
   },
 })
