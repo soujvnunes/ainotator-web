@@ -2,18 +2,16 @@ import { useEffect } from 'react'
 
 import { PencilBrush } from 'fabric'
 
-import selectBrushWidth from '@/selectors/selectBrushWidth'
-import selectCurrentCategory from '@/selectors/selectCurrentCategory'
-import selectIsAnnotating from '@/selectors/selectIsAnnoting'
+import annotator from '@/reducers/annotator'
 
 import useCanvas from './useCanvas'
 import useStoreState from './useStoreState'
 
 export default function useBrush() {
   const canvas = useCanvas()
-  const category = useStoreState(selectCurrentCategory)
-  const brushWidth = useStoreState(selectBrushWidth)
-  const isAnnotating = useStoreState(selectIsAnnotating)
+  const category = useStoreState(annotator.selectors.currentCategory)
+  const brushWidth = useStoreState(annotator.selectors.brushWidth)
+  const isAnnotating = useStoreState(annotator.selectors.isAnnotating)
 
   useEffect(() => {
     const _canvas = canvas.current
