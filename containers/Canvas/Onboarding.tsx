@@ -2,7 +2,7 @@
 
 import { DocumentArrowDownIcon, PlusIcon } from '@heroicons/react/24/solid'
 
-import selectIsWaiting from '@/selectors/selectIsWaiting'
+import annotator from '@/reducers/annotator'
 
 import classes from '@/helpers/classes'
 
@@ -11,7 +11,7 @@ import useStoreState from '@/hooks/useStoreState'
 import OnboardingAddFile from './OnboardingAddFile'
 
 export default function Onboarding() {
-  const isWaiting = useStoreState(selectIsWaiting)
+  const isWaiting = useStoreState(annotator.selectors.isWaiting)
 
   return (
     <section {...rootAttrs({ inert: !isWaiting })}>

@@ -5,8 +5,9 @@ import { useCallback } from 'react'
 import { DocumentArrowDownIcon } from '@heroicons/react/24/solid'
 
 import annotator from '@/reducers/annotator'
+import dataset from '@/reducers/dataset'
 
-import selectDataset from '@/selectors/selectDataset'
+import selectCurrentImage from '@/selectors/selectCurrentImage'
 
 import generateLink from '@/helpers/generateLink'
 
@@ -19,25 +20,27 @@ import IconButton from '@/components/IconButton'
 export default function ActionsExport() {
   const canvas = useCanvas()
   const dispatch = useStoreDispatch()
-  const dataset = useStoreState(selectDataset)
+  const info = useStoreState(dataset.selectors.info)
+  const annotations = useStoreState(dataset.selectors.annotations)
+  const image = useStoreState(selectCurrentImage)
   const handleValidation = useCallback(() => {
     const _canvas = canvas.current
 
-    if (!_canvas) return
+    if (!_canvas || !image) return
 
     generateLink({
-      name: `${dataset.images[0].file_name}_${dataset.info.date_created}_annotations.json`,
+      name: `${image.file_name}_${info.date_created}_annotations.json`,
       value: dataset,
     })
     dispatch(annotator.actions.setMode('waiting'))
     dispatch(annotator.actions.setCategory(0))
     _canvas.clear()
-  }, [canvas, dataset, dispatch])
+  }, [canvas, dispatch, image, info.date_created])
 
   return (
     <IconButton
       onClick={handleValidation}
-      disabled={!dataset.annotations.length}
+      disabled={!annotations.length}
       aria-label="Export annotations in COCO format">
       <DocumentArrowDownIcon className="m-auto size-6" />
     </IconButton>

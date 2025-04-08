@@ -7,10 +7,6 @@ import { useClose } from '@headlessui/react'
 import annotator from '@/reducers/annotator'
 import dataset from '@/reducers/dataset'
 
-import selectCurrentImageId from '@/selectors/selectCurrentImageId'
-import selectCurrentLicenseId from '@/selectors/selectCurrentLicenseId'
-import selectDatasetLicensesFields from '@/selectors/selectDatasetLicensesFields'
-
 import useStoreDispatch from '@/hooks/useDispatch'
 import useStoreState from '@/hooks/useStoreState'
 
@@ -22,9 +18,9 @@ import RadioField from '@/components/RadioField'
 export default function ActionsLicensesSelect() {
   const closeActionsLicenses = useClose()
   const dispatch = useStoreDispatch()
-  const currentLicenseId = useStoreState(selectCurrentLicenseId)
-  const currentImageId = useStoreState(selectCurrentImageId)
-  const licensesFields = useStoreState(selectDatasetLicensesFields)
+  const currentLicenseId = useStoreState(annotator.selectors.currentLicenseId)
+  const currentImageId = useStoreState(annotator.selectors.currentImageId)
+  const licensesFields = useStoreState(dataset.selectors.licensesFields)
   const handleLicense = useCallback(
     (id: number) => {
       dispatch(annotator.actions.setLicense(id))

@@ -11,8 +11,7 @@ import {
   type TPointerEventInfo,
 } from 'fabric'
 
-import selectCurrentCategory from '@/selectors/selectCurrentCategory'
-import selectIsAnnotating from '@/selectors/selectIsAnnoting'
+import annotator from '@/reducers/annotator'
 
 import useCanvas from './useCanvas'
 import useEnhancedId from './useEnhancedId'
@@ -20,8 +19,8 @@ import useStoreState from './useStoreState'
 
 export default function usePolygon() {
   const canvas = useCanvas()
-  const currentCategory = useStoreState(selectCurrentCategory)
-  const isAnnotating = useStoreState(selectIsAnnotating)
+  const currentCategory = useStoreState(annotator.selectors.currentCategory)
+  const isAnnotating = useStoreState(annotator.selectors.isAnnotating)
   const [id, nextId] = useEnhancedId()
   const [lines, setLines] = useState<Line[]>([])
   const [isDrawing, setDrawing] = useState(false)

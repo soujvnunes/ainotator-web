@@ -1,10 +1,7 @@
 import { useEffect } from 'react'
 
+import annotator from '@/reducers/annotator'
 import dataset from '@/reducers/dataset'
-
-import selectCurrentCategory from '@/selectors/selectCurrentCategory'
-import selectCurrentImageId from '@/selectors/selectCurrentImageId'
-import selectIsAnnotating from '@/selectors/selectIsAnnoting'
 
 import useCanvas from '../useCanvas'
 import useStoreDispatch from '../useDispatch'
@@ -15,9 +12,9 @@ import generateAnnotation from './generateAnnotation'
 export default function useGenerateAnnotation() {
   const dispatch = useStoreDispatch()
   const canvas = useCanvas()
-  const currentCategory = useStoreState(selectCurrentCategory)
-  const currentImageId = useStoreState(selectCurrentImageId)
-  const isAnnotating = useStoreState(selectIsAnnotating)
+  const currentCategory = useStoreState(annotator.selectors.currentCategory)
+  const currentImageId = useStoreState(annotator.selectors.currentImageId)
+  const isAnnotating = useStoreState(annotator.selectors.isAnnotating)
   const [id, nextId] = useEnhancedId()
 
   useEffect(() => {

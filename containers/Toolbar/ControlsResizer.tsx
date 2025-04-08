@@ -4,17 +4,14 @@ import { useCallback } from 'react'
 
 import annotator from '@/reducers/annotator'
 
-import selectBrushWidth from '@/selectors/selectBrushWidth'
-import selectCurrentCategory from '@/selectors/selectCurrentCategory'
-
 import useStoreDispatch from '@/hooks/useDispatch'
 import useStoreState from '@/hooks/useStoreState'
 
 import RangeField from '@/components/RangeField'
 
 export default function ControlsResizer() {
-  const currentCategory = useStoreState(selectCurrentCategory)
-  const brushWidth = useStoreState(selectBrushWidth)
+  const currentCategory = useStoreState(annotator.selectors.currentCategory)
+  const brushWidth = useStoreState(annotator.selectors.brushWidth)
   const dispatch = useStoreDispatch()
   const handleSize = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {

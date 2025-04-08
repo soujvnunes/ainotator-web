@@ -1,10 +1,11 @@
 import { createSelector } from '@reduxjs/toolkit'
 
-import selectCurrentImageId from './selectCurrentImageId'
-import selectImages from './selectImages'
+import annotator from '@/reducers/annotator'
+import dataset from '@/reducers/dataset'
 
 const selectCurrentImage = createSelector(
-  [selectCurrentImageId, selectImages],
+  annotator.selectors.currentImageId,
+  dataset.selectors.images,
   (id, images) => images.find((image) => image.id === id),
 )
 

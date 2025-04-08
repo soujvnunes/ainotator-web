@@ -2,7 +2,7 @@
 
 import { InformationCircleIcon } from '@heroicons/react/24/solid'
 
-import selectDatasetHasInfo from '@/selectors/selectDatasetHasInfo'
+import dataset from '@/reducers/dataset'
 
 import classes from '@/helpers/classes'
 
@@ -14,7 +14,7 @@ import IconButton from '@/components/IconButton'
 import ActionsAddInfoForm from './ActionsAddInfoForm'
 
 export default function ActionsAddInfo() {
-  const datasetHasInfo = useStoreState(selectDatasetHasInfo)
+  const datasetHasInfo = useStoreState(dataset.selectors.hasInfo)
 
   return (
     <Dialog

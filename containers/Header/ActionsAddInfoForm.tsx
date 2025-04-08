@@ -4,8 +4,6 @@ import { Fieldset, Legend, useClose } from '@headlessui/react'
 
 import dataset from '@/reducers/dataset'
 
-import selectDatasetInfo from '@/selectors/selectDatasetInfo'
-
 import useStoreDispatch from '@/hooks/useDispatch'
 import useFormSubmit from '@/hooks/useFormSubmit'
 import useStoreState from '@/hooks/useStoreState'
@@ -25,7 +23,7 @@ interface ActionsAddInfoFields {
 export default function ActionsAddInfoForm() {
   const closeActionAddInfo = useClose()
   const dispatch = useStoreDispatch()
-  const datasetInfo = useStoreState(selectDatasetInfo)
+  const datasetInfo = useStoreState(dataset.selectors.info)
   const formSubmit = useFormSubmit<ActionsAddInfoFields>((fields) => {
     dispatch(dataset.actions.setInfo(fields))
     closeActionAddInfo()
