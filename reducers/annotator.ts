@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { type PayloadAction } from '@reduxjs/toolkit'
 
 import { type AnnotatorCrowds } from '@/consts/annotatorCrowds'
@@ -77,5 +77,39 @@ export default createSlice({
       ...state,
       categories: [...state.categories, action.payload],
     }),
+  },
+  selectors: {
+    brushWidth: (state) => state.size.brush,
+    categories: (state) => state.categories,
+    currentCategoryId: (state) => state.current.id.category,
+    currentCategory: createSelector(
+      (state: AnnotatorState) => state.current.id.category,
+      (state: AnnotatorState) => state.categories,
+      (id, categories) => {
+        if (!id) return
+
+        const currentCategory = categories.find(
+          (category) => id === category.id,
+        )
+
+        if (!currentCategory?.color) return
+
+        return {
+          ...currentCategory,
+          color: `rgb(${currentCategory.color} / 0.4)`,
+        }
+      },
+    ),
+    currentImageId: (state) => state.current.id.image,
+    currentLicenseId: (state) => state.current.id.license,
+    mode: (state) => state.mode,
+    isAnnotating: createSelector(
+      (state: AnnotatorState) => state.mode,
+      (mode) => mode === 'annotating',
+    ),
+    isWaiting: createSelector(
+      (state: AnnotatorState) => state.mode,
+      (mode) => mode === 'waiting',
+    ),
   },
 })
