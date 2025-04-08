@@ -8,8 +8,6 @@ import { FabricImage } from 'fabric'
 import annotator from '@/reducers/annotator'
 import dataset from '@/reducers/dataset'
 
-import selectCurrentLicenseId from '@/selectors/selectCurrentLicenseId'
-
 import getDateTime from '@/helpers/getDateTime'
 
 import useCanvas from '@/hooks/useCanvas'
@@ -21,7 +19,7 @@ export default function OnboardingAddFile() {
   const canvas = useCanvas()
   const dispatch = useStoreDispatch()
   const [id, nextId] = useEnhancedId()
-  const licenseId = useStoreState(selectCurrentLicenseId)
+  const licenseId = useStoreState(annotator.selectors.currentLicenseId)
 
   const handleFileChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
