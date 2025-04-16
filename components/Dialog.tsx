@@ -66,9 +66,7 @@ export default function Dialog({
                     <XMarkIcon className={dialog.header.title.close.icon} />
                   </CloseButton>
                 </DialogTitle>
-                <Description className={dialog.header.description}>
-                  {description}
-                </Description>
+                <Description className={dialog.header.description}>{description}</Description>
               </header>
               {children}
             </DialogPanel>

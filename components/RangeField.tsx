@@ -6,19 +6,12 @@ import useRangeFieldPosition from '@/hooks/useRangeFieldPosition'
 
 import rangeField from '@/styles/rangeField'
 
-interface RangeFieldProps
-  extends Omit<React.ComponentPropsWithRef<'input'>, 'type' | 'value'> {
+interface RangeFieldProps extends Omit<React.ComponentPropsWithRef<'input'>, 'type' | 'value'> {
   label: string
   value: number
 }
 
-export default function RangeField({
-  className,
-  disabled,
-  value,
-  label,
-  ...props
-}: RangeFieldProps) {
+export default function RangeField({ className, disabled, value, label, ...props }: RangeFieldProps) {
   const position = useRangeFieldPosition(value, props)
 
   return (
