@@ -1,3 +1,4 @@
+/** @type {import('prettier').Config} */
 module.exports = {
   plugins: ['prettier-plugin-tailwindcss'],
   tailwindFunctions: ['classes', 'cva', 'twMerge'],
@@ -8,4 +9,5 @@ module.exports = {
   semi: false,
   trailingComma: 'all',
   enableDebugLogs: true,
+  printWidth: 104,
 }
