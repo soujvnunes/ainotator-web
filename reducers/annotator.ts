@@ -44,39 +44,24 @@ export default createSlice({
   name: 'annotator',
   initialState,
   reducers: {
-    setMode: (state, action: PayloadAction<AnnotatorModes>) => ({
-      ...state,
-      mode: action.payload,
-    }),
-    setBrushSize: (state, action: PayloadAction<number>) => ({
-      ...state,
-      size: { ...state.size, brush: action.payload },
-    }),
-    setImage: (state, action: PayloadAction<DatasetImage['id']>) => ({
-      ...state,
-      current: {
-        ...state.current,
-        id: { ...state.current.id, image: action.payload },
-      },
-    }),
-    setLicense: (state, action: PayloadAction<DatasetLicense['id']>) => ({
-      ...state,
-      current: {
-        ...state.current,
-        id: { ...state.current.id, license: action.payload },
-      },
-    }),
-    setCategory: (state, action: PayloadAction<DatasetCategory['id']>) => ({
-      ...state,
-      current: {
-        ...state.current,
-        id: { ...state.current.id, category: action.payload },
-      },
-    }),
-    addCategory: (state, action: PayloadAction<AnnotatorCategory>) => ({
-      ...state,
-      categories: [...state.categories, action.payload],
-    }),
+    setMode: (state, action: PayloadAction<AnnotatorModes>) => {
+      state.mode = action.payload
+    },
+    setBrushSize: (state, action: PayloadAction<number>) => {
+      state.size.brush = action.payload
+    },
+    setImage: (state, action: PayloadAction<DatasetImage['id']>) => {
+      state.current.id.image = action.payload
+    },
+    setLicense: (state, action: PayloadAction<DatasetLicense['id']>) => {
+      state.current.id.license = action.payload
+    },
+    setCategory: (state, action: PayloadAction<DatasetCategory['id']>) => {
+      state.current.id.category = action.payload
+    },
+    addCategory: (state, action: PayloadAction<AnnotatorCategory>) => {
+      state.categories.push(action.payload)
+    },
   },
   selectors: {
     brushWidth: (state) => state.size.brush,
@@ -103,13 +88,7 @@ export default createSlice({
     currentImageId: (state) => state.current.id.image,
     currentLicenseId: (state) => state.current.id.license,
     mode: (state) => state.mode,
-    isAnnotating: createSelector(
-      (state: AnnotatorState) => state.mode,
-      (mode) => mode === 'annotating',
-    ),
-    isWaiting: createSelector(
-      (state: AnnotatorState) => state.mode,
-      (mode) => mode === 'waiting',
-    ),
+    isAnnotating: (state) => state.mode === 'annotating',
+    isWaiting: (state) => state.mode === 'waiting',
   },
 })

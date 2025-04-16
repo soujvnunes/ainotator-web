@@ -1,8 +1,4 @@
-import {
-  createSelector,
-  createSlice,
-  type PayloadAction,
-} from '@reduxjs/toolkit'
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
 export interface DatasetInfo {
   description: string
@@ -73,57 +69,40 @@ export default createSlice({
   name: 'dataset',
   initialState,
   reducers: {
-    setInfo: (state, action: PayloadAction<DatasetInfo>) => ({
-      ...state,
-      info: action.payload,
-    }),
-    addLicense: (state, action: PayloadAction<DatasetLicense>) => ({
-      ...state,
-      licenses: [...state.licenses, action.payload],
-    }),
-    addImage: (state, action: PayloadAction<DatasetImage>) => ({
-      ...state,
-      images: [...state.images, action.payload],
-    }),
+    setInfo: (state, action: PayloadAction<DatasetInfo>) => {
+      state.info = action.payload
+    },
+    addLicense: (state, action: PayloadAction<DatasetLicense>) => {
+      state.licenses.push(action.payload)
+    },
+    addImage: (state, action: PayloadAction<DatasetImage>) => {
+      state.images.push(action.payload)
+    },
     setImage: (
       state,
-      action: PayloadAction<
-        Pick<DatasetImage, 'id'> & Partial<Omit<DatasetImage, 'id'>>
-      >,
-    ) => ({
-      ...state,
-      images: state.images.map((image) => {
-        if (image.id !== action.payload.id) return image
+      action: PayloadAction<Partial<DatasetImage> & { id: DatasetImage['id'] }>,
+    ) => {
+      const image = state.images.find(({ id }) => id === action.payload.id)
 
-        return { ...image, ...action.payload }
-      }),
-    }),
-    addAnnotation: (state, action: PayloadAction<DatasetAnnotation>) => ({
-      ...state,
-      annotations: [...state.annotations, action.payload],
-    }),
-    addCategory: (state, action: PayloadAction<DatasetCategory>) => ({
-      ...state,
-      categories: [...state.categories, action.payload],
-    }),
+      if (image) Object.assign(image, action.payload)
+    },
+    addAnnotation: (state, action: PayloadAction<DatasetAnnotation>) => {
+      state.annotations.push(action.payload)
+    },
+    addCategory: (state, action: PayloadAction<DatasetCategory>) => {
+      state.categories.push(action.payload)
+    },
   },
   selectors: {
     annotations: (state) => state.annotations,
-    hasInfo: createSelector(
-      (state: DatasetState) => state.info,
-      (info) => Object.values(info).some(Boolean),
-    ),
+    hasInfo: (state) => Object.values(state.info).some(Boolean),
     info: (state) => state.info,
     licenses: (state) => state.licenses,
-    licensesFields: createSelector(
-      (state: DatasetState) => state.licenses,
-      (licenses) => {
-        return licenses.map((license) => ({
-          value: license.id,
-          children: license.name,
-        }))
-      },
-    ),
+    licensesFields: (state) =>
+      state.licenses.map((license) => ({
+        value: license.id,
+        children: license.name,
+      })),
     images: (state) => state.images,
   },
 })
