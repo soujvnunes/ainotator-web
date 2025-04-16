@@ -2,16 +2,9 @@
 
 import { useEffect, useState } from 'react'
 
-import {
-  Line,
-  Point,
-  Polygon,
-  util,
-  type TPointerEvent,
-  type TPointerEventInfo,
-} from 'fabric'
+import { Line, Point, Polygon, util, type TPointerEvent, type TPointerEventInfo } from 'fabric'
 
-import annotator from '@/reducers/annotator'
+import annotatorSlice from '@/slices/annotatorSlice'
 
 import useCanvas from './useCanvas'
 import useEnhancedId from './useEnhancedId'
@@ -19,8 +12,8 @@ import useStoreState from './useStoreState'
 
 export default function usePolygon() {
   const canvas = useCanvas()
-  const currentCategory = useStoreState(annotator.selectors.currentCategory)
-  const isAnnotating = useStoreState(annotator.selectors.isAnnotating)
+  const currentCategory = useStoreState(annotatorSlice.selectors.currentCategory)
+  const isAnnotating = useStoreState(annotatorSlice.selectors.isAnnotating)
   const [id, nextId] = useEnhancedId()
   const [lines, setLines] = useState<Line[]>([])
   const [isDrawing, setDrawing] = useState(false)
@@ -93,14 +86,5 @@ export default function usePolygon() {
       _canvas.off('mouse:move', handleMouseMove)
       _canvas.off('mouse:dblclick', handleDoubleClick)
     }
-  }, [
-    lines,
-    isDrawing,
-    points,
-    id,
-    currentCategory,
-    nextId,
-    canvas,
-    isAnnotating,
-  ])
+  }, [lines, isDrawing, points, id, currentCategory, nextId, canvas, isAnnotating])
 }

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
-import annotator from '@/reducers/annotator'
-import dataset from '@/reducers/dataset'
+import annotatorSlice from '@/slices/annotatorSlice'
+import datasetSlice from '@/slices/datasetSlice'
 
 import useCanvas from '../useCanvas'
 import useStoreDispatch from '../useDispatch'
@@ -12,9 +12,9 @@ import generateAnnotation from './generateAnnotation'
 export default function useGenerateAnnotation() {
   const dispatch = useStoreDispatch()
   const canvas = useCanvas()
-  const currentCategory = useStoreState(annotator.selectors.currentCategory)
-  const currentImageId = useStoreState(annotator.selectors.currentImageId)
-  const isAnnotating = useStoreState(annotator.selectors.isAnnotating)
+  const currentCategory = useStoreState(annotatorSlice.selectors.currentCategory)
+  const currentImageId = useStoreState(annotatorSlice.selectors.currentImageId)
+  const isAnnotating = useStoreState(annotatorSlice.selectors.isAnnotating)
   const [id, nextId] = useEnhancedId()
 
   useEffect(() => {
@@ -26,20 +26,20 @@ export default function useGenerateAnnotation() {
       if (!_canvas || !currentCategory || !isAnnotating) return
 
       // TODO: skip previous generated annotation
-      const annotation = generateAnnotation(_canvas)
+      const canvasAnnotation = generateAnnotation(_canvas)
 
-      if (!annotation) return
+      if (!canvasAnnotation) return
 
       dispatch(
-        dataset.actions.addAnnotation({
+        datasetSlice.actions.addAnnotation({
           id,
           image_id: currentImageId,
           category_id: currentCategory.id,
           iscrowd: currentCategory.isCrowd === 'yes' ? 1 : 0,
-          ...annotation,
+          ...canvasAnnotation,
         }),
       )
-      dispatch(dataset.actions.addCategory(currentCategory))
+      dispatch(datasetSlice.actions.addCategory(currentCategory))
       nextId()
     }
     _canvas.on('mouse:up', handleMouseUp)
@@ -47,13 +47,5 @@ export default function useGenerateAnnotation() {
     return () => {
       _canvas.off('mouse:up', handleMouseUp)
     }
-  }, [
-    currentImageId,
-    id,
-    dispatch,
-    nextId,
-    currentCategory,
-    canvas,
-    isAnnotating,
-  ])
+  }, [currentImageId, id, dispatch, nextId, currentCategory, canvas, isAnnotating])
 }

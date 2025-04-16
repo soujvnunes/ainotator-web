@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
 
-import annotator from '@/reducers/annotator'
+import annotatorSlice from '@/slices/annotatorSlice'
 
 import useCanvas from './useCanvas'
 import useStoreState from './useStoreState'
 
 export default function useUnselectCanvas() {
   const canvas = useCanvas()
-  const categoryId = useStoreState(annotator.selectors.currentCategoryId)
+  const currentCategoryId = useStoreState(annotatorSlice.selectors.currentCategoryId)
 
   useEffect(() => {
     const _canvas = canvas.current
@@ -20,5 +20,5 @@ export default function useUnselectCanvas() {
       obj.hasControls = false
     })
     _canvas.renderAll()
-  }, [canvas, categoryId])
+  }, [canvas, currentCategoryId])
 }
