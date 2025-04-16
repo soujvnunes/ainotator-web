@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import annotator from '@/reducers/annotator'
-import dataset from '@/reducers/dataset'
+import annotatorSlice from '@/slices/annotatorSlice'
+import datasetSlice from '@/slices/datasetSlice'
 
 export default function initStore() {
   return configureStore({
     reducer: {
-      [dataset.reducerPath]: dataset.reducer,
-      [annotator.reducerPath]: annotator.reducer,
+      [datasetSlice.reducerPath]: datasetSlice.reducer,
+      [annotatorSlice.reducerPath]: annotatorSlice.reducer,
     },
   })
 }
