@@ -26,9 +26,7 @@ export type Attributes<A extends Attribute> = {
   [P in keyof A as Prop<P & string>]?: A[P]
 }
 
-export default function getAttributes<A extends Attribute>(
-  attribute: A,
-): Attributes<A> {
+export default function getAttributes<A extends Attribute>(attribute: A): Attributes<A> {
   const attributes: Partial<Record<string, Value>> = {}
 
   for (const [key, value] of Object.entries(attribute)) {
