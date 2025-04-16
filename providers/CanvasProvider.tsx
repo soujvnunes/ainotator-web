@@ -6,15 +6,8 @@ import type { Canvas } from 'fabric'
 
 import CanvasContext from '@/lib/CanvasContext'
 
-export default function CanvasProvider(props: {
-  readonly children: React.ReactNode
-}) {
+export default function CanvasProvider({ children }: React.PropsWithChildren) {
   const canvas = useRef<Canvas>(null)
 
-  return (
-    <CanvasContext
-      value={canvas}
-      {...props}
-    />
-  )
+  return <CanvasContext value={canvas}>{children}</CanvasContext>
 }
