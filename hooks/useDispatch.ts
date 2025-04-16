@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux'
 
-import { type StoreDispatch } from '@/lib/store'
+import { type StoreDispatch } from '@/lib/initStore'
 
 const useStoreDispatch = useDispatch.withTypes<StoreDispatch>()
 
