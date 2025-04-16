@@ -2,7 +2,7 @@ import { cva } from 'class-variance-authority'
 
 const dialog = {
   root: cva(
-    'data-closed:transform-[scale(95%)] w-full max-w-md bg-neutral-900 duration-300 ease-out data-closed:opacity-0',
+    'w-full max-w-md bg-neutral-900 duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0',
   ),
   header: {
     root: 'bg-neutral-800 pb-2 text-white/60',

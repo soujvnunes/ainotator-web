@@ -7,8 +7,7 @@ const annotationRadio = {
       variants: {
         compact: {
           true: 'aspect-square w-full min-w-10 data-disabled:[--alpha:40%] data-hover:[--alpha:60%]',
-          false:
-            'h-16 w-24 flex-col justify-between [--alpha:60%] data-disabled:[--alpha:40%]',
+          false: 'h-16 w-24 flex-col justify-between [--alpha:60%] data-disabled:[--alpha:40%]',
         },
       },
       defaultVariants: {
