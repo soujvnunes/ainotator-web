@@ -2,7 +2,7 @@
 
 import { Fieldset, Legend, useClose } from '@headlessui/react'
 
-import dataset from '@/reducers/dataset'
+import datasetSlice from '@/slices/datasetSlice'
 
 import useStoreDispatch from '@/hooks/useDispatch'
 import useFormSubmit from '@/hooks/useFormSubmit'
@@ -23,9 +23,9 @@ interface ActionsAddInfoFields {
 export default function ActionsAddInfoForm() {
   const closeActionAddInfo = useClose()
   const dispatch = useStoreDispatch()
-  const datasetInfo = useStoreState(dataset.selectors.info)
+  const info = useStoreState(datasetSlice.selectors.info)
   const formSubmit = useFormSubmit<ActionsAddInfoFields>((fields) => {
-    dispatch(dataset.actions.setInfo(fields))
+    dispatch(datasetSlice.actions.setInfo(fields))
     closeActionAddInfo()
   })
 
@@ -37,7 +37,7 @@ export default function ActionsAddInfoForm() {
           <TextField
             className="mt-4"
             key={field.name}
-            defaultValue={datasetInfo[field.name] || undefined}
+            defaultValue={info[field.name] || undefined}
             invalid={[formSubmit.fields.empty.includes(field.name), 'Empty']}
             {...field}
           />

@@ -2,7 +2,7 @@
 
 import { CheckBadgeIcon } from '@heroicons/react/24/solid'
 
-import dataset from '@/reducers/dataset'
+import datasetSlice from '@/slices/datasetSlice'
 
 import selectCurrentImage from '@/selectors/selectCurrentImage'
 
@@ -19,7 +19,7 @@ import ActionsLicensesSelect from './ActionsLicensesSelect'
 
 export default function ActionsLicenses() {
   const currentImage = useStoreState(selectCurrentImage)
-  const licenses = useStoreState(dataset.selectors.licenses)
+  const licenses = useStoreState(datasetSlice.selectors.licenses)
 
   return (
     <Dialog

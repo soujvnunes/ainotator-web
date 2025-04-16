@@ -2,8 +2,8 @@
 
 import { Fieldset, Legend } from '@headlessui/react'
 
-import annotator from '@/reducers/annotator'
-import dataset, { type DatasetLicense } from '@/reducers/dataset'
+import annotatorSlice from '@/slices/annotatorSlice'
+import datasetSlice, { type DatasetLicense } from '@/slices/datasetSlice'
 
 import useStoreDispatch from '@/hooks/useDispatch'
 import useEnhancedId from '@/hooks/useEnhancedId'
@@ -16,16 +16,15 @@ import TextField from '@/components/TextField'
 export default function ActionsLicensesAdd() {
   const dispatch = useStoreDispatch()
   const [id, nextId] = useEnhancedId()
-  const licenses = useStoreState(dataset.selectors.licenses)
-  const currentImageId = useStoreState(annotator.selectors.currentImageId)
+  const licenses = useStoreState(datasetSlice.selectors.licenses)
+  const currentImageId = useStoreState(annotatorSlice.selectors.currentImageId)
   const formSubmit = useFormSubmit<Omit<DatasetLicense, 'id'>>((fields) => {
-    dispatch(annotator.actions.setLicense(id))
-    dispatch(dataset.actions.addLicense({ id, ...fields }))
+    dispatch(annotatorSlice.actions.setLicense(id))
+    dispatch(datasetSlice.actions.addLicense({ id, ...fields }))
 
-    if (!!currentImageId && licenses.length < 1) {
-      dispatch(dataset.actions.setImage({ id: currentImageId, license: id }))
-    }
+    if (!currentImageId || !licenses.length) return
 
+    dispatch(datasetSlice.actions.setImage({ id: currentImageId, license: id }))
     nextId()
   })
 

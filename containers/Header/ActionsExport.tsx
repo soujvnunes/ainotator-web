@@ -4,24 +4,21 @@ import { useCallback } from 'react'
 
 import { DocumentArrowDownIcon } from '@heroicons/react/24/solid'
 
-import annotator from '@/reducers/annotator'
-import dataset from '@/reducers/dataset'
+import datasetSlice from '@/slices/datasetSlice'
 
 import selectCurrentImage from '@/selectors/selectCurrentImage'
 
 import generateLink from '@/helpers/generateLink'
 
 import useCanvas from '@/hooks/useCanvas'
-import useStoreDispatch from '@/hooks/useDispatch'
 import useStoreState from '@/hooks/useStoreState'
 
 import IconButton from '@/components/IconButton'
 
 export default function ActionsExport() {
   const canvas = useCanvas()
-  const dispatch = useStoreDispatch()
-  const info = useStoreState(dataset.selectors.info)
-  const annotations = useStoreState(dataset.selectors.annotations)
+  const info = useStoreState(datasetSlice.selectors.info)
+  const annotations = useStoreState(datasetSlice.selectors.annotations)
   const image = useStoreState(selectCurrentImage)
   const handleValidation = useCallback(() => {
     const _canvas = canvas.current
@@ -30,12 +27,10 @@ export default function ActionsExport() {
 
     generateLink({
       name: `${image.file_name}_${info.date_created}_annotations.json`,
-      value: dataset,
+      value: { info, annotations },
     })
-    dispatch(annotator.actions.setMode('waiting'))
-    dispatch(annotator.actions.setCategory(0))
     _canvas.clear()
-  }, [canvas, dispatch, image, info.date_created])
+  }, [annotations, canvas, image, info])
 
   return (
     <IconButton

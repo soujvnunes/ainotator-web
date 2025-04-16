@@ -2,7 +2,7 @@
 
 import { InformationCircleIcon } from '@heroicons/react/24/solid'
 
-import dataset from '@/reducers/dataset'
+import datasetSlice from '@/slices/datasetSlice'
 
 import classes from '@/helpers/classes'
 
@@ -14,7 +14,7 @@ import IconButton from '@/components/IconButton'
 import ActionsAddInfoForm from './ActionsAddInfoForm'
 
 export default function ActionsAddInfo() {
-  const datasetHasInfo = useStoreState(dataset.selectors.hasInfo)
+  const hasInfo = useStoreState(datasetSlice.selectors.hasInfo)
 
   return (
     <Dialog
@@ -24,7 +24,7 @@ export default function ActionsAddInfo() {
         <IconButton
           onClick={open}
           aria-label="Add the dataset information"
-          {...addAttrs({ unknown: !datasetHasInfo })}>
+          {...addAttrs({ unknown: !hasInfo })}>
           <InformationCircleIcon className="m-auto size-6" />
         </IconButton>
       )}>

@@ -3,7 +3,7 @@
 import { Fieldset, Legend } from '@headlessui/react'
 import { PlusIcon } from '@heroicons/react/24/solid'
 
-import annotator, { type AnnotatorCategory } from '@/reducers/annotator'
+import annotatorSlice, { type AnnotatorCategory } from '@/slices/annotatorSlice'
 
 import useStoreDispatch from '@/hooks/useDispatch'
 import useEnhancedId from '@/hooks/useEnhancedId'
@@ -22,7 +22,7 @@ export default function CategoriesAdd() {
   const dispatch = useStoreDispatch()
   const [id, nextId] = useEnhancedId()
   const formSubmit = useFormSubmit<Omit<AnnotatorCategory, 'id'>>((fields) => {
-    dispatch(annotator.actions.addCategory({ id, ...fields }))
+    dispatch(annotatorSlice.actions.addCategory({ id, ...fields }))
     nextId()
   })
 
@@ -55,10 +55,7 @@ export default function CategoriesAdd() {
             label="Supercategory"
             placeholder="Animal"
             autoComplete="annotation super category name"
-            invalid={[
-              formSubmit.fields.empty.includes('supercategory'),
-              'Empty',
-            ]}
+            invalid={[formSubmit.fields.empty.includes('supercategory'), 'Empty']}
           />
           <CategoriesAddCrowds />
           <div>
