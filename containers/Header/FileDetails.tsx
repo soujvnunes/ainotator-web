@@ -27,7 +27,4 @@ export default function FileDetails() {
   )
 }
 
-const nameAttrs = classes(
-  'text-caption text-white/60',
-  'data-classes-file:text-white',
-)
+const nameAttrs = classes('text-caption text-white/60', 'data-classes-file:text-white')
