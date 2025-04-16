@@ -3,14 +3,15 @@ import { configureStore } from '@reduxjs/toolkit'
 import annotator from '@/reducers/annotator'
 import dataset from '@/reducers/dataset'
 
-const store = configureStore({
-  reducer: {
-    dataset: dataset.reducer,
-    annotator: annotator.reducer,
-  },
-})
+export default function initStore() {
+  return configureStore({
+    reducer: {
+      [dataset.reducerPath]: dataset.reducer,
+      [annotator.reducerPath]: annotator.reducer,
+    },
+  })
+}
 
-export default store
-export type Store = typeof store
+export type Store = ReturnType<typeof initStore>
 export type StoreState = ReturnType<Store['getState']>
 export type StoreDispatch = Store['dispatch']
