@@ -50,24 +50,22 @@ export interface DatasetState {
   categories: DatasetCategory[]
 }
 
-const initialState: DatasetState = {
-  info: {
-    description: '',
-    url: '',
-    version: '',
-    year: 0,
-    contributor: '',
-    date_created: '',
-  },
-  licenses: [],
-  images: [],
-  annotations: [],
-  categories: [],
-}
-
 export default createSlice({
   name: 'dataset',
-  initialState,
+  initialState: {
+    info: {
+      description: '',
+      url: '',
+      version: '',
+      year: 0,
+      contributor: '',
+      date_created: '',
+    },
+    licenses: [],
+    images: [],
+    annotations: [],
+    categories: [],
+  } as DatasetState,
   reducers: {
     setInfo: (state, action: PayloadAction<DatasetInfo>) => {
       state.info = action.payload
@@ -78,10 +76,7 @@ export default createSlice({
     addImage: (state, action: PayloadAction<DatasetImage>) => {
       state.images.push(action.payload)
     },
-    setImage: (
-      state,
-      action: PayloadAction<Partial<DatasetImage> & { id: DatasetImage['id'] }>,
-    ) => {
+    setImage: (state, action: PayloadAction<Partial<DatasetImage> & { id: DatasetImage['id'] }>) => {
       const image = state.images.find(({ id }) => id === action.payload.id)
 
       if (image) Object.assign(image, action.payload)

@@ -4,7 +4,7 @@ import { type PayloadAction } from '@reduxjs/toolkit'
 import { type AnnotatorCrowds } from '@/consts/annotatorCrowds'
 import { type AnnotatorTypes } from '@/consts/annotatorTypes'
 
-import type { DatasetCategory, DatasetImage, DatasetLicense } from './dataset'
+import type { DatasetCategory, DatasetImage, DatasetLicense } from './datasetSlice'
 
 export interface AnnotatorCategory extends DatasetCategory {
   isCrowd: AnnotatorCrowds
@@ -33,16 +33,14 @@ interface AnnotatorState {
   }
 }
 
-const initialState: AnnotatorState = {
-  mode: 'waiting',
-  size: { brush: 25 },
-  categories: [],
-  current: { id: { image: 0, license: 0, category: 0 } },
-}
-
 export default createSlice({
   name: 'annotator',
-  initialState,
+  initialState: {
+    mode: 'waiting',
+    size: { brush: 25 },
+    categories: [],
+    current: { id: { image: 0, license: 0, category: 0 } },
+  } as AnnotatorState,
   reducers: {
     setMode: (state, action: PayloadAction<AnnotatorModes>) => {
       state.mode = action.payload
@@ -73,9 +71,7 @@ export default createSlice({
       (id, categories) => {
         if (!id) return
 
-        const currentCategory = categories.find(
-          (category) => id === category.id,
-        )
+        const currentCategory = categories.find((category) => id === category.id)
 
         if (!currentCategory?.color) return
 
