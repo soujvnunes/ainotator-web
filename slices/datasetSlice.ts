@@ -1,4 +1,8 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { type ErrorObject } from 'ajv'
+
+import { type AnnotatorCategory } from './annotatorSlice'
 
 export interface DatasetInfo {
   description: string
@@ -42,29 +46,43 @@ export interface DatasetAnnotation {
   id: number
 }
 
+export interface DatasetValidation {
+  isValid: boolean
+  errors?: ErrorObject[]
+}
+
 export interface DatasetState {
-  info: DatasetInfo
   licenses: DatasetLicense[]
   images: DatasetImage[]
   annotations: DatasetAnnotation[]
   categories: DatasetCategory[]
+  info: DatasetInfo
+  validation: DatasetValidation
 }
+
+export const datasetApi = createApi({
+  reducerPath: 'datasetApi',
+  baseQuery: fetchBaseQuery({ baseUrl: '' }),
+  endpoints: (build) => ({
+    validate: build.mutation<DatasetValidation, Omit<DatasetState, 'validation'>>({
+      query: (dataset) => ({
+        url: '/validate-dataset',
+        method: 'POST',
+        body: dataset,
+      }),
+    }),
+  }),
+})
 
 export default createSlice({
   name: 'dataset',
   initialState: {
-    info: {
-      description: '',
-      url: '',
-      version: '',
-      year: 0,
-      contributor: '',
-      date_created: '',
-    },
     licenses: [],
     images: [],
     annotations: [],
     categories: [],
+    info: { description: '', url: '', version: '', year: 0, contributor: '', date_created: '' },
+    validation: { isValid: false, errors: [] },
   } as DatasetState,
   reducers: {
     setInfo: (state, action: PayloadAction<DatasetInfo>) => {
@@ -84,9 +102,17 @@ export default createSlice({
     addAnnotation: (state, action: PayloadAction<DatasetAnnotation>) => {
       state.annotations.push(action.payload)
     },
-    addCategory: (state, action: PayloadAction<DatasetCategory>) => {
-      state.categories.push(action.payload)
+    addCategory: {
+      reducer: (state, action: PayloadAction<DatasetCategory>) => {
+        state.categories.push(action.payload)
+      },
+      prepare: ({ isCrowd, color, type, ...payload }: AnnotatorCategory) => ({ payload }),
     },
+  },
+  extraReducers(builder) {
+    builder.addMatcher(datasetApi.endpoints.validate.matchFulfilled, (state, action) => {
+      state.validation = action.payload
+    })
   },
   selectors: {
     annotations: (state) => state.annotations,
