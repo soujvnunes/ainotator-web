@@ -24,6 +24,7 @@ export interface DialogProps {
   onClose?(): void
   renderController(handleOpen: () => void): React.ReactNode
   className?: string
+  size?: 'md' | 'lg'
 }
 
 export default function Dialog({
@@ -33,6 +34,7 @@ export default function Dialog({
   onClose,
   description,
   className,
+  size = 'md',
 }: React.PropsWithChildren<DialogProps>) {
   const [open, setOpen] = useState(false)
   const handleOpen = useCallback(() => {
@@ -55,7 +57,7 @@ export default function Dialog({
           <div className="flex min-h-full items-center justify-center p-4">
             <DialogPanel
               transition
-              className={twMerge(dialog.root({ className }))}>
+              className={twMerge(dialog.root({ className, size }))}>
               <header className={dialog.header.root}>
                 <DialogTitle className={dialog.header.title.root}>
                   <span className={dialog.header.title.text}>{title}</span>
