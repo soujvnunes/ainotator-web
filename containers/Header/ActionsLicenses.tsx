@@ -1,12 +1,11 @@
 'use client'
 
 import { CheckBadgeIcon } from '@heroicons/react/24/solid'
+import { cva } from 'class-variance-authority'
 
 import datasetSlice from '@/slices/datasetSlice'
 
 import selectCurrentImage from '@/selectors/selectCurrentImage'
-
-import classes from '@/helpers/classes'
 
 import useStoreState from '@/hooks/useStoreState'
 
@@ -28,8 +27,8 @@ export default function ActionsLicenses() {
       renderController={(open) => (
         <IconButton
           aria-label="Select or add an image license"
-          onClick={open}
-          {...addAttrs({ unlicensed: !currentImage?.license })}>
+          className={addAttrs({ licensed: !!currentImage?.license })}
+          onClick={open}>
           <CheckBadgeIcon className="m-auto size-6" />
         </IconButton>
       )}>
@@ -50,4 +49,10 @@ export default function ActionsLicenses() {
   )
 }
 
-const addAttrs = classes('data-classes-unlicensed:text-red-400')
+const addAttrs = cva('', {
+  variants: {
+    licensed: {
+      false: 'text-red-400',
+    },
+  },
+})
