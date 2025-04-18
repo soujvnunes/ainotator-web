@@ -1,7 +1,7 @@
 /** @type {import('prettier').Config} */
 module.exports = {
   plugins: ['prettier-plugin-tailwindcss'],
-  tailwindFunctions: ['classes', 'cva', 'twMerge'],
+  tailwindFunctions: ['cva', 'twMerge'],
   jsxSingleQuote: false,
   bracketSameLine: true,
   singleAttributePerLine: true,
