@@ -4,7 +4,12 @@ import { type PayloadAction } from '@reduxjs/toolkit'
 import { type AnnotatorCrowds } from '@/consts/annotatorCrowds'
 import { type AnnotatorTypes } from '@/consts/annotatorTypes'
 
-import type { DatasetCategory, DatasetImage, DatasetLicense } from './datasetSlice'
+import {
+  datasetApi,
+  type DatasetCategory,
+  type DatasetImage,
+  type DatasetLicense,
+} from './datasetSlice'
 
 export interface AnnotatorCategory extends DatasetCategory {
   isCrowd: AnnotatorCrowds
@@ -61,6 +66,14 @@ export default createSlice({
       state.categories.push(action.payload)
     },
   },
+  extraReducers(builder) {
+    builder.addMatcher(datasetApi.endpoints.validate.matchFulfilled, (state, action) => {
+      if (action.payload.isValid) {
+        state.mode = 'waiting'
+        state.current.id.category = 0
+      }
+    })
+  },
   selectors: {
     brushWidth: (state) => state.size.brush,
     categories: (state) => state.categories,
@@ -78,7 +91,7 @@ export default createSlice({
         return {
           ...currentCategory,
           color: `rgb(${currentCategory.color} / 0.4)`,
-        }
+        } as AnnotatorCategory
       },
     ),
     currentImageId: (state) => state.current.id.image,
