@@ -3,12 +3,8 @@ import type { Path, Polygon } from 'fabric'
 
 export default function generateAnnotation(canvas: Canvas) {
   const objects = canvas.getObjects()
-  const brush = objects.find((object): object is Path => {
-    return object.isType('path')
-  })
-  const polygon = objects.find((object): object is Polygon => {
-    return object.isType('polygon')
-  })
+  const brush = objects.find((object): object is Path => object.isType('path'))
+  const polygon = objects.find((object): object is Polygon => object.isType('polygon'))
 
   if (brush) {
     const { width, height } = brush.getBoundingRect()
