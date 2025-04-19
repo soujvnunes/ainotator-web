@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect } from 'react'
 
-import { datasetApi } from '@/slices/datasetSlice'
+import datasetApi from '@/api/datasetApi'
 
 import selectDataset from '@/selectors/selectDataset'
 
