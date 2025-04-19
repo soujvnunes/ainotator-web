@@ -21,7 +21,7 @@ export default function ActionsExport() {
     <Dialog
       size="lg"
       title="Validate dataset"
-      description="View the provided dataset details before exporting."
+      description="View the provided dataset and provide a name for the file before downloading it."
       renderController={(open) => (
         <IconButton
           onClick={open}
@@ -31,14 +31,12 @@ export default function ActionsExport() {
         </IconButton>
       )}>
       <div className="grid grid-cols-2">
-        <div className="h-full max-h-96 overflow-y-auto">
+        <div className="h-full max-h-[calc(100vh-108px)] overflow-y-auto">
           <Suspense fallback="Loading...">
             <ActionsExportViewer />
           </Suspense>
         </div>
-        <div className="p-4">
-          <ActionsExportDownload />
-        </div>
+        <ActionsExportDownload />
       </div>
     </Dialog>
   )
