@@ -26,7 +26,7 @@ export default function OnboardingAddFile() {
       const file = event.target.files?.item(0)
       const reader = new FileReader()
 
-      if (file == null) return
+      if (!file) return
 
       reader.onload = async (event) => {
         const result = event.target?.result
