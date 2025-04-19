@@ -19,8 +19,11 @@ module.exports = {
         groups: [
           '/^react/',
           '/^next/',
+          '/^react-redux/',
+          '/^@reduxjs/',
           'module',
           '/@/consts/',
+          '/@/api/',
           '/@/slices/',
           '/@/lib/',
           '/@/selectors/',
