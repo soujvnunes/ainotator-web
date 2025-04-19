@@ -1,7 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
 
+import datasetApi from '@/api/datasetApi'
+
 import annotatorSlice from '@/slices/annotatorSlice'
-import datasetSlice, { datasetApi } from '@/slices/datasetSlice'
+import datasetSlice from '@/slices/datasetSlice'
 
 export default function initStore() {
   return configureStore({
