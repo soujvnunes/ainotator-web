@@ -1,10 +1,9 @@
 'use client'
 
 import { InformationCircleIcon } from '@heroicons/react/24/solid'
+import { cva } from 'class-variance-authority'
 
-import dataset from '@/reducers/dataset'
-
-import classes from '@/helpers/classes'
+import datasetSlice from '@/slices/datasetSlice'
 
 import useStoreState from '@/hooks/useStoreState'
 
@@ -14,7 +13,7 @@ import IconButton from '@/components/IconButton'
 import ActionsAddInfoForm from './ActionsAddInfoForm'
 
 export default function ActionsAddInfo() {
-  const datasetHasInfo = useStoreState(dataset.selectors.hasInfo)
+  const hasInfo = useStoreState(datasetSlice.selectors.hasInfo)
 
   return (
     <Dialog
@@ -24,7 +23,7 @@ export default function ActionsAddInfo() {
         <IconButton
           onClick={open}
           aria-label="Add the dataset information"
-          {...addAttrs({ unknown: !datasetHasInfo })}>
+          className={addAttrs({ hasInfo })}>
           <InformationCircleIcon className="m-auto size-6" />
         </IconButton>
       )}>
@@ -33,4 +32,10 @@ export default function ActionsAddInfo() {
   )
 }
 
-const addAttrs = classes('data-classes-unknown:text-red-400')
+const addAttrs = cva('', {
+  variants: {
+    hasInfo: {
+      false: 'text-red-400',
+    },
+  },
+})

@@ -9,10 +9,7 @@ interface RangeFieldPositionOptions {
   min?: number | string
 }
 
-export default function useRangeFieldPosition(
-  value?: number,
-  options?: RangeFieldPositionOptions,
-) {
+export default function useRangeFieldPosition(value?: number, options?: RangeFieldPositionOptions) {
   return useMemo(() => {
     if (typeof value === 'undefined') return { x: 0, y: 0 }
 

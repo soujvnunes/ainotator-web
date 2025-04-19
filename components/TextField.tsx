@@ -15,21 +15,13 @@ export interface TextFieldProps extends React.ComponentPropsWithRef<'input'> {
   invalid?: TextFieldInvalidProp | TextFieldInvalidProp[]
 }
 
-function isInvalidProp(
-  invalid: TextFieldProps['invalid'],
-): invalid is TextFieldInvalidProp {
-  return (
-    Array.isArray(invalid) &&
-    typeof invalid[0] === 'boolean' &&
-    typeof invalid[1] === 'string'
-  )
+function isInvalidProp(invalid: TextFieldProps['invalid']): invalid is TextFieldInvalidProp {
+  return Array.isArray(invalid) && typeof invalid[0] === 'boolean' && typeof invalid[1] === 'string'
 }
 function resolveInvalid(invalid: TextFieldProps['invalid']) {
   if (!Array.isArray(invalid)) return
 
-  return (
-    isInvalidProp(invalid) ? [invalid] : invalid
-  ) as TextFieldInvalidProp[]
+  return (isInvalidProp(invalid) ? [invalid] : invalid) as TextFieldInvalidProp[]
 }
 export default function TextField({
   label,

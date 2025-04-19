@@ -1,48 +1,43 @@
 'use client'
 
-import { useCallback } from 'react'
+import { Suspense } from 'react'
 
 import { DocumentArrowDownIcon } from '@heroicons/react/24/solid'
 
-import annotator from '@/reducers/annotator'
-import dataset from '@/reducers/dataset'
+import datasetSlice from '@/slices/datasetSlice'
 
-import selectCurrentImage from '@/selectors/selectCurrentImage'
-
-import generateLink from '@/helpers/generateLink'
-
-import useCanvas from '@/hooks/useCanvas'
-import useStoreDispatch from '@/hooks/useDispatch'
 import useStoreState from '@/hooks/useStoreState'
 
+import Dialog from '@/components/Dialog'
 import IconButton from '@/components/IconButton'
 
+import ActionsExportDownload from './ActionsExportDownload'
+import ActionsExportViewer from './ActionsExportViewer'
+
 export default function ActionsExport() {
-  const canvas = useCanvas()
-  const dispatch = useStoreDispatch()
-  const info = useStoreState(dataset.selectors.info)
-  const annotations = useStoreState(dataset.selectors.annotations)
-  const image = useStoreState(selectCurrentImage)
-  const handleValidation = useCallback(() => {
-    const _canvas = canvas.current
-
-    if (!_canvas || !image) return
-
-    generateLink({
-      name: `${image.file_name}_${info.date_created}_annotations.json`,
-      value: dataset,
-    })
-    dispatch(annotator.actions.setMode('waiting'))
-    dispatch(annotator.actions.setCategory(0))
-    _canvas.clear()
-  }, [canvas, dispatch, image, info.date_created])
+  const annotations = useStoreState(datasetSlice.selectors.annotations)
 
   return (
-    <IconButton
-      onClick={handleValidation}
-      disabled={!annotations.length}
-      aria-label="Export annotations in COCO format">
-      <DocumentArrowDownIcon className="m-auto size-6" />
-    </IconButton>
+    <Dialog
+      size="lg"
+      title="Validate dataset"
+      description="View the provided dataset and provide a name for the file before downloading it."
+      renderController={(open) => (
+        <IconButton
+          onClick={open}
+          disabled={!annotations.length}
+          aria-label="Export annotations in COCO format">
+          <DocumentArrowDownIcon className="m-auto size-6" />
+        </IconButton>
+      )}>
+      <div className="grid grid-cols-2">
+        <div className="h-full max-h-[calc(100vh-108px)] overflow-y-auto">
+          <Suspense fallback="Loading...">
+            <ActionsExportViewer />
+          </Suspense>
+        </div>
+        <ActionsExportDownload />
+      </div>
+    </Dialog>
   )
 }

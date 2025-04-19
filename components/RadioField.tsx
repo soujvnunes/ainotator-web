@@ -5,8 +5,7 @@ import twMerge from '@/helpers/twMerge'
 
 import radioField from '@/styles/radioField'
 
-interface RadioFieldProps<V extends string | number>
-  extends RadioGroupProps<'div', V> {
+interface RadioFieldProps<V extends string | number> extends RadioGroupProps<'div', V> {
   values: { value: V; children: React.ReactNode; label?: string }[]
   vertical?: boolean
 }

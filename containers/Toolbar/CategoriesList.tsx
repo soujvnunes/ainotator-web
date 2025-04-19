@@ -4,7 +4,7 @@ import { useCallback } from 'react'
 
 import { RadioGroup } from '@headlessui/react'
 
-import annotator from '@/reducers/annotator'
+import annotatorSlice from '@/slices/annotatorSlice'
 
 import useStoreDispatch from '@/hooks/useDispatch'
 import useStoreState from '@/hooks/useStoreState'
@@ -13,13 +13,13 @@ import AnnotationRadio from '@/components/AnnotationRadio'
 
 export default function CategoriesList() {
   const dispatch = useStoreDispatch()
-  const isAnnotating = useStoreState(annotator.selectors.isAnnotating)
-  const categories = useStoreState(annotator.selectors.categories)
-  const currentCategoryId = useStoreState(annotator.selectors.currentCategoryId)
+  const isAnnotating = useStoreState(annotatorSlice.selectors.isAnnotating)
+  const categories = useStoreState(annotatorSlice.selectors.categories)
+  const currentCategoryId = useStoreState(annotatorSlice.selectors.currentCategoryId)
   const handleCategory = useCallback(
     (id: number) => {
-      dispatch(annotator.actions.setCategory(id))
-      dispatch(annotator.actions.setMode('annotating'))
+      dispatch(annotatorSlice.actions.setCategory(id))
+      dispatch(annotatorSlice.actions.setMode('annotating'))
     },
     [dispatch],
   )

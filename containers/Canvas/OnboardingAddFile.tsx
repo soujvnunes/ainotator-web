@@ -5,8 +5,8 @@ import { useCallback } from 'react'
 import { DocumentArrowUpIcon } from '@heroicons/react/24/solid'
 import { FabricImage } from 'fabric'
 
-import annotator from '@/reducers/annotator'
-import dataset from '@/reducers/dataset'
+import annotatorSlice from '@/slices/annotatorSlice'
+import datasetSlice from '@/slices/datasetSlice'
 
 import getDateTime from '@/helpers/getDateTime'
 
@@ -19,14 +19,14 @@ export default function OnboardingAddFile() {
   const canvas = useCanvas()
   const dispatch = useStoreDispatch()
   const [id, nextId] = useEnhancedId()
-  const licenseId = useStoreState(annotator.selectors.currentLicenseId)
+  const licenseId = useStoreState(annotatorSlice.selectors.currentLicenseId)
 
   const handleFileChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.item(0)
       const reader = new FileReader()
 
-      if (file == null) return
+      if (!file) return
 
       reader.onload = async (event) => {
         const result = event.target?.result
@@ -34,26 +34,26 @@ export default function OnboardingAddFile() {
 
         if (typeof result !== 'string' || !_canvas) return
 
-        const image = await FabricImage.fromURL(result)
+        const fabricImage = await FabricImage.fromURL(result)
 
-        if (_canvas.width / image.width > _canvas.height / image.height) {
-          image.scaleToWidth(_canvas.width)
+        if (_canvas.width / fabricImage.width > _canvas.height / fabricImage.height) {
+          fabricImage.scaleToWidth(_canvas.width)
         } else {
-          image.scaleToHeight(_canvas.height)
+          fabricImage.scaleToHeight(_canvas.height)
         }
 
-        image.selectable = false
-        image.hasControls = false
-        _canvas.add(image)
+        fabricImage.selectable = false
+        fabricImage.hasControls = false
+        _canvas.add(fabricImage)
         _canvas.renderAll()
-        dispatch(annotator.actions.setMode('annotating'))
-        dispatch(annotator.actions.setImage(id))
+        dispatch(annotatorSlice.actions.setMode('annotating'))
+        dispatch(annotatorSlice.actions.setImage(id))
         dispatch(
-          dataset.actions.addImage({
+          datasetSlice.actions.addImage({
             id,
             license: licenseId,
-            height: image.height,
-            width: image.width,
+            height: fabricImage.height,
+            width: fabricImage.width,
             date_captured: getDateTime(file.lastModified),
             coco_url: '',
             flickr_url: '',

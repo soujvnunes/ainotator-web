@@ -12,12 +12,7 @@ export interface ButtonProps extends React.ComponentPropsWithRef<'button'> {
   variant?: 'filled' | 'text'
 }
 
-export default function Button({
-  className,
-  variant,
-  fullWidth,
-  ...props
-}: ButtonProps) {
+export default function Button({ className, variant, fullWidth, ...props }: ButtonProps) {
   return (
     <HeadlessButton
       className={twMerge(button.root({ variant, fullWidth, className }))}

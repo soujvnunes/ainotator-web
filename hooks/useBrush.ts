@@ -2,16 +2,16 @@ import { useEffect } from 'react'
 
 import { PencilBrush } from 'fabric'
 
-import annotator from '@/reducers/annotator'
+import annotatorSlice from '@/slices/annotatorSlice'
 
 import useCanvas from './useCanvas'
 import useStoreState from './useStoreState'
 
 export default function useBrush() {
   const canvas = useCanvas()
-  const category = useStoreState(annotator.selectors.currentCategory)
-  const brushWidth = useStoreState(annotator.selectors.brushWidth)
-  const isAnnotating = useStoreState(annotator.selectors.isAnnotating)
+  const currentCategory = useStoreState(annotatorSlice.selectors.currentCategory)
+  const brushWidth = useStoreState(annotatorSlice.selectors.brushWidth)
+  const isAnnotating = useStoreState(annotatorSlice.selectors.isAnnotating)
 
   useEffect(() => {
     const _canvas = canvas.current
@@ -20,11 +20,11 @@ export default function useBrush() {
 
     _canvas.isDrawingMode = false
 
-    if (!isAnnotating || category?.type !== 'brush') return
+    if (!isAnnotating || currentCategory?.type !== 'brush') return
 
     _canvas.isDrawingMode = true
     _canvas.freeDrawingBrush = new PencilBrush(_canvas)
-    _canvas.freeDrawingBrush.color = category.color
+    _canvas.freeDrawingBrush.color = currentCategory.color
     _canvas.freeDrawingBrush.width = brushWidth
-  }, [canvas, category, isAnnotating, brushWidth])
+  }, [canvas, currentCategory, isAnnotating, brushWidth])
 }
