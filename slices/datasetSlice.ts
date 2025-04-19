@@ -1,6 +1,8 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+
 import { type ErrorObject } from 'ajv'
+
+import datasetApi from '@/api/datasetApi'
 
 import { type AnnotatorCategory } from './annotatorSlice'
 
@@ -59,20 +61,6 @@ export interface DatasetState {
   info: DatasetInfo
   validation: DatasetValidation
 }
-
-export const datasetApi = createApi({
-  reducerPath: 'datasetApi',
-  baseQuery: fetchBaseQuery({ baseUrl: '' }),
-  endpoints: (build) => ({
-    validate: build.mutation<DatasetValidation, Omit<DatasetState, 'validation'>>({
-      query: (dataset) => ({
-        url: '/validate-dataset',
-        method: 'POST',
-        body: dataset,
-      }),
-    }),
-  }),
-})
 
 export default createSlice({
   name: 'dataset',

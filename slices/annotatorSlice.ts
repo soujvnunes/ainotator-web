@@ -4,12 +4,9 @@ import { type PayloadAction } from '@reduxjs/toolkit'
 import { type AnnotatorCrowds } from '@/consts/annotatorCrowds'
 import { type AnnotatorTypes } from '@/consts/annotatorTypes'
 
-import {
-  datasetApi,
-  type DatasetCategory,
-  type DatasetImage,
-  type DatasetLicense,
-} from './datasetSlice'
+import datasetApi from '@/api/datasetApi'
+
+import { type DatasetCategory, type DatasetImage, type DatasetLicense } from './datasetSlice'
 
 export interface AnnotatorCategory extends DatasetCategory {
   isCrowd: AnnotatorCrowds
@@ -17,13 +14,12 @@ export interface AnnotatorCategory extends DatasetCategory {
   color: `${number} ${number} ${number}`
 }
 
-export type AnnotatorModes =
-  // Onboarding screen on first-time access/after exporting previous annotations
-  | 'waiting'
-  // User selected a class name
-  | 'annotating'
-  // User switched to erase mode
-  | 'erasing'
+/**
+ * waiting: Onboarding screen on first-time access/after exporting previous annotations;
+ * annotating: User selected a class name;
+ * erasing: User switched to erase mode
+ */
+export type AnnotatorModes = 'waiting' | 'annotating' | 'erasing'
 
 interface AnnotatorState {
   mode: AnnotatorModes
