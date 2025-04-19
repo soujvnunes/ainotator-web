@@ -2,7 +2,7 @@ import { type JSONSchemaType } from 'ajv'
 
 import { type DatasetState } from '@/slices/datasetSlice'
 
-const schema: JSONSchemaType<Omit<DatasetState, 'validation'>> = {
+const datasetSchema: JSONSchemaType<Omit<DatasetState, 'validation'>> = {
   type: 'object',
   properties: {
     info: {
@@ -106,4 +106,4 @@ const schema: JSONSchemaType<Omit<DatasetState, 'validation'>> = {
   additionalProperties: false,
 }
 
-export default schema
+export default datasetSchema
