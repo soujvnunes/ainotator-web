@@ -10,7 +10,6 @@ import datasetApi from '@/api/datasetApi'
 import selectDataset from '@/selectors/selectDataset'
 
 import generateLink from '@/helpers/generateLink'
-import isFetchBaseQueryError from '@/helpers/isFetchBaseQueryError'
 
 import useFormSubmit from '@/hooks/useFormSubmit'
 import useStoreState from '@/hooks/useStoreState'
@@ -24,7 +23,7 @@ export default function ActionsExportDownload() {
   const [validate, validation] = datasetApi.useValidateMutation()
 
   const handleValidate = useCallback(() => {
-    validate(dataset) // Validate on error
+    validate(dataset)
   }, [dataset, validate])
 
   const formSubmit = useFormSubmit<{ name: string }>((fields) => {
@@ -32,23 +31,27 @@ export default function ActionsExportDownload() {
   })
 
   useEffect(() => {
-    handleValidate() // Validate (only) on mount
+    handleValidate()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  console.log(validation)
-
   return (
     <div className="flex flex-col">
-      <div className="m-auto px-4">
-        {validation.isLoading && 'Validating...'}
+      <div className="m-auto p-4">
+        <p
+          className="mb-2"
+          aria-live="polite"
+          aria-atomic="true">
+          {validation.isError
+            ? 'Internal server error.'
+            : validation.isLoading
+              ? 'Validating...'
+              : validation.data?.isValid
+                ? 'Valid! Proceed to give the dataset file a name.'
+                : 'Invalid! Fix each field value based on its requirement:'}
+        </p>
         {validation.isError && (
           <div className="space-y-2 text-center">
-            <p className="text-lg">
-              {isFetchBaseQueryError(validation.error) && validation.error.status === 500
-                ? 'Internal server error'
-                : 'An Error has occured.'}
-            </p>
             <Button
               variant="filled"
               className="gap-3"
@@ -59,11 +62,8 @@ export default function ActionsExportDownload() {
             </Button>
           </div>
         )}
-        {!!validation.data?.errors?.length && (
-          <p className="mb-4">Validation successfull, but encountered minor errors:</p>
-        )}
         <ul
-          className="mb-2 space-y-2"
+          className="space-y-2"
           hidden={!validation.data?.errors?.length}>
           {validation.data?.errors?.map((error) => (
             <li key={error.instancePath + error.message}>
@@ -74,11 +74,6 @@ export default function ActionsExportDownload() {
             </li>
           ))}
         </ul>
-        {!!validation.data?.errors?.length && (
-          <p className="text-sm text-white/60">
-            Please, check each field followed by its requirement, and close this dialog to fix them.
-          </p>
-        )}
       </div>
       <form onSubmit={formSubmit.onSubmit}>
         <Fieldset disabled={validation.isLoading || !validation.data?.isValid}>

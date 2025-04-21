@@ -49,7 +49,7 @@ export interface DatasetAnnotation {
 }
 
 export interface DatasetValidation {
-  isValid: boolean
+  isValid?: boolean
   errors?: ErrorObject[]
 }
 
@@ -70,7 +70,7 @@ export default createSlice({
     annotations: [],
     categories: [],
     info: { description: '', url: '', version: '', year: 0, contributor: '', date_created: '' },
-    validation: { isValid: false, errors: [] },
+    validation: {},
   } as DatasetState,
   reducers: {
     setInfo: (state, action: PayloadAction<DatasetInfo>) => {

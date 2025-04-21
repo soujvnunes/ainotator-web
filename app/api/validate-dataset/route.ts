@@ -14,10 +14,7 @@ export async function POST(req: Request) {
 
   if (Math.random() > 0.5) {
     return Response.json(
-      {
-        isValid: false,
-        errors: [],
-      },
+      {},
       {
         status: 500,
       },
@@ -29,7 +26,7 @@ export async function POST(req: Request) {
   return Response.json(
     {
       isValid: validate(dataset),
-      errors: validate.errors ?? [],
+      errors: validate.errors,
     },
     {
       status: 200,

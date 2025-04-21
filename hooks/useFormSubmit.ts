@@ -11,21 +11,16 @@ export default function useFormSubmit<
     (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault()
 
-      const data = new FormData(event.currentTarget)
-      const entries = Object.fromEntries(data.entries()) as O
-      const fieldsValues = Object.values(entries)
+      const entries = new FormData(event.currentTarget).entries()
 
-      if (fieldsValues.some((field) => !field)) {
-        const emptyFields = Object.entries(entries).reduce(
-          (acc, [field, value]) => [...acc, !value ? (field as K) : null],
-          [] as (K | null)[],
+      if (entries.some((entry) => !entry[1])) {
+        return setEmpty(
+          entries.reduce((acc, [key, value]) => (!value ? [...acc, key as K] : acc), [] as K[]),
         )
-
-        return setEmpty(emptyFields.filter(Boolean) as K[])
       }
 
       setEmpty([])
-      formSubmit(entries)
+      formSubmit(Object.fromEntries(entries) as O)
     },
     [formSubmit],
   )
