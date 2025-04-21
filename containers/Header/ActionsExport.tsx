@@ -1,7 +1,5 @@
 'use client'
 
-import { Suspense } from 'react'
-
 import { DocumentArrowDownIcon } from '@heroicons/react/24/solid'
 
 import datasetSlice from '@/slices/datasetSlice'
@@ -31,11 +29,7 @@ export default function ActionsExport() {
         </IconButton>
       )}>
       <div className="grid grid-cols-2">
-        <div className="h-full max-h-[calc(100vh-108px)] overflow-y-auto">
-          <Suspense fallback="Loading...">
-            <ActionsExportViewer />
-          </Suspense>
-        </div>
+        <ActionsExportViewer />
         <ActionsExportDownload />
       </div>
     </Dialog>
