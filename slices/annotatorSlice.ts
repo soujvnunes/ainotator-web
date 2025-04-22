@@ -1,10 +1,12 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { type PayloadAction } from '@reduxjs/toolkit'
 
+import { type ErrorObject } from 'ajv'
+
 import { type AnnotatorCrowds } from '@/consts/annotatorCrowds'
 import { type AnnotatorTypes } from '@/consts/annotatorTypes'
 
-import datasetApi from '@/api/datasetApi'
+import annotatorApi from '@/api/annotatorApi'
 
 import { type DatasetCategory, type DatasetImage, type DatasetLicense } from './datasetSlice'
 
@@ -12,6 +14,11 @@ export interface AnnotatorCategory extends DatasetCategory {
   isCrowd: AnnotatorCrowds
   type: AnnotatorTypes
   color: `${number} ${number} ${number}`
+}
+
+export interface AnnotatorValidation {
+  isValid?: boolean
+  errors?: ErrorObject[]
 }
 
 /**
@@ -25,6 +32,7 @@ interface AnnotatorState {
   mode: AnnotatorModes
   size: { brush: number }
   categories: AnnotatorCategory[]
+  validation?: AnnotatorValidation
   current: {
     id: {
       image: DatasetImage['id']
@@ -63,7 +71,9 @@ export default createSlice({
     },
   },
   extraReducers(builder) {
-    builder.addMatcher(datasetApi.endpoints.validate.matchFulfilled, (state, action) => {
+    builder.addMatcher(annotatorApi.endpoints.validate.matchFulfilled, (state, action) => {
+      state.validation = action.payload
+
       if (action.payload.isValid) {
         state.mode = 'waiting'
         state.current.id.category = 0
