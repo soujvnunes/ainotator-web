@@ -5,28 +5,30 @@ import { useCallback, useEffect } from 'react'
 import { Fieldset, Legend } from '@headlessui/react'
 import { ArrowPathIcon } from '@heroicons/react/24/solid'
 
-import datasetApi from '@/api/datasetApi'
-
-import selectDataset from '@/selectors/selectDataset'
+import annotatorApi from '@/api/annotatorApi'
 
 import generateLink from '@/helpers/generateLink'
 
+import useDatasetState from '@/hooks/useDatasetState'
 import useFormSubmit from '@/hooks/useFormSubmit'
-import useStoreState from '@/hooks/useStoreState'
 
 import Button from '@/components/Button'
 import TextField from '@/components/TextField'
 
-export default function ActionsExportDownload() {
-  const dataset = useStoreState(selectDataset)
+interface ActionsExportDownloadFields {
+  name: string
+}
 
-  const [validate, validation] = datasetApi.useValidateMutation()
+export default function ActionsExportDownload() {
+  const dataset = useDatasetState()
+
+  const [validate, validation] = annotatorApi.useValidateMutation()
 
   const handleValidate = useCallback(() => {
     validate(dataset)
   }, [dataset, validate])
 
-  const formSubmit = useFormSubmit<{ name: string }>((fields) => {
+  const formSubmit = useFormSubmit<ActionsExportDownloadFields>((fields) => {
     generateLink({ name: `${fields.name}.json`, value: dataset })
   })
 
