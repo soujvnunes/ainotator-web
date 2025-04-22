@@ -7,12 +7,12 @@ import selectCurrentImage from '@/selectors/selectCurrentImage'
 
 import twMerge from '@/helpers/twMerge'
 
-import useStoreState from '@/hooks/useStoreState'
+import useAppState from '@/hooks/useAppState'
 
 import IconButton from '@/components/IconButton'
 
 export default function FileDetails() {
-  const currentImage = useStoreState(selectCurrentImage)
+  const currentImage = useAppState(selectCurrentImage)
 
   return (
     <div className="flex items-center space-x-1">

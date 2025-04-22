@@ -11,7 +11,7 @@ export default function useFormSubmit<
     (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault()
 
-      const entries = new FormData(event.currentTarget).entries()
+      const entries = new FormData(event.currentTarget).entries().toArray()
 
       if (entries.some((entry) => !entry[1])) {
         return setEmpty(

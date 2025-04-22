@@ -1,12 +1,13 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import type { DatasetState, DatasetValidation } from '@/slices/datasetSlice'
+import { type AnnotatorValidation } from '@/slices/annotatorSlice'
+import { type DatasetState } from '@/slices/datasetSlice'
 
 export default createApi({
-  reducerPath: 'datasetApi',
+  reducerPath: 'annotatorApi',
   baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
   endpoints: (build) => ({
-    validate: build.mutation<DatasetValidation, Omit<DatasetState, 'validation'>>({
+    validate: build.mutation<AnnotatorValidation, DatasetState>({
       query: (dataset) => ({
         url: '/validate-dataset',
         method: 'POST',

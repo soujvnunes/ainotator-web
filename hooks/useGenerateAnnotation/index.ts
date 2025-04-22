@@ -3,18 +3,21 @@ import { useEffect } from 'react'
 import annotatorSlice from '@/slices/annotatorSlice'
 import datasetSlice from '@/slices/datasetSlice'
 
+import useAppDispatch from '../useAppDispatch'
+import useAppState from '../useAppState'
 import useCanvas from '../useCanvas'
-import useStoreDispatch from '../useDispatch'
 import useEnhancedId from '../useEnhancedId'
-import useStoreState from '../useStoreState'
 import generateAnnotation from './generateAnnotation'
 
 export default function useGenerateAnnotation() {
-  const dispatch = useStoreDispatch()
+  const dispatch = useAppDispatch()
+
   const canvas = useCanvas()
-  const currentCategory = useStoreState(annotatorSlice.selectors.currentCategory)
-  const currentImageId = useStoreState(annotatorSlice.selectors.currentImageId)
-  const isAnnotating = useStoreState(annotatorSlice.selectors.isAnnotating)
+
+  const currentCategory = useAppState(annotatorSlice.selectors.currentCategory)
+  const currentImageId = useAppState(annotatorSlice.selectors.currentImageId)
+  const isAnnotating = useAppState(annotatorSlice.selectors.isAnnotating)
+
   const [id, nextId] = useEnhancedId()
 
   useEffect(() => {

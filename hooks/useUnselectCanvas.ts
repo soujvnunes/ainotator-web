@@ -2,12 +2,13 @@ import { useEffect } from 'react'
 
 import annotatorSlice from '@/slices/annotatorSlice'
 
+import useAppState from './useAppState'
 import useCanvas from './useCanvas'
-import useStoreState from './useStoreState'
 
 export default function useUnselectCanvas() {
   const canvas = useCanvas()
-  const currentCategoryId = useStoreState(annotatorSlice.selectors.currentCategoryId)
+
+  const currentCategoryId = useAppState(annotatorSlice.selectors.currentCategoryId)
 
   useEffect(() => {
     const _canvas = canvas.current

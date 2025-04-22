@@ -4,12 +4,12 @@ import { DocumentArrowDownIcon, PlusIcon } from '@heroicons/react/24/solid'
 
 import annotatorSlice from '@/slices/annotatorSlice'
 
-import useStoreState from '@/hooks/useStoreState'
+import useAppState from '@/hooks/useAppState'
 
 import OnboardingAddFile from './OnboardingAddFile'
 
 export default function Onboarding() {
-  const isWaiting = useStoreState(annotatorSlice.selectors.isWaiting)
+  const isWaiting = useAppState(annotatorSlice.selectors.isWaiting)
 
   return (
     <section

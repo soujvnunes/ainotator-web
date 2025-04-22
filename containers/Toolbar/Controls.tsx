@@ -5,7 +5,7 @@ import { Squares2X2Icon } from '@heroicons/react/24/solid'
 
 import annotatorSlice from '@/slices/annotatorSlice'
 
-import useStoreState from '@/hooks/useStoreState'
+import useAppState from '@/hooks/useAppState'
 
 import IconButton from '@/components/IconButton'
 
@@ -16,7 +16,7 @@ import ControlsZoomIn from './ControlsZoomIn'
 import ControlsZoomOut from './ControlsZoomOut'
 
 export default function Controls() {
-  const isAnnotating = useStoreState(annotatorSlice.selectors.isAnnotating)
+  const isAnnotating = useAppState(annotatorSlice.selectors.isAnnotating)
 
   return (
     <Popover>

@@ -4,14 +4,15 @@ import { PencilBrush } from 'fabric'
 
 import annotatorSlice from '@/slices/annotatorSlice'
 
+import useAppState from './useAppState'
 import useCanvas from './useCanvas'
-import useStoreState from './useStoreState'
 
 export default function useBrush() {
   const canvas = useCanvas()
-  const currentCategory = useStoreState(annotatorSlice.selectors.currentCategory)
-  const brushWidth = useStoreState(annotatorSlice.selectors.brushWidth)
-  const isAnnotating = useStoreState(annotatorSlice.selectors.isAnnotating)
+
+  const currentCategory = useAppState(annotatorSlice.selectors.currentCategory)
+  const brushWidth = useAppState(annotatorSlice.selectors.brushWidth)
+  const isAnnotating = useAppState(annotatorSlice.selectors.isAnnotating)
 
   useEffect(() => {
     const _canvas = canvas.current

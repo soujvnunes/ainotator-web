@@ -6,15 +6,18 @@ import { Line, Point, Polygon, util, type TPointerEvent, type TPointerEventInfo 
 
 import annotatorSlice from '@/slices/annotatorSlice'
 
+import useAppState from './useAppState'
 import useCanvas from './useCanvas'
 import useEnhancedId from './useEnhancedId'
-import useStoreState from './useStoreState'
 
 export default function usePolygon() {
   const canvas = useCanvas()
-  const currentCategory = useStoreState(annotatorSlice.selectors.currentCategory)
-  const isAnnotating = useStoreState(annotatorSlice.selectors.isAnnotating)
+
+  const currentCategory = useAppState(annotatorSlice.selectors.currentCategory)
+  const isAnnotating = useAppState(annotatorSlice.selectors.isAnnotating)
+
   const [id, nextId] = useEnhancedId()
+
   const [lines, setLines] = useState<Line[]>([])
   const [isDrawing, setDrawing] = useState(false)
   const [points, setPoints] = useState<Record<'x' | 'y', number>[]>([])
