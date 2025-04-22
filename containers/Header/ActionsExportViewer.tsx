@@ -15,7 +15,7 @@ export default function ActionsExportViewer() {
   const dataset = useDatasetState()
 
   return (
-    <div className="h-full max-h-[calc(100vh-108px)] overflow-y-auto">
+    <div className="overflow-y-auto md:h-full md:max-h-[calc(100vh-108px)]">
       <ReactJson
         theme="threezerotwofour"
         indentWidth={2}
