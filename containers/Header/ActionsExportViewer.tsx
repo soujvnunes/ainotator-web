@@ -2,9 +2,7 @@
 
 import dynamic from 'next/dynamic'
 
-import selectDataset from '@/selectors/selectDataset'
-
-import useStoreState from '@/hooks/useStoreState'
+import useDatasetState from '@/hooks/useDatasetState'
 
 import ActionsExportViewerSkeleton from './ActionsExportViewerSkeleton'
 
@@ -14,7 +12,7 @@ const ReactJson = dynamic(() => import('react-json-view'), {
 })
 
 export default function ActionsExportViewer() {
-  const dataset = useStoreState(selectDataset)
+  const dataset = useDatasetState()
 
   return (
     <div className="h-full max-h-[calc(100vh-108px)] overflow-y-auto">
