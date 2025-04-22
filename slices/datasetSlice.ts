@@ -1,9 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
-import { type ErrorObject } from 'ajv'
-
-import datasetApi from '@/api/datasetApi'
-
 import { type AnnotatorCategory } from './annotatorSlice'
 
 export interface DatasetInfo {
@@ -48,18 +44,12 @@ export interface DatasetAnnotation {
   id: number
 }
 
-export interface DatasetValidation {
-  isValid?: boolean
-  errors?: ErrorObject[]
-}
-
 export interface DatasetState {
   licenses: DatasetLicense[]
   images: DatasetImage[]
   annotations: DatasetAnnotation[]
   categories: DatasetCategory[]
   info: DatasetInfo
-  validation: DatasetValidation
 }
 
 export default createSlice({
@@ -70,7 +60,6 @@ export default createSlice({
     annotations: [],
     categories: [],
     info: { description: '', url: '', version: '', year: 0, contributor: '', date_created: '' },
-    validation: {},
   } as DatasetState,
   reducers: {
     setInfo: (state, action: PayloadAction<DatasetInfo>) => {
@@ -97,13 +86,9 @@ export default createSlice({
       prepare: ({ isCrowd, color, type, ...payload }: AnnotatorCategory) => ({ payload }),
     },
   },
-  extraReducers(builder) {
-    builder.addMatcher(datasetApi.endpoints.validate.matchFulfilled, (state, action) => {
-      state.validation = action.payload
-    })
-  },
   selectors: {
     annotations: (state) => state.annotations,
+    categories: (state) => state.categories,
     hasInfo: (state) => Object.values(state.info).some(Boolean),
     info: (state) => state.info,
     licenses: (state) => state.licenses,
