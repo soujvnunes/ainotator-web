@@ -5,7 +5,7 @@ import { PlusIcon } from '@heroicons/react/24/solid'
 
 import annotatorSlice, { type AnnotatorCategory } from '@/slices/annotatorSlice'
 
-import useStoreDispatch from '@/hooks/useDispatch'
+import useAppDispatch from '@/hooks/useAppDispatch'
 import useEnhancedId from '@/hooks/useEnhancedId'
 import useFormSubmit from '@/hooks/useFormSubmit'
 
@@ -19,8 +19,10 @@ import CategoriesAddCrowds from './CategoriesAddCrowds'
 import CategoriesAddType from './CategoriesAddType'
 
 export default function CategoriesAdd() {
-  const dispatch = useStoreDispatch()
+  const dispatch = useAppDispatch()
+
   const [id, nextId] = useEnhancedId()
+
   const formSubmit = useFormSubmit<Omit<AnnotatorCategory, 'id'>>((fields) => {
     dispatch(annotatorSlice.actions.addCategory({ id, ...fields }))
     nextId()

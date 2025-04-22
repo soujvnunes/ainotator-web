@@ -5,7 +5,7 @@ import { cva } from 'class-variance-authority'
 
 import datasetSlice from '@/slices/datasetSlice'
 
-import useStoreState from '@/hooks/useStoreState'
+import useAppState from '@/hooks/useAppState'
 
 import Dialog from '@/components/Dialog'
 import IconButton from '@/components/IconButton'
@@ -13,7 +13,7 @@ import IconButton from '@/components/IconButton'
 import ActionsAddInfoForm from './ActionsAddInfoForm'
 
 export default function ActionsAddInfo() {
-  const hasInfo = useStoreState(datasetSlice.selectors.hasInfo)
+  const hasInfo = useAppState(datasetSlice.selectors.hasInfo)
 
   return (
     <Dialog

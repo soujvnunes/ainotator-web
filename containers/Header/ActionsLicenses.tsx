@@ -7,7 +7,7 @@ import datasetSlice from '@/slices/datasetSlice'
 
 import selectCurrentImage from '@/selectors/selectCurrentImage'
 
-import useStoreState from '@/hooks/useStoreState'
+import useAppState from '@/hooks/useAppState'
 
 import Dialog from '@/components/Dialog'
 import IconButton from '@/components/IconButton'
@@ -17,8 +17,8 @@ import ActionsLicensesAdd from './ActionsLicensesAdd'
 import ActionsLicensesSelect from './ActionsLicensesSelect'
 
 export default function ActionsLicenses() {
-  const currentImage = useStoreState(selectCurrentImage)
-  const licenses = useStoreState(datasetSlice.selectors.licenses)
+  const currentImage = useAppState(selectCurrentImage)
+  const licenses = useAppState(datasetSlice.selectors.licenses)
 
   return (
     <Dialog

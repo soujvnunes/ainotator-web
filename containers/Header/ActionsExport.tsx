@@ -4,7 +4,7 @@ import { DocumentArrowDownIcon } from '@heroicons/react/24/solid'
 
 import datasetSlice from '@/slices/datasetSlice'
 
-import useStoreState from '@/hooks/useStoreState'
+import useAppState from '@/hooks/useAppState'
 
 import Dialog from '@/components/Dialog'
 import IconButton from '@/components/IconButton'
@@ -13,7 +13,7 @@ import ActionsExportDownload from './ActionsExportDownload'
 import ActionsExportViewer from './ActionsExportViewer'
 
 export default function ActionsExport() {
-  const annotations = useStoreState(datasetSlice.selectors.annotations)
+  const annotations = useAppState(datasetSlice.selectors.annotations)
 
   return (
     <Dialog

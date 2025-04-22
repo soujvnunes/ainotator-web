@@ -4,9 +4,9 @@ import { Fieldset, Legend, useClose } from '@headlessui/react'
 
 import datasetSlice from '@/slices/datasetSlice'
 
-import useStoreDispatch from '@/hooks/useDispatch'
+import useAppDispatch from '@/hooks/useAppDispatch'
+import useAppState from '@/hooks/useAppState'
 import useFormSubmit from '@/hooks/useFormSubmit'
-import useStoreState from '@/hooks/useStoreState'
 
 import Button from '@/components/Button'
 import TextField from '@/components/TextField'
@@ -22,8 +22,11 @@ interface ActionsAddInfoFields {
 
 export default function ActionsAddInfoForm() {
   const closeActionAddInfo = useClose()
-  const dispatch = useStoreDispatch()
-  const info = useStoreState(datasetSlice.selectors.info)
+
+  const dispatch = useAppDispatch()
+
+  const info = useAppState(datasetSlice.selectors.info)
+
   const formSubmit = useFormSubmit<ActionsAddInfoFields>((fields) => {
     dispatch(datasetSlice.actions.setInfo(fields))
     closeActionAddInfo()

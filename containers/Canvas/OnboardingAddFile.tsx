@@ -10,16 +10,19 @@ import datasetSlice from '@/slices/datasetSlice'
 
 import getDateTime from '@/helpers/getDateTime'
 
+import useAppDispatch from '@/hooks/useAppDispatch'
+import useAppState from '@/hooks/useAppState'
 import useCanvas from '@/hooks/useCanvas'
-import useStoreDispatch from '@/hooks/useDispatch'
 import useEnhancedId from '@/hooks/useEnhancedId'
-import useStoreState from '@/hooks/useStoreState'
 
 export default function OnboardingAddFile() {
   const canvas = useCanvas()
-  const dispatch = useStoreDispatch()
+
+  const dispatch = useAppDispatch()
+
   const [id, nextId] = useEnhancedId()
-  const licenseId = useStoreState(annotatorSlice.selectors.currentLicenseId)
+
+  const licenseId = useAppState(annotatorSlice.selectors.currentLicenseId)
 
   const handleFileChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
