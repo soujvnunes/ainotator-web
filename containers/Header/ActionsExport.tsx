@@ -28,7 +28,7 @@ export default function ActionsExport() {
           <DocumentArrowDownIcon className="m-auto size-6" />
         </IconButton>
       )}>
-      <div className="grid grid-cols-2">
+      <div className="md:grid md:grid-cols-2">
         <ActionsExportViewer />
         <ActionsExportDownload />
       </div>
